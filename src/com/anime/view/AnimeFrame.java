@@ -3,9 +3,18 @@ package com.anime.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class AnimeFrame extends JFrame{
+public class AnimeFrame extends JFrame {
     // VARIABLES
     // private AppController controller
+    /** The login panel for the specified Account/user */
+    private AccountPanel login;
+    private HomePage home;
+    private SeriesPage series;
+    private EpisodePage episode;
+    private ActorPage actor;
+    private JPanel container = new JPanel();
+    private CardLayout cardLayout = new CardLayout();
+
 
     /**
      * Private constructor to prevent instantiation without needed parameters
@@ -16,6 +25,7 @@ public class AnimeFrame extends JFrame{
         //TODO: add Controller as parameter
         super("Anime Streaming App");
         init();
+        addPanels();
     }
 
     /**
@@ -27,5 +37,26 @@ public class AnimeFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setVisible(true);
+
+        setLayout(new BorderLayout());
     }
+
+    private void addPanels() {
+        container.setLayout(cardLayout);
+
+        login = new AccountPanel();
+        home = new HomePage();
+        series = new SeriesPage();
+        episode = new EpisodePage();
+        actor = new ActorPage();
+
+        container.add("login",login);
+        container.add("home", home);
+        container.add("series", series);
+        container.add("episode", episode);
+        container.add("actor", actor);
+
+        add(container);
+    }
+
 }

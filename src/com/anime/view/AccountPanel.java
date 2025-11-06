@@ -43,4 +43,16 @@ public class AccountPanel extends JPanel{
 
         add(container);
     }
+
+    public String getLoginName() {
+        return loginNameField.getText();
+    }
+
+    public JButton getLoginBtn(){
+        return loginBtn;
+    }
+
+    public JButton getSignupBtn(){
+        return signupBtn;
+    }
 }

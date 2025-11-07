@@ -10,6 +10,7 @@ public class SeriesPage extends JPanel{
     private JPanel episodesPnl = new JPanel();
     private JPanel contentPnl = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(contentPnl);
+    private JButton faveBtn = new JButton("fave", new ImageIcon());
     private JLabel titleLb = new JLabel("My Hero Aca");
     private JLabel genreLb = new JLabel("Action");
     private JLabel releaseYearLb = new JLabel("2025-09-08");
@@ -55,6 +56,7 @@ public class SeriesPage extends JPanel{
         seriesInfoPnl.add(releaseYearLb);
         seriesInfoPnl.add(epCountLb);
         seriesInfoPnl.add(statusLb);
+        seriesInfoPnl.add(faveBtn);
 
         episodesPnl.setLayout(new FlowLayout(FlowLayout.CENTER));
         episodesPnl.setBackground(Color.black);

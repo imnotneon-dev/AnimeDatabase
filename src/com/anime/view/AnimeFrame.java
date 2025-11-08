@@ -25,13 +25,15 @@ public class AnimeFrame extends JFrame {
         //TODO: add Controller as parameter
         super("Anime Streaming App");
         init();
-        addPanels();
     }
 
     /**
      * Initialize the components of the application frame
      */
     private void init(){
+        addPanels();
+        pack();
+
         setSize(new Dimension(1280,720));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,17 +46,17 @@ public class AnimeFrame extends JFrame {
     private void addPanels() {
         container.setLayout(cardLayout);
 
-        login = new AccountPanel();
-        home = new HomePage();
-        series = new SeriesPage();
+//        login = new AccountPanel();
+//        home = new HomePage();
+//        series = new SeriesPage();
         episode = new EpisodePage();
-        actor = new ActorPage();
+//        actor = new ActorPage();
 
-        container.add("login",login);
-        container.add("home", home);
-        container.add("series", series);
-        container.add("episode", episode);
-        container.add("actor", actor);
+//        container.add(login,BorderLayout.CENTER);
+//        container.add(home);
+//        container.add(series);
+        container.add(episode);
+//        container.add(actor);
 
         add(container);
     }

@@ -4,7 +4,7 @@ public class Transactions {
     //should this even be directly in this file or shd i make a new class for this lmk
     public void likeEpisode(int userId, int episodeId) throws SQLException {
     //check if episode is already liked
-    String check = "SELECT COUNT(*) FROM LikedEpisode WHERE user_id = ? AND episode_id = ?";
+    String check = "SELECT COUNT(*) FROM LikedEpisode WHERE user_id = ? AND episode_id = ?"; // episode_id variable name will also depend on what the variable is called in episodes sql file
     PreparedStatement checkStmt = conn.prepareStatement(check);
     checkStmt.setInt(1, userId);
     checkStmt.setInt(2, episodeId);

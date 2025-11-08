@@ -8,7 +8,7 @@ public class Transactions {
     ps.setInt(1, userId);
     ps.setInt(2, episodeId);
     ps.executeUpdate();
-    System.out.println("Episode liked!");
+    System.out.println("You liked this episode!");
     }
 
 }

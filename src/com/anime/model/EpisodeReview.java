@@ -13,7 +13,7 @@ public class EpisodeReview {
     }
 
     // Generate the Episode Review Log report
-    public void generateEpisodeReviewLog(int episodeId, String month) throws SQLException { // user_review and date_reviewed will come from data for episodes so variable name would probs change depending on the file
+    public void generateEpisodeReviewLog(int episodeId, String month) throws SQLException { // user_review and date_reviewed will come from data for episodes so variable name would probs change depending on the review sql file
         String sql = """
             SELECT u.username, r.user_review, r.date_reviewed
             FROM Review r

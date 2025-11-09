@@ -1,7 +1,7 @@
 package com.anime.view;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class AccountPanel extends JPanel{
     private JButton loginBtn = new JButton();

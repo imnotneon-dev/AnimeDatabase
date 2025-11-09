@@ -1,7 +1,7 @@
 package com.anime.view;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class AnimeFrame extends JFrame {
     // VARIABLES
@@ -46,17 +46,17 @@ public class AnimeFrame extends JFrame {
     private void addPanels() {
         container.setLayout(cardLayout);
 
-//        login = new AccountPanel();
-//        home = new HomePage();
-//        series = new SeriesPage();
+        login = new AccountPanel();
+        home = new HomePage();
+        series = new SeriesPage();
         episode = new EpisodePage();
-//        actor = new ActorPage();
+        actor = new ActorPage();
 
-//        container.add(login,BorderLayout.CENTER);
-//        container.add(home);
-//        container.add(series);
+        container.add(login,BorderLayout.CENTER);
+        container.add(home);
+        container.add(series);
         container.add(episode);
-//        container.add(actor);
+        container.add(actor);
 
         add(container);
     }

@@ -1,8 +1,8 @@
 package com.anime.view;
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
 
 public class EpisodePage extends JPanel{
     private JButton button = new JButton("SeriesPage");
@@ -16,6 +16,10 @@ public class EpisodePage extends JPanel{
     private JLabel sypnosisLb = new JLabel("Sypnosis");
     private JLabel releaseDataLb = new JLabel("Rlease Date");
     private JLabel runtimeLb = new JLabel("runtime");
+
+    private JPanel reviewsPanel = new JPanel();
+    private JScrollPane reviewsScrollPane = new JScrollPane(reviewsPanel);
+    
     public EpisodePage() {
         init();
     }
@@ -58,11 +62,39 @@ public class EpisodePage extends JPanel{
 //        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        reviewsPanel.setLayout(new BoxLayout(reviewsPanel, BoxLayout.Y_AXIS));
+        reviewsPanel.setBackground(Color.lightGray);
+        reviewsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        reviewsPanel.setPreferredSize(new Dimension(1280, 600)); 
+        reviewsPanel.setMaximumSize(new Dimension(1400, 600));  
+
+// checking reviews onleh
+        addReview("Great episode!");
+        addReview("Animation was amazing this week.");
+        addReview("WOWOWOWOWOWOW");
+
+        reviewsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        reviewsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        reviewsScrollPane.setWheelScrollingEnabled(true);
+        reviewsScrollPane.setPreferredSize(new Dimension(1500, 230));
+        reviewsScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        reviewsScrollPane.setAlignmentY(Component.CENTER_ALIGNMENT);
+        reviewsScrollPane.setBorder(BorderFactory.createTitledBorder("Reviews"));
+
         infoPnl.add(episodeInfoPnl);
         infoPnl.add(commentsPnl);
         add(videoPanel);
         add(scrollPane);
+        add(reviewsScrollPane);
     }
+
+    public void addReview(String reviewText) {
+        JLabel reviewLabel = new JLabel("- " + reviewText);
+        reviewLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        reviewsPanel.add(reviewLabel);
+        reviewsPanel.add(Box.createVerticalStrut(5));
+    }
+
     public JButton getButton(){
         return button;
     }

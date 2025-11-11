@@ -52,9 +52,9 @@ public class AnimeFrame extends JFrame {
         episode = new EpisodePage();
         actor = new ActorPage();
 
-        container.add(login,BorderLayout.CENTER);
-        container.add(home);
-        container.add(series);
+//      container.add(login,BorderLayout.CENTER);
+//      container.add(home);
+//      container.add(series);
         container.add(episode);
         container.add(actor);
 

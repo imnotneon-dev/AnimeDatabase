@@ -1,8 +1,8 @@
 package com.anime.view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import javax.swing.*;
 
 public class SeriesPage extends JPanel{
     private JButton button = new JButton("SeriesPage");

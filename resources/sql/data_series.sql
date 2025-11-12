@@ -103,7 +103,33 @@ VALUES
 ('The Rising of the Shield Hero', 'Action, Adventure, Drama, Fantasy', '2019', '25', 'Complete'),
 ('The Rising of the Shield Hero Season 2', 'Action, Adventure, Drama, Fantasy', '2022', '13', 'Complete'),
 ('The Rising of the Shield Hero Season 3', 'Action, Adventure, Drama, Fantasy', '2023', '12', 'Complete'),
-('The Rising of the Shield Hero Season 4', 'Action, Adventure, Drama, Fantasy', '2025', '12', 'Complete');
+('The Rising of the Shield Hero Season 4', 'Action, Adventure, Drama, Fantasy', '2025', '12', 'Complete'),
+('Tower of God', 'Action, Adventure, Drama, Fantasy, Mystery', '2020', '13', 'Complete'),
+('Tower of God Season 2: Return of the Prince', 'Action, Adventure, Drama, Fantasy, Mystery', '2024', '13', 'Complete'),
+('Tower of God Season 2: Workshop Battle', 'Action, Adventure, Drama, Fantasy, Mystery', '2024', '13', 'Complete'),
+('Food Wars: Shokugeki no Soma', 'Gourmet, Ecchi', '2015', '24', 'Complete'),
+('Food Wars! The Second Plate', 'Gourmet, Ecchi', '2016', '13', 'Complete'),
+('Food Wars! The Third Plate', 'Gourmet, Ecchi', '2017', '12', 'Complete'),
+('Food Wars! The Third Plate: Totsuki Train Arc', 'Gourmet, Ecchi', '2018', '12', 'Complete'),
+('Food Wars! The Fourth Plate', 'Gourmet, Ecchi', '2019', '12', 'Complete'),
+('Food Wars! The Fifth Plate', 'Gourmet, Ecchi', '2020', '13', 'Complete'),
+('Slam Dunk', 'Sports', '1993', '101', 'Complete'),
+('Pokémon', 'Action, Adventure, Comedy, Fantasy', '1997', '276', 'Complete'),
+('Pokémon: Advanced', 'Action, Adventure, Comedy, Fantasy', '2002', '192', 'Complete'),
+('Pokémon: Diamond and Pearl', 'Action, Adventure, Comedy, Fantasy', '2006', '191', 'Complete'),
+('Pokémon: Black & White', 'Action, Adventure, Comedy, Fantasy', '2010', '84', 'Complete'),
+('Pokémon: Black & White: Rival Destinies', 'Action, Adventure, Comedy, Fantasy', '2012', '24', 'Complete'),
+
+
+
+
+
+
+
+
+
+
+
 
 
 

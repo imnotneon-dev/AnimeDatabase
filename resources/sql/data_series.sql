@@ -119,17 +119,64 @@ VALUES
 ('Pokémon: Diamond and Pearl', 'Action, Adventure, Comedy, Fantasy', '2006', '191', 'Complete'),
 ('Pokémon: Black & White', 'Action, Adventure, Comedy, Fantasy', '2010', '84', 'Complete'),
 ('Pokémon: Black & White: Rival Destinies', 'Action, Adventure, Comedy, Fantasy', '2012', '24', 'Complete'),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+('Pokémon: Black & White: Adventures in Unova', 'Action, Adventure, Comedy, Fantasy', '2013', '14', 'Complete'),
+('Pokémon: Black & White: Adventures in Unova and Beyond', 'Action, Adventure, Comedy, Fantasy', '2013', '20', 'Complete'),
+('Pokémon the Series: XY', 'Action, Adventure, Comedy, Fantasy', '2013', '93', 'Complete'),
+('Pokémon the Series: XYZ', 'Action, Adventure, Comedy, Fantasy', '2015', '47', 'Complete'),
+('Pokémon the Series: Sun & Moon', 'Action, Fantasy', '2016', '146', 'Complete'),
+('Pokémon Journeys: The Series', 'Action, Adventure, Comedy, Fantasy', '2019', '136', 'Complete'),
+('Pokémon: To Be a Pokémon Master', 'Action, Adventure, Comedy, Fantasy', '2023', '11', 'Complete'),
+('Doraemon', 'Adventure, Comedy, Fantasy, Sci-Fi', '1979', '1787', 'Complete'),
+('Digimon Adventures', 'Action, Adventure, Comedy, Fantasy', '1999', '54', 'Complete'),
+('Sailor Moon', 'Romance', '1992', '46', 'Complete'),
+('Sailor Moon R', 'Romance', '1993', '43', 'Complete'),
+('Sailor Moon S', 'Romance', '1994', '38', 'Complete'),
+('Sailor Moon SuperS', 'Romance', '1995', '39', 'Complete'),
+('Sailor Moon Sailor Stars', 'Romance', '1996', '34', 'Complete'),
+('Nana', 'Drama, Romance', '2006', '47', 'Complete'),
+('Paradise Kiss', 'Drama, Romance', '2005', '12', 'Complete'),
+('Tokyo Ghoul', 'Action, Fantasy, Horror, Suspense', '2014', '12', 'Complete'),
+('Tokyo Ghoul √A', 'Gore, Psychological, Urban Fantasy', '2015', '12', 'Complete'),
+('Tokyo Ghoul:re', 'Gore, Psychological, Urban Fantasy', '2018', '12', 'Complete'),
+('Tokyo Ghoul:re 2nd Season', 'Gore, Psychological, Urban Fantasy', '2018', '12', 'Complete'),
+('Sword Art Online', 'Action, Adventure, Fantasy, Romance', '2012', '25', 'Complete'),
+('Sword Art Online II', 'Action, Adventure, Fantasy, Romance', '2014', '24', 'Complete'),
+('Sword Art Online: Alicization', 'Action, Adventure, Fantasy', '2018', '24', 'Complete'),
+('Sword Art Online: Alicization - War of Underworld', 'Action, Adventure, Fantasy', '2019', '12', 'Complete'),
+('Sword Art Online: Alicization - War of Underworld Part 2', 'Action, Adventure, Fantasy', '2020', '11', 'Complete'),
+('Psycho-Pass', 'Action, Mystery, Sci-Fi, Suspense', '2012', '22', 'Complete'),
+('Psycho-Pass 2', 'Action, Mystery, Sci-Fi, Suspense', '2014', '11', 'Complete'),
+('Psycho-Pass 3', 'Action, Mystery, Sci-Fi, Suspense', '2019', '8', 'Complete'),
+('Neon Genesis Evangelion', 'Avant Garde, Award Winning, Drama, Sci-Fi, Suspense', '1995', '26', 'Complete'),
+('Toradora!', 'Drama, Romance', '2008', '25', 'Complete'),
+('Danganronpa: The Animation', 'Horror, Mystery, Suspense', '2013', '13', 'Complete'),
+('Danganronpa 3: The End of Hopes Peak High School - Despair Arc', 'Action, Horror, Mystery, Suspense', '2016', '11', 'Complete'),
+('Danganronpa 3: The End of Hopes Peak High School - Future Arc', 'Action, Horror, Mystery, Suspense', '2016', '12', 'Complete'),
+('Given', 'Boys Love, Drama', '2019', '11', 'Complete'),
+('Bloom Into You', 'Drama, Girls Love', '2018', '13', 'Complete'),
+('Gintama', 'Action, Comedy, Sci-Fi', '2006', '201', 'Complete'),
+('Gintama Season 2', 'Action, Comedy, Sci-Fi', '2011', '51', 'Complete'),
+('Gintama: Enchousen', 'Action, Comedy, Sci-Fi', '2012', '13', 'Complete'),
+('Gintama Season 4', 'Action, Comedy, Sci-Fi', '2015', '51', 'Complete'),
+('Gintama Season 5', 'Action, Comedy, Sci-Fi', '2017', '12', 'Complete'),
+('Gintama. Slip Arc', 'Action, Comedy, Sci-Fi', '2017', '13', 'Complete'),
+('Gintama. Silver Soul Arc', 'Action, Comedy, Sci-Fi', '2018', '12', 'Complete'),
+('Gintama. Silver Soul Arc - Second Half War', 'Action, Comedy, Sci-Fi', '2018', '14', 'Complete'),
+('High School DxD', 'Action, Comedy, Romance, Supernatural, Ecchi', '2018', '12', 'Complete'),
+('Berserk', 'Action, Adventure, Drama, Fantasy, Horror', '1997', '25', 'Complete'),
+('Berserk (2016)', 'Action, Adventure, Drama, Fantasy, Horror', '2016', '12', 'Complete'),
+('Berserk: Season II', 'Gore, Military, Psychological', '2017', '12', 'Complete'),
+('Carole And Tuesday', 'Drama, Sci-Fi', '2019', '24', 'Complete'),
+('Rose Of Versailles', 'Drama, Romance', '1979', '40', 'Complete'),
+('Cowboy Bebop', 'Action, Award Winning, Sci-Fi', '1998', '26', 'Complete'),
+('Golden Kamuy', 'Action, Adventure', '2018', '12', 'Complete'),
+('Golden Kamuy Season 2', 'Action, Adventure', '2018', '12', 'Complete'),
+('Golden Kamuy Season 3', 'Action, Adventure', '2020', '12', 'Complete'),
+('Golden Kamuy Season 4', 'Action, Adventure', '2022', '13', 'Complete'),
+('Tenchi Muyou!', 'Comedy, Romance, Sci-Fi', '1995', '26', 'Complete'),
+('Castlevania', 'Fantasy, Horror, Action, Adventure', '2017', '32', 'Complete'),
+('Clannad', 'Drama, Romance', '2007', '23', 'Complete'),
+('Clannad: After Story', 'Drama, Romance', '2008', '24', 'Complete'),
+('Elfen Lied', 'Action, Drama, Horror, Romance, Suspense', '2004', '13', 'Complete'),
+('Monster', 'Drama, Mystery, Suspense', '2004', '74', 'Complete'),
+('Revolutionary Girl Utena', 'Drama, Award Winning', '1997', '39', 'Complete');

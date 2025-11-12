@@ -1,18 +1,28 @@
 package com.anime.view;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class AccountPanel extends JPanel{
+    private final String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
+
     private JButton loginBtn = new JButton();
     private JButton signupBtn = new JButton();
     private JTextField loginNameField = new JTextField(25);
+    private ImageIcon takorollIcon = new ImageIcon();
+    private JLabel logoIconLb = new JLabel();
     private JPanel container = new JPanel();
     private GridBagLayout layout = new GridBagLayout();
     private final Component LEFT_GLUE = Box.createHorizontalGlue();
     private final Component RIGHT_GLUE = Box.createHorizontalGlue();
     private final Component TOP_GLUE = Box.createVerticalGlue();
     private final Component BOT_GLUE = Box.createVerticalGlue();
+
+
+
 
     public AccountPanel() {
         init();
@@ -43,15 +53,23 @@ public class AccountPanel extends JPanel{
         loginBtn.setFocusable(true);
         signupBtn.setText("Signup");
 
+        BufferedImage biTakorollIcon = loadImage(TAKOROLL_LOGO);
+        Image scaled = biTakorollIcon.getScaledInstance(300,300,Image.SCALE_AREA_AVERAGING);
+        takorollIcon = new ImageIcon(scaled);
+        logoIconLb.setIcon(takorollIcon);
+
         // Set component alignments
         loginNameField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginNameField.setAlignmentY(Component.TOP_ALIGNMENT);
         loginBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         signupBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoIconLb.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Setup visual appearance of container panel
         container.add(TOP_GLUE);
         container.add(LEFT_GLUE);
-
+        container.add(Box.createVerticalStrut(5));
+        container.add(logoIconLb);
         container.add(Box.createVerticalStrut(5));
         container.add(loginNameField);
         container.add(Box.createVerticalStrut(10));
@@ -65,6 +83,14 @@ public class AccountPanel extends JPanel{
 
         // Add to main panel
         add(container);
+    }
+
+    public static BufferedImage loadImage(String iresPath)
+    {
+        BufferedImage image = null;
+        try { image = ImageIO.read(AccountPanel.class.getResource(iresPath)); }
+        catch (IOException e) { e.printStackTrace(); }
+        return image;
     }
 
     public String getLoginName() {

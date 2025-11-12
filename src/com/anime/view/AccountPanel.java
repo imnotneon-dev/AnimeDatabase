@@ -33,9 +33,12 @@ public class AccountPanel extends JPanel{
 
         // set layout of component container so components are centered
         container.setLayout(new BoxLayout(container,BoxLayout.Y_AXIS));
-
+        container.setPreferredSize(new Dimension(400,600));
+        container.setMaximumSize(new Dimension(400,600));
         // Set text and component attributes
         loginNameField.setText("Enter your account");
+        loginNameField.setPreferredSize(new Dimension(350,30));
+        loginNameField.setMaximumSize(new Dimension(350,30));
         loginBtn.setText("Login");
         loginBtn.setFocusable(true);
         signupBtn.setText("Signup");
@@ -47,6 +50,7 @@ public class AccountPanel extends JPanel{
 
         // Setup visual appearance of container panel
         container.add(TOP_GLUE);
+        container.add(LEFT_GLUE);
 
         container.add(Box.createVerticalStrut(5));
         container.add(loginNameField);
@@ -56,6 +60,7 @@ public class AccountPanel extends JPanel{
         container.add(signupBtn);
         container.add(Box.createVerticalStrut(5));
 
+        container.add(RIGHT_GLUE);
         container.add(BOT_GLUE);
 
         // Add to main panel

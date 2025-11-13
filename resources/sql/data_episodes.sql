@@ -25,13 +25,12 @@ CREATE TABLE series_episodes_t (
 );
 
 CREATE TABLE watch_history_t (
+    watch_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
-    series_id INT NOT NULL,
     episode_id INT NOT NULL,
     is_done_watching BOOLEAN,
     start_watch_date DATE,
-    PRIMARY KEY (user_id, episode_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (series_id) REFERENCES series(series_id),
     FOREIGN KEY (episode_id) REFERENCES episodes_t(episode_id)
 );
+

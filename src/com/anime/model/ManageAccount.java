@@ -1,4 +1,4 @@
-package com.anime.controller;
+package com.anime.model;
 
 import java.sql.*;
 

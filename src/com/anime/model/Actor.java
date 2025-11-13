@@ -1,3 +1,5 @@
+package com.anime.model;
+
 import java.time.LocalDate;
 
 public class Actor {

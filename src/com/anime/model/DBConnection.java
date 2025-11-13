@@ -1,4 +1,4 @@
-package com.anime.dao;
+package com.anime.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -103,13 +103,11 @@ public class AccountPanel extends JPanel{
         return image;
     }
 
-    private void setupGhostText(final JTextField textField, final String placeholder) {
+    private void setupGhostText(JTextField textField, String placeholder) {
 
-        // 1. Initial State: Set the placeholder text and gray color
         textField.setText(placeholder);
         textField.setForeground(Color.GRAY);
 
-        // 2. Add FocusListener to handle gaining/losing focus
         textField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {

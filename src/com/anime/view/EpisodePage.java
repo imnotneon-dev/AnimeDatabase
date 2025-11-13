@@ -68,7 +68,7 @@ public class EpisodePage extends JPanel{
         reviewsPanel.setPreferredSize(new Dimension(1280, 600)); 
         reviewsPanel.setMaximumSize(new Dimension(1400, 600));  
 
-// checking reviews onleh
+        // checking reviews onleh
         addReview("Great episode!");
         addReview("Animation was amazing this week.");
         addReview("WOWOWOWOWOWOW");

@@ -3,6 +3,7 @@ package com.anime.view;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -45,6 +46,8 @@ public class SeriesPage extends JPanel{
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         initComponents();
+        revalidate();
+        repaint();
     }
 
     private void initComponents(){
@@ -61,10 +64,10 @@ public class SeriesPage extends JPanel{
         seriesInfoPnl.setBorder(new EmptyBorder(0,70,100,70));
         seriesInfoPnl.setBackground(Color.WHITE);
         seriesInfoPnl.setPreferredSize(new Dimension(1280,700));
-//        seriesInfoPnl.setMaximumSize(new Dimension(1280,600));
+        seriesInfoPnl.setMaximumSize(new Dimension(1280,700));
 //        seriesInfoPnl.setPreferredSize(new Dimension(420,720));
 //        seriesInfoPnl.setMaximumSize(new Dimension(500, 720));
-        seriesInfoPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        seriesInfoPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
         gb.setConstraints(epInfoVSpacer, new GridBagConstraints(
                 0,0,3,1,
                 0.0,0.7,
@@ -89,8 +92,10 @@ public class SeriesPage extends JPanel{
                 GridBagConstraints.NONE,
                 new Insets(0,10,0,10),0,0));
 
-        faveBtn.setPreferredSize(new Dimension(30,30));
-        faveBtn.setMaximumSize(new Dimension(30,30));
+        faveBtn.setPreferredSize(new Dimension(40,40));
+        faveBtn.setMaximumSize(new Dimension(40,40));
+        faveBtn.setBorder(new EmptyBorder(0,0,0,0));
+        faveBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         seriesInfoPnl.add(epInfoVSpacer);
         seriesInfoPnl.add(titleLb);
         seriesInfoPnl.add(statusLb);
@@ -100,23 +105,26 @@ public class SeriesPage extends JPanel{
         seriesInfoPnl.add(epInfoHSpacer);
         seriesInfoPnl.add(faveBtn);
 
-        episodesPnl.setLayout(new FlowLayout(FlowLayout.CENTER));
+        episodesPnl.setLayout(new GridLayout(0,4,5,5));
+        episodesPnl.setBorder(new EmptyBorder(0,25,35,40));
         episodesPnl.setBackground(Color.black);
-        seriesInfoPnl.setPreferredSize(new Dimension(1280,600));
-        seriesInfoPnl.setMaximumSize(new Dimension(1280,600));
-//        episodesPnl.setPreferredSize(new Dimension(100,100));
-        episodesPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
+//        episodesPnl.setPreferredSize(new Dimension(1280,600));
         for(String s: episodeList){
-            JButton series = new JButton();
-            series.setText(s);
-            series.setAlignmentX(Component.LEFT_ALIGNMENT);
-            episodesPnl.add(series);
+            EpisodeCard epCard = new EpisodeCard(s,"test",23, LocalDate.of(2025,9,14));
+            epCard.setAlignmentX(Component.LEFT_ALIGNMENT);
+            episodesPnl.add(epCard);
         }
+        episodesPnl.setMaximumSize(new Dimension(1280,Integer.MAX_VALUE));
+        episodesPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
+        episodesPnl.setPreferredSize(new Dimension(1200, (int) (Math.ceil(episodeList.size() / 5.0) * 150)));
 
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(1,Integer.MAX_VALUE));
+        scrollPane.getVerticalScrollBar().setVisible(false);
         scrollPane.setWheelScrollingEnabled(true);
-        scrollPane.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        scrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         contentPnl.setLayout(new BoxLayout(contentPnl,BoxLayout.Y_AXIS));

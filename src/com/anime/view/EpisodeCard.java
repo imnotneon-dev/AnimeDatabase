@@ -5,6 +5,8 @@ import javax.swing.border.EmptyBorder;
 //import com.anime.model.Episode;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 
 public class EpisodeCard extends JPanel {
@@ -28,5 +30,17 @@ public class EpisodeCard extends JPanel {
         add(synopsis);
         add(runTime);
         add(relDate);
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                setBackground(Color.decode("#F8481C"));
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e){
+                setBackground(Color.WHITE);
+            }
+        });
     }
 }

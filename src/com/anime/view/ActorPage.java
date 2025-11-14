@@ -1,8 +1,11 @@
 package com.anime.view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 
 public class ActorPage extends JPanel{
@@ -14,6 +17,7 @@ public class ActorPage extends JPanel{
     private JLabel placeOfBirthLb = new JLabel("Tokyo");
     private JLabel agencyNameLb = new JLabel("Agency");
     private JScrollPane rolesScrollPane = new JScrollPane(rolesPnl);
+    private ImageIcon actorPhotoIcon   = new ImageIcon("/resources/imgs/takoroll_logo.png");
 //    private List<ActorRole> rolesList;
     private List<RoleCard> rolesList = List.of(
             new RoleCard("My Hero Academia: Final Season", "Katsuki Bakugo"),
@@ -73,9 +77,16 @@ public class ActorPage extends JPanel{
         // fix this line
         actorInfoPnl.setBorder(new EmptyBorder(10,10,10,10));
 
+        String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
+        BufferedImage biActorPic = loadImage(TAKOROLL_LOGO);
+        Image scaled = biActorPic.getScaledInstance(80,80,Image.SCALE_SMOOTH);
+        actorPhotoIcon = new ImageIcon(scaled);
+        actorPhoto.setIcon(actorPhotoIcon);
+
         actorInfoPnl.add(Box.createVerticalGlue());
         actorInfoPnl.add(Box.createHorizontalGlue());
 
+        actorPhoto.setIcon(actorPhotoIcon);
         actorPhoto.setAlignmentX(Component.CENTER_ALIGNMENT);
         actorInfoPnl.add(actorPhoto);
         nameLb.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -117,6 +128,12 @@ public class ActorPage extends JPanel{
 
         add(actorInfoPnl, BorderLayout.WEST);
         add(rolesScrollPane, BorderLayout.CENTER);
-
+    }
+    public static BufferedImage loadImage(String iresPath)
+    {
+        BufferedImage image = null;
+        try { image = ImageIO.read(AccountPanel.class.getResource(iresPath)); }
+        catch (IOException e) { e.printStackTrace(); }
+        return image;
     }
 }

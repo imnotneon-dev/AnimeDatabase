@@ -116,7 +116,7 @@ public class EpisodePage extends JPanel{
 //        reviewsScrollPane.setPreferredSize(new Dimension(1280, 230));
         reviewsScrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, reviewsPanel.getPreferredSize().height));
         reviewsScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
-        reviewsScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        reviewsScrollPane.getVerticalScrollBar().setUnitIncrement(10);
         reviewsScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(1,Integer.MAX_VALUE));
         reviewsScrollPane.setBorder(BorderFactory.createTitledBorder("Reviews"));
         reviewsScrollPane.setBorder(BorderFactory.createEmptyBorder());

@@ -1,4 +1,4 @@
-package com.anime.view;
+package com.anime.view.customcards;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

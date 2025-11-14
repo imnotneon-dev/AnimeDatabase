@@ -1,13 +1,10 @@
-package com.anime.view;
+package com.anime.view.customcards;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 //import com.anime.model.Review;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 
 public class ReviewCard extends JPanel {
     //    private Review review;

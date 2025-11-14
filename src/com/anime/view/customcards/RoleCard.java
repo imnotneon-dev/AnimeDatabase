@@ -1,4 +1,6 @@
-package com.anime.view;
+package com.anime.view.customcards;
+
+import com.anime.view.AccountPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,7 +12,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.time.LocalDate;
 
 
 public class RoleCard extends JPanel {

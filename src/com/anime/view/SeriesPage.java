@@ -120,7 +120,7 @@ public class SeriesPage extends JPanel{
 
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(10);
         scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(1,Integer.MAX_VALUE));
         scrollPane.getVerticalScrollBar().setVisible(false);
         scrollPane.setWheelScrollingEnabled(true);

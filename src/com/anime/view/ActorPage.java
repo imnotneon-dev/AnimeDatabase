@@ -13,7 +13,7 @@ public class ActorPage extends JPanel{
     private JLabel ageLb = new JLabel("40");
     private JLabel placeOfBirthLb = new JLabel("Tokyo");
     private JLabel agencyNameLb = new JLabel("Agency");
-    private JScrollPane scrollPane = new JScrollPane(rolesPnl);
+    private JScrollPane rolesScrollPane = new JScrollPane(rolesPnl);
 //    private List<ActorRole> rolesList;
     private List<String> rolesList = List.of("Bakugo","Midoriya", "Todoroki");
     /*
@@ -33,15 +33,16 @@ public class ActorPage extends JPanel{
         setOpaque(true);
         setVisible(true);
         setBackground(Color.BLUE);
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+//        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(new BorderLayout());
         initComponents();
     }
 
     private void initComponents(){
         actorInfoPnl.setLayout(new BoxLayout(actorInfoPnl,BoxLayout.Y_AXIS));
         actorInfoPnl.setBackground(Color.gray);
-        actorInfoPnl.setPreferredSize(new Dimension(1280/2, 720));
-        actorInfoPnl.setMaximumSize(new Dimension(1280/2, 720));
+        actorInfoPnl.setPreferredSize(new Dimension((int)(1280/2.5), 720));
+        actorInfoPnl.setMaximumSize(new Dimension((int)(1280/2.5), 720));
         actorInfoPnl.setAlignmentY(Component.CENTER_ALIGNMENT);
 //        actorInfoPnl.setMinimumSize(new Dimension(1280/2,720));
         actorInfoPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -67,8 +68,8 @@ public class ActorPage extends JPanel{
 
         rolesPnl.setLayout(new BoxLayout(rolesPnl, BoxLayout.Y_AXIS));
         rolesPnl.setBackground(Color.black);
-        rolesPnl.setPreferredSize(new Dimension(1280/2, 720));
-        rolesPnl.setMaximumSize(new Dimension(1280/2, 720));
+        rolesPnl.setPreferredSize(new Dimension(1280, 720));
+        rolesPnl.setMaximumSize(new Dimension(1280, 720));
         rolesPnl.setAlignmentY(Component.CENTER_ALIGNMENT);
 //        rolesPnl.setMinimumSize(new Dimension(1280/2,720));
         rolesPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -82,14 +83,14 @@ public class ActorPage extends JPanel{
             rolesPnl.add(role);
         }
 
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setWheelScrollingEnabled(true);
-        scrollPane.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        rolesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        rolesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        rolesScrollPane.setWheelScrollingEnabled(true);
+        rolesScrollPane.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        rolesScrollPane.setBorder(BorderFactory.createEmptyBorder());
 
-        add(actorInfoPnl);
-        add(scrollPane);
+        add(actorInfoPnl, BorderLayout.WEST);
+        add(rolesScrollPane, BorderLayout.CENTER);
 
     }
 }

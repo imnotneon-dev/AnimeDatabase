@@ -64,14 +64,19 @@ public class ActorPage extends JPanel{
     }
 
     private void initComponents(){
+        JLabel actorInfo = new JLabel("Actor's Information");
         JLabel filmography = new JLabel("Filmography");
+
+        actorInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        actorInfo.setAlignmentY(Component.TOP_ALIGNMENT);
         filmography.setAlignmentX(Component.LEFT_ALIGNMENT);
         filmography.setForeground(Color.white);
+
         actorInfoPnl.setLayout(new BoxLayout(actorInfoPnl,BoxLayout.Y_AXIS));
         actorInfoPnl.setBackground(Color.gray);
         actorInfoPnl.setPreferredSize(new Dimension((int)(1280/2.5), 720));
         actorInfoPnl.setMaximumSize(new Dimension((int)(1280/2.5), 720));
-        actorInfoPnl.setAlignmentY(Component.CENTER_ALIGNMENT);
+//        actorInfoPnl.setAlignmentY(Component.CENTER_ALIGNMENT);
 //        actorInfoPnl.setMinimumSize(new Dimension(1280/2,720));
         actorInfoPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
         // fix this line
@@ -79,23 +84,26 @@ public class ActorPage extends JPanel{
 
         String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
         BufferedImage biActorPic = loadImage(TAKOROLL_LOGO);
-        Image scaled = biActorPic.getScaledInstance(80,80,Image.SCALE_SMOOTH);
+        Image scaled = biActorPic.getScaledInstance(360,500,Image.SCALE_SMOOTH);
         actorPhotoIcon = new ImageIcon(scaled);
         actorPhoto.setIcon(actorPhotoIcon);
+        actorPhoto.setBackground(Color.WHITE);
+        actorPhoto.setOpaque(true);
 
-        actorInfoPnl.add(Box.createVerticalGlue());
-        actorInfoPnl.add(Box.createHorizontalGlue());
-
-        actorPhoto.setIcon(actorPhotoIcon);
         actorPhoto.setAlignmentX(Component.CENTER_ALIGNMENT);
-        actorInfoPnl.add(actorPhoto);
         nameLb.setAlignmentX(Component.CENTER_ALIGNMENT);
-        actorInfoPnl.add(nameLb);
         ageLb.setAlignmentX(Component.CENTER_ALIGNMENT);
-        actorInfoPnl.add(ageLb);
         placeOfBirthLb.setAlignmentX(Component.CENTER_ALIGNMENT);
-        actorInfoPnl.add(placeOfBirthLb);
         agencyNameLb.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        actorInfoPnl.add(Box.createHorizontalGlue());
+        actorPhoto.setIcon(actorPhotoIcon);
+        actorInfoPnl.add(actorInfo);
+        actorInfoPnl.add(Box.createVerticalGlue());
+        actorInfoPnl.add(actorPhoto);
+        actorInfoPnl.add(nameLb);
+        actorInfoPnl.add(ageLb);
+        actorInfoPnl.add(placeOfBirthLb);
         actorInfoPnl.add(agencyNameLb);
 
         actorInfoPnl.add(Box.createHorizontalGlue());
@@ -123,6 +131,7 @@ public class ActorPage extends JPanel{
         rolesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         rolesScrollPane.setWheelScrollingEnabled(true);
         rolesScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        rolesScrollPane.getVerticalScrollBar().setUnitIncrement(10);
         rolesScrollPane.setBorder(BorderFactory.createEmptyBorder());
         rolesPnl.setBorder(new EmptyBorder(10,10,10,10));
 

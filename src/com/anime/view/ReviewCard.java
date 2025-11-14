@@ -12,29 +12,30 @@ import java.time.LocalDate;
 public class ReviewCard extends JPanel {
     //    private Review review;
     public ReviewCard(String username, String userReview){
-        setOpaque(true);
-        setVisible(true);
-        setBackground(Color.RED);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(new EmptyBorder(5,5,10,5));
-//        setPreferredSize(new Dimension(1280,IN));
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, this.getPreferredSize().height));
-
         JLabel user = new JLabel(username);
-        JTextArea review = new JTextArea(3,40);
+        JTextArea review = new JTextArea(userReview);
 
-        int lines = review.getLineCount();
-        review.setRows(Math.max(lines,3));
-        review.setText(userReview);
+//        int lines = review.getLineCount();
+//        review.setRows(Math.max(lines,3));
+//        review.setText(userReview);
         review.setAlignmentX(Component.LEFT_ALIGNMENT);
         review.setLineWrap(true);
         review.setWrapStyleWord(true);
         review.setEditable(false);
-        review.setOpaque(false);
+        review.setOpaque(true);
+        review.setAlignmentX(Component.LEFT_ALIGNMENT);
         review.setBorder(BorderFactory.createEmptyBorder());
 
-        user.setAlignmentX(LEFT_ALIGNMENT);
-        review.setAlignmentX(LEFT_ALIGNMENT);
+        user.setAlignmentX(Component.LEFT_ALIGNMENT);
+        review.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        setOpaque(true);
+        setVisible(true);
+        setBackground(Color.WHITE);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(new EmptyBorder(5,10,5,5));
+//        setPreferredSize(new Dimension(200,160));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, Short.MAX_VALUE));
 
         add(user);
         add(review);

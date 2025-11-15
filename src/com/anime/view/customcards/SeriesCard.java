@@ -22,14 +22,14 @@ public class SeriesCard extends JPanel {
         setBackground(Color.WHITE);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(5,5,5,5));
-        setPreferredSize(new Dimension(160,200));
-        setMaximumSize(new Dimension(160,200));
+        setPreferredSize(new Dimension(160,220));
+        setMaximumSize(new Dimension(160,220));
 
         JLabel seriesTitle = new JLabel(title);
         JLabel seriesPosterLb = new JLabel();
         String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
         BufferedImage biSeriesPoster = loadImage(TAKOROLL_LOGO);
-        Image scaled = biSeriesPoster.getScaledInstance(80,80,Image.SCALE_SMOOTH);
+        Image scaled = biSeriesPoster.getScaledInstance(160,200,Image.SCALE_SMOOTH);
         seriesPosterIcon = new ImageIcon(scaled);
         seriesPosterLb.setIcon(seriesPosterIcon);
 
@@ -45,6 +45,18 @@ public class SeriesCard extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e){
                 setBackground(Color.WHITE);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setBackground(Color.DARK_GRAY);
+                seriesTitle.setForeground(Color.WHITE);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBackground(Color.white);
+                seriesTitle.setForeground(Color.black);
             }
         });
     }

@@ -8,17 +8,27 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AccountPanel extends JPanel{
     private final String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
+    private ImageIcon takorollIcon = new ImageIcon();
+    private JLabel logoIconLb = new JLabel();
 
     private JButton loginBtn = new JButton();
     private JButton signupBtn = new JButton();
+
     private JTextField loginNameField = new JTextField(25);
-    private JTextField passwordField = new JTextField(25);
-    private ImageIcon takorollIcon = new ImageIcon();
-    private JLabel logoIconLb = new JLabel();
-    private JPanel container = new JPanel();
+    private JTextField loginPasswordField = new JTextField(25);
+    private JPanel loginContainer = new JPanel();
+
+
+    private JTextField signNameField = new JTextField(25);
+    private JTextField signPasswordField = new JTextField(25);
+//    private
+    private JFormattedTextField signDobField;
+    private JPanel signupContainer = new JPanel();
     private GridBagLayout layout = new GridBagLayout();
     private final Component LEFT_GLUE = Box.createHorizontalGlue();
     private final Component RIGHT_GLUE = Box.createHorizontalGlue();
@@ -35,27 +45,89 @@ public class AccountPanel extends JPanel{
         setLayout(layout);
 
 
+        setupLoginPanel();
         initComponents();
     }
 
-    private void initComponents(){
-        // GridBagLayout centers the container panel
-        layout.setConstraints(container, new GridBagConstraints());
 
-        // set layout of component container so components are centered
-        container.setLayout(new BoxLayout(container,BoxLayout.Y_AXIS));
-        container.setPreferredSize(new Dimension(400,600));
-        container.setMaximumSize(new Dimension(400,600));
+    private void initComponents(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        signDobField = new JFormattedTextField(dateFormat);
+
+        // GridBagLayout centers the signupContainer panel
+        layout.setConstraints(signupContainer, new GridBagConstraints());
+
+        // set layout of component signupContainer so components are centered
+        signupContainer.setLayout(new BoxLayout(signupContainer,BoxLayout.Y_AXIS));
+        signupContainer.setPreferredSize(new Dimension(400,600));
+        signupContainer.setMaximumSize(new Dimension(400,600));
+        // Set text and component attributes
+//        signNameField.setText();
+        setupGhostText(signNameField,"test");
+        signNameField.setPreferredSize(new Dimension(350,30));
+        signNameField.setMaximumSize(new Dimension(350,30));
+        signNameField.setBorder(new MatteBorder(0,0,1,0,Color.black));
+        setupGhostText(loginPasswordField,"Password");
+        loginPasswordField.setPreferredSize(new Dimension(350,30));
+        loginPasswordField.setMaximumSize(new Dimension(350,30));
+        loginPasswordField.setBorder(new MatteBorder(0,0,1,0,Color.black));
+        loginBtn.setText("Login");
+        loginBtn.setFocusable(true);
+        signupBtn.setText("Signup");
+
+        BufferedImage biTakorollIcon = loadImage(TAKOROLL_LOGO);
+        Image scaled = biTakorollIcon.getScaledInstance(250,250,Image.SCALE_AREA_AVERAGING);
+        takorollIcon = new ImageIcon(scaled);
+        logoIconLb.setIcon(takorollIcon);
+
+        // Set component alignments
+        signNameField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        signNameField.setAlignmentY(Component.TOP_ALIGNMENT);
+        loginPasswordField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginPasswordField.setAlignmentY(Component.TOP_ALIGNMENT);
+        loginBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        signupBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoIconLb.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Setup visual appearance of signupContainer panel
+        signupContainer.add(TOP_GLUE);
+        signupContainer.add(LEFT_GLUE);
+        signupContainer.add(Box.createVerticalStrut(5));
+        signupContainer.add(logoIconLb);
+        signupContainer.add(signNameField);
+        signupContainer.add(Box.createVerticalStrut(10));
+        signupContainer.add(loginPasswordField);
+        signupContainer.add(Box.createVerticalStrut(10));
+        signupContainer.add(loginBtn);
+        signupContainer.add(Box.createVerticalStrut(5));
+        signupContainer.add(signupBtn);
+        signupContainer.add(Box.createVerticalStrut(5));
+
+        signupContainer.add(RIGHT_GLUE);
+        signupContainer.add(BOT_GLUE);
+
+        // Add to main panel
+        add(signupContainer);
+    }
+    private void setupLoginPanel(){
+        // GridBagLayout centers the loginContainer panel
+        layout.setConstraints(loginContainer, new GridBagConstraints());
+
+        // set layout of component loginContainer so components are centered
+        loginContainer.setLayout(new BoxLayout(loginContainer,BoxLayout.Y_AXIS));
+        loginContainer.setPreferredSize(new Dimension(400,600));
+        loginContainer.setMaximumSize(new Dimension(400,600));
         // Set text and component attributes
 //        loginNameField.setText();
         setupGhostText(loginNameField,"Name");
         loginNameField.setPreferredSize(new Dimension(350,30));
         loginNameField.setMaximumSize(new Dimension(350,30));
         loginNameField.setBorder(new MatteBorder(0,0,1,0,Color.black));
-        setupGhostText(passwordField,"Password");
-        passwordField.setPreferredSize(new Dimension(350,30));
-        passwordField.setMaximumSize(new Dimension(350,30));
-        passwordField.setBorder(new MatteBorder(0,0,1,0,Color.black));
+        setupGhostText(loginPasswordField,"Password");
+        loginPasswordField.setPreferredSize(new Dimension(350,30));
+        loginPasswordField.setMaximumSize(new Dimension(350,30));
+        loginPasswordField.setBorder(new MatteBorder(0,0,1,0,Color.black));
         loginBtn.setText("Login");
         loginBtn.setFocusable(true);
         signupBtn.setText("Signup");
@@ -68,31 +140,31 @@ public class AccountPanel extends JPanel{
         // Set component alignments
         loginNameField.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginNameField.setAlignmentY(Component.TOP_ALIGNMENT);
-        passwordField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        passwordField.setAlignmentY(Component.TOP_ALIGNMENT);
+        loginPasswordField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginPasswordField.setAlignmentY(Component.TOP_ALIGNMENT);
         loginBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         signupBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         logoIconLb.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Setup visual appearance of container panel
-        container.add(TOP_GLUE);
-        container.add(LEFT_GLUE);
-        container.add(Box.createVerticalStrut(5));
-        container.add(logoIconLb);
-        container.add(loginNameField);
-        container.add(Box.createVerticalStrut(10));
-        container.add(passwordField);
-        container.add(Box.createVerticalStrut(10));
-        container.add(loginBtn);
-        container.add(Box.createVerticalStrut(5));
-        container.add(signupBtn);
-        container.add(Box.createVerticalStrut(5));
+        // Setup visual appearance of loginContainer panel
+        loginContainer.add(TOP_GLUE);
+        loginContainer.add(LEFT_GLUE);
+        loginContainer.add(Box.createVerticalStrut(5));
+        loginContainer.add(logoIconLb);
+        loginContainer.add(loginNameField);
+        loginContainer.add(Box.createVerticalStrut(10));
+        loginContainer.add(loginPasswordField);
+        loginContainer.add(Box.createVerticalStrut(10));
+        loginContainer.add(loginBtn);
+        loginContainer.add(Box.createVerticalStrut(5));
+        loginContainer.add(signupBtn);
+        loginContainer.add(Box.createVerticalStrut(5));
 
-        container.add(RIGHT_GLUE);
-        container.add(BOT_GLUE);
+        loginContainer.add(RIGHT_GLUE);
+        loginContainer.add(BOT_GLUE);
 
         // Add to main panel
-        add(container);
+        add(loginContainer);
     }
 
     public static BufferedImage loadImage(String iresPath)

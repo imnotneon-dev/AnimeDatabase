@@ -46,6 +46,7 @@ public class SeriesCard extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e){
                 setBackground(Color.WHITE);
+                seriesTitle.setForeground(Color.black);
             }
 
             @Override

@@ -13,6 +13,12 @@ public class HomePage extends JPanel{
     private List<SeriesCard> favoriteList = List.of(
             new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
             new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"),new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"),new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"),new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
             new SeriesCard("Inazuma Eleven"));
     private List<SeriesCard> catalog = List.of(
             new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
@@ -23,11 +29,33 @@ public class HomePage extends JPanel{
         new SeriesCard("Inazuma Eleven"), new SeriesCard("Kuroko no Basket"),
         new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
         new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
-        new SeriesCard("Inazuma Eleven"), new SeriesCard("Kuroko no Basket"));
+        new SeriesCard("Inazuma Eleven"), new SeriesCard("Kuroko no Basket"),
+            new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"),
+            new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"),
+            new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"),
+            new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"),
+            new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"),
+            new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"),
+            new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
+            new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
+            new SeriesCard("Inazuma Eleven"));
 
     private GridBagLayout gb = new GridBagLayout();
-    private JPanel headerPnl = new JPanel();
     private JPanel container = new JPanel();
+//    private JPanel catalogWrapperPanel = new JPanel();
+    private JScrollPane homePageScrollPane = new JScrollPane(container);
 
     public HomePage() {
         init();
@@ -36,8 +64,9 @@ public class HomePage extends JPanel{
         setOpaque(true);
         setVisible(true);
         setBackground(Color.RED);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(new EmptyBorder(10,10,10,10));
+        setLayout(new BorderLayout());
+//        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//        setBorder(new EmptyBorder(10,10,10,10));
 
         initComponents();
 
@@ -51,13 +80,24 @@ public class HomePage extends JPanel{
         JPanel watchShelf = createShelf("Watching", watchingList);
         JPanel favoriteShelf = createShelf("Favorite Shows", favoriteList);
         JPanel shelf2 = createCatalog("Catalog", catalog);
+        watchShelf.setBackground(Color.MAGENTA);
         favoriteShelf.setBackground(Color.ORANGE);
-        shelf2.setBackground(Color.GRAY);
+        shelf2.setBackground(Color.BLACK);
         container.add(watchShelf);
         container.add(favoriteShelf);
         container.add(shelf2);
 
-        add(container);
+        homePageScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        homePageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        homePageScrollPane.getVerticalScrollBar().setUnitIncrement(10);
+        homePageScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(10,Integer.MAX_VALUE));
+        homePageScrollPane.getVerticalScrollBar().setVisible(false);
+        homePageScrollPane.setWheelScrollingEnabled(true);
+        homePageScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        homePageScrollPane.setBorder(new EmptyBorder(20,20,20,20));
+
+//        add(container);
+        add(homePageScrollPane, BorderLayout.CENTER);
     }
 
     private JPanel createShelf(String title, List<SeriesCard> seriesList){
@@ -74,8 +114,9 @@ public class HomePage extends JPanel{
         seriesContentPnl.setLayout(new FlowLayout(FlowLayout.LEFT,15,10));
         seriesContentPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-
-        seriesContentScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        seriesContentScroller.setPreferredSize(new Dimension(Integer.MAX_VALUE, 250));
+        seriesContentScroller.setMaximumSize(new Dimension(Integer.MAX_VALUE, 250));
+        seriesContentScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         seriesContentScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         seriesContentScroller.setWheelScrollingEnabled(true);
         seriesContentScroller.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -90,6 +131,7 @@ public class HomePage extends JPanel{
             s.setAlignmentX(Component.LEFT_ALIGNMENT);
             seriesContentPnl.add(s);
         }
+//        seriesContentPnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, seriesContentPnl.getPreferredSize().height));
         shelfPnl.add(seriesTitle);
         shelfPnl.add(seriesContentScroller);
         return shelfPnl;
@@ -99,7 +141,8 @@ public class HomePage extends JPanel{
         JLabel seriesTitle = new JLabel(title);
         JPanel shelfPnl = new JPanel();
         JPanel seriesContentPnl = new JPanel();
-        JScrollPane seriesContentScroller = new JScrollPane(seriesContentPnl);
+        JPanel catalogWrapperPanel = new JPanel();
+        JScrollPane seriesContentScroller = new JScrollPane(catalogWrapperPanel);
 
         seriesTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -109,6 +152,10 @@ public class HomePage extends JPanel{
         seriesContentPnl.setLayout(new GridLayout(0,7,15,15));
         seriesContentPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        catalogWrapperPanel.setLayout(new FlowLayout(FlowLayout.LEFT,0,0));
+        catalogWrapperPanel.setBackground(Color.CYAN);
+        catalogWrapperPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        catalogWrapperPanel.add(seriesContentPnl);
 
         seriesContentScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         seriesContentScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

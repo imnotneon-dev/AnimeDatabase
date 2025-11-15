@@ -1,6 +1,7 @@
 package com.anime.view;
 
-import java.time.LocalDate;
+import com.anime.view.customcards.ReviewCard;
+
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;

@@ -1,5 +1,7 @@
 package com.anime.view;
 
+import com.anime.view.customcards.RoleCard;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

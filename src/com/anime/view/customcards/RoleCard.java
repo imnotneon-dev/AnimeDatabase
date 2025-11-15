@@ -68,7 +68,7 @@ public class RoleCard extends JPanel {
     public static BufferedImage loadImage(String iresPath)
     {
         BufferedImage image = null;
-        try { image = ImageIO.read(AccountPanel.class.getResource(iresPath)); }
+        try { image = ImageIO.read(RoleCard.class.getResource(iresPath)); }
         catch (IOException e) { e.printStackTrace(); }
         return image;
     }

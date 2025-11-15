@@ -1,5 +1,7 @@
 package com.anime.view;
 
+import com.anime.view.customcards.EpisodeCard;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -136,7 +138,7 @@ public class SeriesPage extends JPanel{
     public static BufferedImage loadImage(String iresPath)
     {
         BufferedImage image = null;
-        try { image = ImageIO.read(AccountPanel.class.getResource(iresPath)); }
+        try { image = ImageIO.read(SeriesPage.class.getResource(iresPath)); }
         catch (IOException e) { e.printStackTrace(); }
         return image;
     }

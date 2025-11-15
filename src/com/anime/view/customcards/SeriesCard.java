@@ -1,6 +1,7 @@
 package com.anime.view.customcards;
 
 import com.anime.view.AccountPanel;
+import com.anime.view.HomePage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -63,7 +64,7 @@ public class SeriesCard extends JPanel {
     public static BufferedImage loadImage(String iresPath)
     {
         BufferedImage image = null;
-        try { image = ImageIO.read(AccountPanel.class.getResource(iresPath)); }
+        try { image = ImageIO.read(HomePage.class.getResource(iresPath)); }
         catch (IOException e) { e.printStackTrace(); }
         return image;
     }

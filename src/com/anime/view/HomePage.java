@@ -8,8 +8,9 @@ import java.awt.*;
 import java.util.List;
 
 public class HomePage extends JPanel{
-    private List<SeriesCard> watchingList = List.of(
-            new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"));
+    private List<SeriesCard> watchingList = null;
+            //List.of(
+            //new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"));
     private List<SeriesCard> favoriteList = List.of(
             new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
             new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
@@ -73,8 +74,10 @@ public class HomePage extends JPanel{
     }
 
     private void initComponents(){
-        JPanel watchShelf = createShelf("Watching", watchingList);
-        JPanel favoriteShelf = createShelf("Favorite Shows", favoriteList);
+        JPanel watchShelf = createShelf("Watching",
+                "Not watching anything? Check out the catalog!", watchingList);
+        JPanel favoriteShelf = createShelf("Favorite Shows",
+                "Add your favorite shows by clicking the heart on a series",favoriteList);
         watchShelf.setBackground(Color.MAGENTA);
         favoriteShelf.setBackground(Color.ORANGE);
 
@@ -104,8 +107,9 @@ public class HomePage extends JPanel{
 //        add(homePageScrollPane, BorderLayout.CENTER);
     }
 
-    private JPanel createShelf(String title, List<SeriesCard> seriesList){
+    private JPanel createShelf(String title, String msg, List<SeriesCard> seriesList){
         JLabel seriesTitle = new JLabel(title);
+        JLabel message = new JLabel(msg);
         JPanel shelfPnl = new JPanel();
         JPanel seriesContentPnl = new JPanel();
         JScrollPane seriesContentScroller = new JScrollPane(seriesContentPnl);
@@ -128,12 +132,15 @@ public class HomePage extends JPanel{
         seriesContentScroller.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
 
         shelfPnl.setBorder(new EmptyBorder(10,10,15,10));
-
-        for (SeriesCard s: seriesList){
+        if(seriesList !=null) {
+            for (SeriesCard s : seriesList) {
 //            JButton series = new JButton();
 //            series.setText(s);
-            s.setAlignmentX(Component.LEFT_ALIGNMENT);
-            seriesContentPnl.add(s);
+                s.setAlignmentX(Component.LEFT_ALIGNMENT);
+                seriesContentPnl.add(s);
+            }
+        } else {
+            seriesContentPnl.add(message);
         }
 //        seriesContentPnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, seriesContentPnl.getPreferredSize().height));
         shelfPnl.add(seriesTitle);

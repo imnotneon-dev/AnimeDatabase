@@ -64,8 +64,8 @@ public class HomePage extends JPanel{
         setOpaque(true);
         setVisible(true);
         setBackground(Color.RED);
-        setLayout(new BorderLayout());
-//        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//        setLayout(new BorderLayout());
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 //        setBorder(new EmptyBorder(10,10,10,10));
 
         initComponents();
@@ -73,31 +73,35 @@ public class HomePage extends JPanel{
     }
 
     private void initComponents(){
-
-//        gb.setConstraints(container, new GridBagConstraints());
-        container.setLayout(new BoxLayout(container,BoxLayout.Y_AXIS));
-        container.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
         JPanel watchShelf = createShelf("Watching", watchingList);
         JPanel favoriteShelf = createShelf("Favorite Shows", favoriteList);
-        JPanel shelf2 = createCatalog("Catalog", catalog);
         watchShelf.setBackground(Color.MAGENTA);
         favoriteShelf.setBackground(Color.ORANGE);
-        shelf2.setBackground(Color.BLACK);
+
+//        gb.setConstraints(container, new GridBagConstraints());
+        container.setBackground(Color.black);
+        container.setBorder(new EmptyBorder(20,20,20,20));
+        container.setLayout(new BoxLayout(container,BoxLayout.Y_AXIS));
+//        container.setAlignmentY(Component.CENTER_ALIGNMENT);
+//        container.setAlignmentX(Component.CENTER_ALIGNMENT);
+        container.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        container.add(Box.createVerticalGlue());
         container.add(watchShelf);
         container.add(favoriteShelf);
-        container.add(shelf2);
+        container.add(Box.createVerticalGlue());
+//        container.add(shelf2);
 
-        homePageScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        homePageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        homePageScrollPane.getVerticalScrollBar().setUnitIncrement(10);
-        homePageScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(10,Integer.MAX_VALUE));
-        homePageScrollPane.getVerticalScrollBar().setVisible(false);
-        homePageScrollPane.setWheelScrollingEnabled(true);
-        homePageScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-        homePageScrollPane.setBorder(new EmptyBorder(20,20,20,20));
+//        homePageScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//        homePageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//        homePageScrollPane.getVerticalScrollBar().setUnitIncrement(10);
+//        homePageScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(10,Integer.MAX_VALUE));
+//        homePageScrollPane.getVerticalScrollBar().setVisible(false);
+//        homePageScrollPane.setWheelScrollingEnabled(true);
+//        homePageScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+//        homePageScrollPane.setBorder(new EmptyBorder(20,20,20,20));
 
-//        add(container);
-        add(homePageScrollPane, BorderLayout.CENTER);
+        add(container);
+//        add(homePageScrollPane, BorderLayout.CENTER);
     }
 
     private JPanel createShelf(String title, List<SeriesCard> seriesList){
@@ -120,7 +124,7 @@ public class HomePage extends JPanel{
         seriesContentScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         seriesContentScroller.setWheelScrollingEnabled(true);
         seriesContentScroller.setAlignmentX(Component.LEFT_ALIGNMENT);
-        seriesContentScroller.getVerticalScrollBar().setUnitIncrement(10);
+        seriesContentScroller.getVerticalScrollBar().setUnitIncrement(15);
         seriesContentScroller.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
 
         shelfPnl.setBorder(new EmptyBorder(10,10,15,10));

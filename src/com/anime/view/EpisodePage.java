@@ -13,6 +13,7 @@ public class EpisodePage extends JPanel{
     private JPanel episodeInfoPnl = new JPanel();
     private JLabel titleLb = new JLabel("Episode Title");
     private JLabel seriesLb = new JLabel("Series Title");
+    private JButton likeEpisodeBtn = new JButton("👍");
     private List<ReviewCard> reviews = List.of(new ReviewCard("user1", "review 1 wowee"),
                                         new ReviewCard("user2",
                                                 "jeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdsh" +
@@ -33,7 +34,7 @@ public class EpisodePage extends JPanel{
     private JButton submitCommentBtn = new JButton("Submit");
     private JScrollPane reviewTextAreaScroll = new JScrollPane(reviewTextArea);
     private JScrollPane reviewsScrollPane = new JScrollPane(reviewsPanel);
-    
+    private GridBagLayout gb = new GridBagLayout();
     public EpisodePage() {
         init();
     }
@@ -46,20 +47,62 @@ public class EpisodePage extends JPanel{
     }
 
     private void initComponents(){
+        JPanel epInfoHSpacer = new JPanel();
         videoPanel.setLayout(new BoxLayout(videoPanel,BoxLayout.Y_AXIS));
         videoPanel.setBackground(Color.black);
         videoPanel.setPreferredSize(new Dimension(1280, 550));
         videoPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 550));
         videoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        episodeInfoPnl.setLayout(new BoxLayout(episodeInfoPnl,BoxLayout.Y_AXIS));
+//        episodeInfoPnl.setLayout(new BoxLayout(episodeInfoPnl,BoxLayout.Y_AXIS));
+
+        gb.setConstraints(seriesLb, new GridBagConstraints(
+                0,0,
+                1,1,
+                0.0,1.0,
+                GridBagConstraints.LINE_START,
+                GridBagConstraints.HORIZONTAL,
+                new Insets(0,0,0,0),
+                0,0));
+        gb.setConstraints(titleLb, new GridBagConstraints(
+                0,1,
+                1,1,
+                0.0,0.0,
+                GridBagConstraints.LINE_START,
+                GridBagConstraints.HORIZONTAL,
+                new Insets(0,0,0,0),
+                0,0));
+        gb.setConstraints(epInfoHSpacer, new GridBagConstraints(
+                0,0,1,2,
+                1.0,0.0,
+                GridBagConstraints.CENTER,
+                GridBagConstraints.BOTH,
+                new Insets(0,0,0,0),0,0));
+        gb.setConstraints(likeEpisodeBtn, new GridBagConstraints(
+                1,0,
+                1,1,
+                0.0,0.0,
+                GridBagConstraints.LINE_END,
+                GridBagConstraints.NONE,
+                new Insets(0,0,0,0),
+                0,0));
+
+        likeEpisodeBtn.setPreferredSize(new Dimension(40,40));
+        likeEpisodeBtn.setMaximumSize(new Dimension(80,80));
+        likeEpisodeBtn.setBorder(new EmptyBorder(0,0,0,0));
+        likeEpisodeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        episodeInfoPnl.setLayout(gb);
         episodeInfoPnl.setBackground(Color.gray);
         episodeInfoPnl.setPreferredSize(new Dimension(1300, 80));
-        episodeInfoPnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
+        episodeInfoPnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
         episodeInfoPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
         episodeInfoPnl.setBorder(new EmptyBorder(20,30,20,30));
-        episodeInfoPnl.add(titleLb);
         episodeInfoPnl.add(seriesLb);
+        episodeInfoPnl.add(titleLb);
+        episodeInfoPnl.add(epInfoHSpacer);
+        episodeInfoPnl.add(likeEpisodeBtn);
+
 
         /**
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -70,6 +113,7 @@ public class EpisodePage extends JPanel{
         scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(1,Integer.MAX_VALUE));
         scrollPane.setBorder(new EmptyBorder(0,0,0,0));
          */
+
         reviewTextArea.setLineWrap(true);
         reviewTextArea.setWrapStyleWord(true);
         reviewTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);

@@ -35,9 +35,32 @@ public class SeriesDAO{
 
         return null;
     }
-    
-    
+
+    public Series getSeriesByTitle(String title){
+
+
+    }
+
+    public List<Series> getAllSeries(){
+
+    }
+
+
+    public void addSeries(Series series){
+        /* I don't know if this should be void or not? :D */
+    }
+
+    /*For this, Idk yet if pwede ilapag yung pag-archive ng series under update series or needed
+    separate yung pag-archive. Will decide/finalize latur*/
+    public void updateSeries(Series series){
+        /* I don't know if this should be void or not? :D */
+    }
+
+    public void archiveSeries(Series series){
+        /* I don't know if this should be void or not? :D */
+    }
 }
+
 
 
 

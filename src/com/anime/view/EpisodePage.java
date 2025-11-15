@@ -48,6 +48,8 @@ public class EpisodePage extends JPanel{
 
     private void initComponents(){
         JPanel epInfoHSpacer = new JPanel();
+        epInfoHSpacer.setOpaque(false);
+
         videoPanel.setLayout(new BoxLayout(videoPanel,BoxLayout.Y_AXIS));
         videoPanel.setBackground(Color.black);
         videoPanel.setPreferredSize(new Dimension(1280, 550));
@@ -73,22 +75,24 @@ public class EpisodePage extends JPanel{
                 new Insets(0,0,0,0),
                 0,0));
         gb.setConstraints(epInfoHSpacer, new GridBagConstraints(
-                0,0,1,2,
+                1,0,
+                1,2,
                 1.0,0.0,
                 GridBagConstraints.CENTER,
                 GridBagConstraints.BOTH,
                 new Insets(0,0,0,0),0,0));
         gb.setConstraints(likeEpisodeBtn, new GridBagConstraints(
-                1,0,
-                1,1,
+                2,0,
+                1,2,
                 0.0,0.0,
-                GridBagConstraints.LINE_END,
+                GridBagConstraints.CENTER,
                 GridBagConstraints.NONE,
-                new Insets(0,0,0,0),
+                new Insets(0,10,0,10),
                 0,0));
 
-        likeEpisodeBtn.setPreferredSize(new Dimension(40,40));
-        likeEpisodeBtn.setMaximumSize(new Dimension(80,80));
+        likeEpisodeBtn.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+        likeEpisodeBtn.setPreferredSize(new Dimension(80, 80));
+        likeEpisodeBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
         likeEpisodeBtn.setBorder(new EmptyBorder(0,0,0,0));
         likeEpisodeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 

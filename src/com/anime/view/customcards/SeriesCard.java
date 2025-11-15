@@ -12,9 +12,11 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class SeriesCard extends JPanel {
 //    private Episode episode;
+    private String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
     private ImageIcon seriesPosterIcon;
     public SeriesCard(String title){
 //        episode = ep;
@@ -23,12 +25,12 @@ public class SeriesCard extends JPanel {
         setBackground(Color.WHITE);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(5,5,5,5));
-        setPreferredSize(new Dimension(160,220));
-        setMaximumSize(new Dimension(160,220));
+        setPreferredSize(new Dimension(160,230));
+        setMaximumSize(new Dimension(160,230));
 
         JLabel seriesTitle = new JLabel(title);
         JLabel seriesPosterLb = new JLabel();
-        String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
+
         BufferedImage biSeriesPoster = loadImage(TAKOROLL_LOGO);
         Image scaled = biSeriesPoster.getScaledInstance(160,200,Image.SCALE_SMOOTH);
         seriesPosterIcon = new ImageIcon(scaled);
@@ -65,7 +67,7 @@ public class SeriesCard extends JPanel {
     public static BufferedImage loadImage(String iresPath)
     {
         BufferedImage image = null;
-        try { image = ImageIO.read(HomePage.class.getResource(iresPath)); }
+        try { image = ImageIO.read(SeriesCard.class.getResource(iresPath)); }
         catch (IOException e) { e.printStackTrace(); }
         return image;
     }

@@ -21,6 +21,18 @@ public class ManageAccount {
         ps.executeUpdate();
     }
 
+    // Login
+    public boolean login(String username, String password) throws SQLException {
+        String sql = "SELECT * FROM Users WHERE username = ? AND password = ?";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, username);
+        ps.setDate(2, password);
+
+        ResultSet rs = ps.executeQuery();
+        return rs.next();
+    }
+
     // Read a user record and favorites
     public void viewUserWithFavorites(String username) throws SQLException {
         String sql = """

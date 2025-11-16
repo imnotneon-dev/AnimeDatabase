@@ -43,6 +43,7 @@ public class RoleCard extends JPanel {
 //        container.setAlignmentX(LEFT_ALIGNMENT);
 
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.setOpaque(false);
         container.add(role);
         container.add(Box.createVerticalStrut(10));
         container.add(title);

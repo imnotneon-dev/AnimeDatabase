@@ -1,0 +1,72 @@
+CREATE DATABASE IF NOT EXISTS anime_db;
+USE anime_db;
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(
+  -- user_id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(50) PRIMARY KEY UNIQUE NOT NULL,
+  date_of_birth DATE NOT NULL,
+  country VARCHAR(50),
+  top_genre VARCHAR(50),
+  date_user_created DATE DEFAULT CURRENT_DATE
+);
+
+DROP TABLE IF EXISTS series;
+CREATE TABLE series (
+	series_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    genre VARCHAR(100) NOT NULL,
+    release_year INT,
+    total_episode_count INT,
+    status_of_series VARCHAR(10)
+);
+
+DROP TABLE IF EXISTS episodes;
+REATE TABLE episodes (
+    episode_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(70) NOT NULL,
+    release_date DATE NOT NULL,
+    synopsis VARCHAR(100),
+    no_of_views INT DEFAULT 0,
+    runtime INT NOT NULL
+);
+DROP TABLE IF EXISTS actors;
+CREATE TABLE actors (
+    actors_id INT NOT NULL AUTO_INCREMENT,
+    last_name VARCHAR(50),
+    first_name VARCHAR(50),
+    gender VARCHAR(10),
+    date_of_birth DATE,
+    place_of_birth VARCHAR(100),
+    agency VARCHAR(100),
+    PRIMARY KEY (actors_id)
+);
+DROP TABLE IF EXISTS likedEpisode;
+CREATE TABLE likedEpisode(
+  user_id INT,
+  episode_id INT,
+  date_added DATE DEFAULT CURRENT_DATE,
+  PRIMARY KEY (user_id, episode_id),
+  FOREIGN KEY (user_id) REFERENCES Users(user_id),
+  FOREIGN KEY (episode_id) REFERENCES Episodes(episode_id) --episode_id variable name depends on what variable name will be used in the episodes.sql file
+);
+
+DROP TABLE IF EXISTS seriesEpisodes;
+CREATE TABLE series_episodes_t (
+    series_id INT NOT NULL,
+    episode_id INT NOT NULL,
+    PRIMARY KEY (series_id, episode_id),
+    FOREIGN KEY (series_id) REFERENCES series(series_id),
+    FOREIGN KEY (episode_id) REFERENCES episodes_t(episode_id)
+);
+
+DROP TABLE IF EXISTS watchHistory;
+CREATE TABLE watchHistory (
+    watch_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    episode_id INT NOT NULL,
+    is_done_watching BOOLEAN,
+    watch_date DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (episode_id) REFERENCES episodes_t(episode_id)
+);

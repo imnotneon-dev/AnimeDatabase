@@ -2,10 +2,10 @@ package com.anime.model;
 
 import java.sql.*;
 
-public class ManageAccount {
+public class ManageAccountDAO {
     private Connection conn;
 
-    public ManageAccount(Connection conn) {
+    public ManageAccountDAO(Connection conn) {
         this.conn = conn;
     }
 

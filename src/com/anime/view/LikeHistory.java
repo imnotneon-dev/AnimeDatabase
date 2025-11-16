@@ -1,6 +1,6 @@
 package com.anime.view;
 
-import com.anime.view.customcards.HistoryEpisodeCard;
+import com.anime.view.customcards.PlainEpisodeCard;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,8 +18,8 @@ public class LikeHistory extends JPanel{
 //    private JLabel agencyNameLb = new JLabel("Agency");
     private JScrollPane likeHistoryScrollPane = new JScrollPane(likePnl);
 //    private List<ActorRole> rolesList;
-    private List<HistoryEpisodeCard> episodeList = List.of(
-            new HistoryEpisodeCard("Kaiju No. 8: Season 2", "Second Wave", LocalDate.now()));
+    private List<PlainEpisodeCard> episodeList = List.of(
+            new PlainEpisodeCard("Kaiju No. 8: Season 2", "Second Wave", LocalDate.now()));
     /*
     * public ActorPage(Actor actor, List<ActorRole> roles){
     *   actorPhoto.
@@ -60,7 +60,7 @@ public class LikeHistory extends JPanel{
 
         likePnl.add(likesHistory);
         likePnl.add(Box.createVerticalStrut(10));
-        for(HistoryEpisodeCard h: episodeList){
+        for(PlainEpisodeCard h: episodeList){
             h.setAlignmentX(Component.LEFT_ALIGNMENT);
             likePnl.add(h);
             likePnl.add(Box.createVerticalStrut(10));

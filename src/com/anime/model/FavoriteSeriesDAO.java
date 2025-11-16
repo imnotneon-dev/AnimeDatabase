@@ -90,6 +90,26 @@ public class FavoriteSeriesDAO {
         return favorites;
     }
 
+    public List<String> getAllSeriesTitles(){
+        List<String> titles = new ArrayList<>();
+        String sql = "SELECT title FROM Series";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ResultSet resSet = ps.executeQuery();
+            
+            while (resSet.next()) {
+                titles.add(resSet.getString("title"));
+            }
+        
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return titles;
+
+    }
+
+
     public void counterForTopGenre(int user_id, List<String> genres, List<Integer> counts) {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT s.genre, COUNT(s.genre) AS genre_count ");

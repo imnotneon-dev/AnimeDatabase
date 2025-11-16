@@ -3,6 +3,8 @@ package com.anime.view;
 import com.anime.view.customcards.EpisodeCard;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -28,6 +30,7 @@ public class SeriesPage extends JPanel{
             "Episode 1","Episode 2","Episode 3","Episode 4","Episode 5",
         "Episode 6","Episode 7","Episode 8","Episode 9","Episode 10",
         "Episode 11","Episode 12");
+    private List<String> actorsList = List.of("Actor 1", "Actor 2", "Actor 3");
     private GridBagLayout gb = new GridBagLayout();
     /*public SeriesPage (Series series, List<Episodes> epList){
         // take the info from the series passed then use that to display stuff
@@ -60,6 +63,10 @@ public class SeriesPage extends JPanel{
         epInfoHSpacer.setOpaque(false);
         JPanel epInfoVSpacer = new JPanel();
         epInfoVSpacer.setOpaque(false);
+        JPanel actorsContainer = new JPanel();
+        JLabel actorsListLb = new JLabel("Notable Actors:     ");
+        actorsContainer.setLayout(new BoxLayout(actorsContainer, BoxLayout.Y_AXIS));
+        actorsContainer.setOpaque(false);
 
         seriesInfoPnl = new GradientPanel(biTakorollIcon);
         seriesInfoPnl.setLayout(gb);
@@ -82,7 +89,7 @@ public class SeriesPage extends JPanel{
         gb.setConstraints(releaseYearLb, new GridBagConstraints(0,4,1,1,0.0,0.0,GridBagConstraints.LINE_START,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10),0,0));
         gb.setConstraints(epCountLb, new GridBagConstraints(0,5,1,1,0.0,0.0,GridBagConstraints.LINE_START,GridBagConstraints.HORIZONTAL,new Insets(0,10,0,10),0,0));
         gb.setConstraints(epInfoHSpacer, new GridBagConstraints(
-                1,1,1,5,
+                1,1,1,1,
                 1.0,0.0,
                 GridBagConstraints.CENTER,
                 GridBagConstraints.BOTH,
@@ -93,11 +100,19 @@ public class SeriesPage extends JPanel{
                 GridBagConstraints.LINE_END,
                 GridBagConstraints.NONE,
                 new Insets(0,10,0,10),0,0));
+        gb.setConstraints(actorsContainer, new GridBagConstraints(
+                0,6,
+                1,1,
+                0.0,0.0,
+                GridBagConstraints.LINE_START,
+                GridBagConstraints.HORIZONTAL,
+                new Insets(0,10,0,10),0,0));
 
         faveBtn.setPreferredSize(new Dimension(40,40));
         faveBtn.setMaximumSize(new Dimension(40,40));
         faveBtn.setBorder(new EmptyBorder(0,0,0,0));
         faveBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         seriesInfoPnl.add(epInfoVSpacer);
         seriesInfoPnl.add(titleLb);
         seriesInfoPnl.add(statusLb);
@@ -106,6 +121,13 @@ public class SeriesPage extends JPanel{
         seriesInfoPnl.add(epCountLb);
         seriesInfoPnl.add(epInfoHSpacer);
         seriesInfoPnl.add(faveBtn);
+        actorsContainer.add(actorsListLb);
+        for(String a: actorsList){
+            JLabel actor = new JLabel(a);
+            actorsContainer.add(actor);
+            actorsContainer.add(Box.createVerticalStrut(5));
+        }
+        seriesInfoPnl.add(actorsContainer);
 
         episodesPnl.setLayout(new GridLayout(0,4,5,5));
         episodesPnl.setBorder(new EmptyBorder(0,25,35,40));
@@ -142,6 +164,7 @@ public class SeriesPage extends JPanel{
         catch (IOException e) { e.printStackTrace(); }
         return image;
     }
+
     public JButton getButton(){
         return button;
     }

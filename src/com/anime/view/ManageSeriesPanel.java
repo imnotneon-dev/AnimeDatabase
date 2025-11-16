@@ -78,7 +78,7 @@ public class ManageSeriesPanel extends JPanel {
         epCountField.setMaximumSize(new Dimension(350,30));
         epCountField.setAlignmentX(LEFT_ALIGNMENT);
 
-        statusCb = new JComboBox<>(new String[]{ "Ongoing", "Finished", "Archived" });
+        statusCb = new JComboBox<>(new String[]{ "On-Going", "Complete", "Archived" });
         statusCb.setMaximumSize(new Dimension(350,30));
         statusCb.setAlignmentX(Component.LEFT_ALIGNMENT);
 

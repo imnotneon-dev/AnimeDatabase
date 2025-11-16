@@ -1,5 +1,7 @@
 package com.anime.view;
 
+import com.anime.view.customcards.PlainEpisodeCard;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -11,13 +13,12 @@ public class AdminPage extends JPanel implements ItemListener {
     private JPanel addSeriesPnl = new JPanel();
     private JPanel addEpisodePnl = new JPanel();
     private JPanel addActorPnl = new JPanel();
-    private JPanel updateSeriesPnl = new JPanel();
-    private JPanel updateEpisodePnl = new JPanel();
-    private JPanel updateActorPnl = new JPanel();
     private JPanel panelContainer = new JPanel();
 
     private JComboBox<String> cb;
     private CardLayout cl = new CardLayout();
+
+
 
     private List<String> episodeList = List.of(
             "Episode 1","Episode 2","Episode 3","Episode 4","Episode 5",
@@ -38,7 +39,7 @@ public class AdminPage extends JPanel implements ItemListener {
     }
     private void initComponents(){
         initPanels();
-
+        setupEpisodePanel();
         revalidate();
         repaint();
 
@@ -58,7 +59,7 @@ public class AdminPage extends JPanel implements ItemListener {
         adminTitlePnl.setAlignmentX(Component.CENTER_ALIGNMENT);
         adminTitlePnl.setBorder(new EmptyBorder(10,10,10,10));
 
-        String comboBoxItems[] = { "add series", "add episode" };
+        String comboBoxItems[] = { ADD_SERIES, ADD_EP, ADD_ACTOR };
         cb = new JComboBox<>(comboBoxItems);
         cb.setEditable(false);
         cb.addItemListener(this);
@@ -68,7 +69,7 @@ public class AdminPage extends JPanel implements ItemListener {
         add(adminTitlePnl,BorderLayout.NORTH);
 
         panelContainer.setLayout(cl);
-        panelContainer.setBorder(new EmptyBorder(10,10,10,10));
+//        panelContainer.setBorder(new EmptyBorder(10,10,10,10));
         panelContainer.setAlignmentY(Component.CENTER_ALIGNMENT);
         panelContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelContainer.setBackground(Color.red);
@@ -82,24 +83,49 @@ public class AdminPage extends JPanel implements ItemListener {
         addEpisodePnl.setBorder(new EmptyBorder(10,10,10,10));
 
         addActorPnl.setLayout(new BorderLayout());
-        addActorPnl.setBackground(Color.yellow);
+        addActorPnl.setBackground(Color.cyan);
         addActorPnl.setBorder(new EmptyBorder(10,10,10,10));
 
         panelContainer.add(addSeriesPnl,ADD_SERIES);
-        panelContainer.add(addEpisodePnl,ADD_ACTOR);
+        panelContainer.add(addEpisodePnl,ADD_EP);
         panelContainer.add(addActorPnl,ADD_ACTOR);
 
         add(panelContainer, BorderLayout.CENTER);
     }
 
     private void setupEpisodePanel(){
-        JPanel episodeList = new JPanel();
-        JPanel episodeForm = new JPanel();
+        JPanel episodeListPnl = new JPanel();
+        JPanel episodeFormPnl = new JPanel();
+        JScrollPane epListScrollPane = new JScrollPane(episodeListPnl);
 
-        episodeList.setLayout(new GridLayout(0,4,5,5));
-        episodeList.setPreferredSize(new Dimension((int)(1280/2.5), 720));
-        episodeList.setMaximumSize(new Dimension((int)(1280/2.5), 720));
-        for()
+        episodeListPnl.setLayout(new BoxLayout(episodeListPnl, BoxLayout.Y_AXIS));
+        episodeListPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
+        episodeListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
+        episodeListPnl.setBorder(new EmptyBorder(10,10,10,10));
+        episodeListPnl.setBackground(Color.magenta);
+        for(String e: episodeList){
+            PlainEpisodeCard pec = new PlainEpisodeCard("Seriesname", e);
+            episodeListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
+            episodeListPnl.add(pec);
+            episodeListPnl.add(Box.createVerticalStrut(5));
+        }
+        epListScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        epListScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        epListScrollPane.setWheelScrollingEnabled(true);
+        epListScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        epListScrollPane.getVerticalScrollBar().setUnitIncrement(10);
+        epListScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
+        addEpisodePnl.add(epListScrollPane, BorderLayout.WEST);
+
+        episodeFormPnl.setLayout(new BoxLayout(episodeFormPnl,BoxLayout.Y_AXIS));
+        episodeFormPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
+        episodeFormPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
+        episodeFormPnl.setBorder(new EmptyBorder(10,10,10,10));
+        episodeFormPnl.setBackground(Color.orange);
+
+
+        addEpisodePnl.add(episodeFormPnl,BorderLayout.CENTER);
+
     }
     @Override
     public void itemStateChanged(ItemEvent evt) {

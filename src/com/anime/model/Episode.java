@@ -1,6 +1,7 @@
 package com.anime.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Episode {
@@ -11,15 +12,19 @@ public class Episode {
     private LocalDate releaseDate;
     private int episodeId;
     private int seriesId;
-    private List<Review> listOfReviews;
+    private List<EpisodeReview> listOfReviews;
 
-    public Episode(int eid, String t, String s, int r, LocalDate rD) {
-        episodeId = eid;
-        epTitle = t;
-        sypnosis = s;
-        runtime = r;
-        releaseDate = rD;
-    }
+public Episode(int episodeId, String epTitle, String sypnosis, int runtime, int views, LocalDate releaseDate, int seriesId) {
+    this.episodeId = episodeId;
+    this.epTitle = epTitle;
+    this.sypnosis = sypnosis;
+    this.runtime = runtime;
+    this.views = views;
+    this.releaseDate = releaseDate;
+    this.seriesId = seriesId;
+    this.listOfReviews = new ArrayList<>();
+}
+
 
     public int getSeriesId(){
         return seriesId;
@@ -77,13 +82,12 @@ public class Episode {
         this.releaseDate = releaseDate;
     }
 
-    public List<Review> getListOfReviews(){
+    public List<EpisodeReview> getListOfReviews(){
         return listOfReviews;
     }
 
-    public void setListOfReviews(List<Review> listOfReviews){
+    public void setListOfReviews(List<EpisodeReview> listOfReviews){
         this.listOfReviews = listOfReviews;
     }
-
 
 }

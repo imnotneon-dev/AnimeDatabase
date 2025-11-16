@@ -1,11 +1,9 @@
 package com.anime.model;
 
 import java.sql.*;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.List;
 
 public class EpisodeDAO {
 
@@ -29,12 +27,14 @@ public class EpisodeDAO {
                         releaseDate = sqlDate.toLocalDate();
                     }
                     return new Episode(
-                            rs.getInt("episodeId"),
-                            rs.getString("title"),
-                            rs.getString("sypnosis"),
-                            rs.getInt("views"),
-                            rs.getInt("runtime"),
-                            releaseDate;
+                        rs.getInt("episode_id"),
+                        rs.getString("episode_title"),
+                        rs.getString("sypnosis"),
+                        rs.getInt("runtime"),
+                        rs.getInt("views"),
+                        rs.getDate("release_date").toLocalDate(),
+                        rs.getInt("series_id")
+                    );
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -43,8 +43,8 @@ public class EpisodeDAO {
       return null;
     }
 
-    public List<Review> getReviewByEpisodeId(String episodeId) throws SQLException{
-        List<Review> reviews = new ArrayList<>();
+    public List<EpisodeReview> getReviewByEpisodeId(String episodeId) throws SQLException{
+        List<EpisodeReview> reviews = new ArrayList<>();
 
         String sql = "SELECT r.user_review, u.name, r.episode_id, r.series_id " +
                 "FROM reviews r " +
@@ -55,11 +55,11 @@ public class EpisodeDAO {
             ps.setString(1, episodeId);
             try (ResultSet rs = ps.executeQuery()){
                 while(rs.next()) {
-                    Review data = new Review(
-                            rs.getString("name"),
+                    EpisodeReview data = new EpisodeReview(
+                            rs.getInt("review_id"),
+                            rs.getString("username"),
                             rs.getInt("series_id"),
-                            rs.getInt("episode_id"),
-                            rs.getString("user_review")
+                            rs.getString("comment")
                     );
                     reviews.add(data);
                 }

@@ -1,4 +1,4 @@
-package src.com.anime.model;
+package com.anime.model;
 
 public class Series {
     
@@ -69,4 +69,5 @@ public class Series {
 
 
 }
+
 

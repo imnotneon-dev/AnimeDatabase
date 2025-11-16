@@ -3,24 +3,23 @@ package com.anime.model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.anime.model.Actor;
 
 public class ActorDAO {
 
-    private final Connection conn
+    private final Connection conn;
 
-    public EpisodeDAO(Connection conn) {
+    public ActorDAO(Connection conn) {
       this.conn = conn;
     }
 
     public Actor getActorById(int id) {
         String sql = "SELECT * FROM actors WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+            PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
-                return new Actor(rs.getInt("id"), rs.getString("name"), rs.getInt("age"), rs.getString("birthplace"));
+                return new Actor(rs.getInt("id"), rs.getString("last_name"), rs.getString("first_name"), rs.getString("gender"), rs.getDate("date_of_birth").toLocalDate(), rs.getString("place_of_birth"), rs.getString("agency"));
             }
         } catch(SQLException e) {
             e.printStackTrace();
@@ -29,8 +28,8 @@ public class ActorDAO {
     }
 
     // if we gonna try listing all roles by actor id
-    public ArrayList<String> getRolesByActorId(int actorId) {
-        ArrayList<String> roles = new ArrayList<>();
+    public List<String> getRolesByActorId(int actorId) {
+        List<String> roles = new ArrayList<>();
         String sql = "SELECT role_name FROM roles WHERE actor_id = ?";
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {

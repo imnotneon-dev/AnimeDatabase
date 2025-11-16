@@ -1,40 +1,88 @@
 package com.anime.model;
 
-import java.sql.*;
+import java.sql.Date;
 
 public class ManageAccount {
-    private Connection conn;
 
-    public ManageAccount(Connection conn) {
-        this.conn = conn;
+    private int userId;
+    private String username;
+    private String password;
+    private Date dateOfBirth;
+    private String country;
+    private String topGenre;
+    private Date dateCreated;
+
+    public ManageAccount(int userId, String username, String password, Date dateOfBirth, String country, String topGenre, Date dateCreated) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.country = country;
+        this.topGenre = topGenre;
+        this.dateCreated = dateCreated;
     }
 
-    // Create a user
-    public void addUser(String username, String dob, String country) throws SQLException {
-        String sql = "INSERT INTO Users (username, date_of_birth, country) VALUES (?, ?, ?)";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, username);
-        ps.setDate(2, Date.valueOf(dob));
-        ps.setString(3, country);
-        ps.executeUpdate();
+    public ManageAccount(String username, String password, Date dateOfBirth, String country, String topGenre) {
+        this.username = username;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.country = country;
+        this.topGenre = topGenre;
     }
 
-    // Read a user record and favorites
-    public void viewUserWithFavorites(String username) throws SQLException {
-        String sql = """
-            SELECT u.username, u.country, u.top_genre, s.title
-            FROM Users u
-            LEFT JOIN FavoriteSeries f ON u.user_id = f.user_id
-            LEFT JOIN Series s ON f.series_id = s.series_id
-            WHERE u.username = ?;
-        """;
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, username);
-        ResultSet rs = ps.executeQuery();
+    public int getUserId() {
+        return userId;
+    }
 
-        System.out.println("Favorites for " + username + ":");
-        while (rs.next()) {
-            System.out.println("- " + rs.getString("title"));
-        }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getTopGenre() {
+        return topGenre;
+    }
+
+    public void setTopGenre(String topGenre) {
+        this.topGenre = topGenre;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

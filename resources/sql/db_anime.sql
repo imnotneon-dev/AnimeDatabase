@@ -22,7 +22,7 @@ CREATE TABLE series (
 );
 
 DROP TABLE IF EXISTS episodes;
-REATE TABLE episodes (
+CREATE TABLE episodes (
     episode_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(70) NOT NULL,
     release_date DATE NOT NULL,
@@ -68,4 +68,26 @@ CREATE TABLE watchHistory (
     watch_date DATE DEFAULT CURRENT_DATE,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (episode_id) REFERENCES episodes_t(episode_id)
+);
+
+DROP TABLE IF EXISTS actorSeries;
+CREATE TABLE actorSeries (
+    act_id INT NOT NULL AUTO_INCREMENT,
+    actors_id INT NOT NULL,
+    series_id INT NOT NULL,
+    character_name VARCHAR(100),
+    PRIMARY KEY (act_id),
+    FOREIGN KEY (actors_id) REFERENCES actors(actors_id),
+    FOREIGN KEY (series_id) REFERENCES series(series_id)
+);
+
+
+DROP TABLE IF EXISTS episodeReviews;
+CREATE TABLE episodeReviews (
+    review_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    episode_id INT NOT NULL,
+    comment TEXT,
+    FOREIGN KEY (username) REFERENCES users(username),
+    FOREIGN KEY (episode_id) REFERENCES episodes(episode_id)
 );

@@ -10,11 +10,11 @@ public class ManageAccount {
     }
 
     // Create a user
-    public void addUser(String username, String dob, String country, String topGenre) throws SQLException {
+    public void addUser(String username, String password, String dob, String country, String topGenre) throws SQLException {
         String sql = "INSERT INTO Users (username, password, date_of_birth, country, top_genre) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, username);
-        ps.setDate(2, password);
+        ps.setString(2, password);
         ps.setDate(3, Date.valueOf(dob));
         ps.setString(4, country);
         ps.setString(5, topGenre);
@@ -27,7 +27,7 @@ public class ManageAccount {
 
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, username);
-        ps.setDate(2, password);
+        ps.setString(2, password);
 
         ResultSet rs = ps.executeQuery();
         return rs.next();

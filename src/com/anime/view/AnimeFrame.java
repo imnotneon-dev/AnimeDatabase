@@ -9,9 +9,14 @@ public class AnimeFrame extends JFrame {
     /** The login panel for the specified Account/user */
     private AccountPanel login;
     private HomePage home;
+    private CatalogPage catalog;
     private SeriesPage series;
     private EpisodePage episode;
     private ActorPage actor;
+    private WatchHistory watch;
+    private LikeHistory likes;
+    private HeaderPanel head;
+    private AdminPage adminpg;
     private JPanel container = new JPanel();
     private CardLayout cardLayout = new CardLayout();
 
@@ -31,6 +36,7 @@ public class AnimeFrame extends JFrame {
      * Initialize the components of the application frame
      */
     private void init(){
+
         addPanels();
         pack();
 
@@ -48,16 +54,26 @@ public class AnimeFrame extends JFrame {
 
         login = new AccountPanel();
         home = new HomePage();
+        catalog = new CatalogPage();
         series = new SeriesPage();
         episode = new EpisodePage();
         actor = new ActorPage();
+        watch = new WatchHistory();
+        likes = new LikeHistory();
+        adminpg = new AdminPage();
+        head = new HeaderPanel();
+
 
 //      container.add(login,BorderLayout.CENTER);
-//      container.add(home);
+      container.add(home);
+//        container.add(catalog);
 //      container.add(series);
-        container.add(episode);
-        container.add(actor);
-
+//        container.add(episode);
+//        container.add(actor);
+//        container.add(watch);
+//        container.add(likes);
+//        container.add(adminpg);
+        add(head, BorderLayout.NORTH);
         add(container);
     }
 

@@ -1,4 +1,4 @@
-package com.anime.model;
+package src.com.anime.model;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -199,3 +199,4 @@ public class SeriesDAO{
         
     }
 }
+

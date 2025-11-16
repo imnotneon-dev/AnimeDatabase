@@ -1,6 +1,7 @@
 package com.anime.view;
 
 import com.anime.view.customcards.PlainEpisodeCard;
+import com.anime.view.customcards.PlainSeriesCard;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,7 +13,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class ManageSeriesPanel extends JPanel {
-    private JPanel addEpisodePnl = new JPanel();
 
     private JTextField titleField = new JTextField();
     private JTextField genreField = new JTextField();
@@ -20,21 +20,9 @@ public class ManageSeriesPanel extends JPanel {
     private JTextField epCountField = new JTextField();
     private JComboBox<String> statusCb = new JComboBox<>();
 
-    private JTextField releaseDateField = new JTextField();
-    private JTextArea synopsisTA = new JTextArea();
-    private JTextField runtimeField = new JTextField();
-    private JComboBox<Object> seriesTitleCb = new JComboBox<Object>();
-
     private JButton addBtn = new JButton("Add");
     private JButton updateBtn = new JButton("Update");
 
-    private JComboBox<String> manage = new JComboBox<>();
-    private CardLayout cl = new CardLayout();
-
-    private List<String> episodeList = List.of(
-            "Episode 1","Episode 2","Episode 3","Episode 4","Episode 5",
-            "Episode 6","Episode 7","Episode 8","Episode 9","Episode 10",
-            "Episode 11","Episode 12");
     private List<String> seriesList = List.of(
             "Series 1","Series 2","Series 3","Series 4","Series 5",
             "Series 6","Series 7","Series 8","Series 9","Series 10",
@@ -44,64 +32,55 @@ public class ManageSeriesPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(Color.yellow);
         setBorder(new EmptyBorder(10,10,10,10));
-        setupEpisodePanel();
+        setupSeriesPanel();
     }
-    private void setupEpisodePanel(){
-        JPanel episodeListPnl = new JPanel();
-        JPanel episodeFormPnl = new JPanel();
-        JScrollPane epListScrollPane = new JScrollPane(episodeListPnl);
+    private void setupSeriesPanel(){
+        JPanel seriesListPnl = new JPanel();
+        JPanel seriesFormPnl = new JPanel();
+        JScrollPane seriesListScrollPanel = new JScrollPane(seriesListPnl);
 
-        episodeListPnl.setLayout(new BoxLayout(episodeListPnl, BoxLayout.Y_AXIS));
-        episodeListPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
-        episodeListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
-        episodeListPnl.setBorder(new EmptyBorder(10,10,10,10));
-        episodeListPnl.setBackground(Color.magenta);
-        for(String e: episodeList){
-            PlainEpisodeCard pec = new PlainEpisodeCard("Seriesname", e);
-            episodeListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
-            episodeListPnl.add(pec);
-            episodeListPnl.add(Box.createVerticalStrut(5));
+        seriesListPnl.setLayout(new BoxLayout(seriesListPnl, BoxLayout.Y_AXIS));
+        seriesListPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
+        seriesListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
+        seriesListPnl.setBorder(new EmptyBorder(10,10,10,10));
+        seriesListPnl.setBackground(Color.magenta);
+        for(String s: seriesList){
+            PlainSeriesCard psc = new PlainSeriesCard(s);
+            seriesListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
+            seriesListPnl.add(psc);
+            seriesListPnl.add(Box.createVerticalStrut(5));
         }
 
-        epListScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        epListScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        epListScrollPane.setWheelScrollingEnabled(true);
-        epListScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-        epListScrollPane.getVerticalScrollBar().setUnitIncrement(10);
-        epListScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
-        add(epListScrollPane, BorderLayout.WEST);
+        seriesListScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        seriesListScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        seriesListScrollPanel.setWheelScrollingEnabled(true);
+        seriesListScrollPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        seriesListScrollPanel.getVerticalScrollBar().setUnitIncrement(10);
+        seriesListScrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
+        add(seriesListScrollPanel, BorderLayout.WEST);
 
         titleField.setMaximumSize(new Dimension(350,30));
         titleField.setAlignmentX(LEFT_ALIGNMENT);
+        genreField.setMaximumSize(new Dimension(350,30));
+        genreField.setAlignmentX(LEFT_ALIGNMENT);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
-        releaseDateField = new JFormattedTextField(dateFormat);
-        releaseDateField.setMaximumSize(new Dimension(350,30));
-        releaseDateField.setAlignmentX(LEFT_ALIGNMENT);
+        releaseYearField = new JFormattedTextField(dateFormat);
+        releaseYearField.setMaximumSize(new Dimension(350,30));
+        releaseYearField.setAlignmentX(LEFT_ALIGNMENT);
 
         NumberFormat integerFormat = NumberFormat.getIntegerInstance(Locale.ROOT);
         NumberFormatter formatter = new NumberFormatter(integerFormat);
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);
-        runtimeField = new JFormattedTextField(formatter);
-        runtimeField.setMaximumSize(new Dimension(350,30));
-        runtimeField.setAlignmentX(LEFT_ALIGNMENT);
 
         epCountField = new JFormattedTextField(formatter);
         epCountField.setMaximumSize(new Dimension(350,30));
         epCountField.setAlignmentX(LEFT_ALIGNMENT);
 
-        synopsisTA.setLineWrap(true);
-        synopsisTA.setWrapStyleWord(true);
-        synopsisTA.setAlignmentX(Component.LEFT_ALIGNMENT);
-//        synopsisTA.setBorder(new MatteBorder(1,1,1,1,Color.BLACK));
-        synopsisTA.setBackground(Color.WHITE);
-        synopsisTA.setPreferredSize(new Dimension(600,200));
-        synopsisTA.setMaximumSize(new Dimension(600,200));
-
-        seriesTitleCb = new JComboBox<Object>(seriesList.toArray());
-        seriesTitleCb.setMaximumSize(new Dimension(350,30));
-        seriesTitleCb.setAlignmentX(Component.LEFT_ALIGNMENT);
+        statusCb = new JComboBox<>(new String[]{ "Ongoing", "Finished", "Archived" });
+        statusCb.setMaximumSize(new Dimension(350,30));
+        statusCb.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         addBtn.setPreferredSize(new Dimension(200,35));
         addBtn.setMaximumSize(new Dimension(200,35));
@@ -114,38 +93,35 @@ public class ManageSeriesPanel extends JPanel {
 //        updateBtn.setForeground(Color.WHITE);
         updateBtn.setEnabled(false);
 
-        episodeFormPnl.add(Box.createVerticalStrut(10));
-        episodeFormPnl.add(new JLabel("Enter Episode Title"));
-        episodeFormPnl.add(titleField);
-        episodeFormPnl.add(Box.createVerticalStrut(10));
-        episodeFormPnl.add(new JLabel("Select Series"));
-        episodeFormPnl.add(seriesTitleCb);
-        episodeFormPnl.add(Box.createVerticalStrut(10));
-        episodeFormPnl.add(new JLabel("Enter Synopsis"));
-        episodeFormPnl.add(synopsisTA);
-        episodeFormPnl.add(Box.createVerticalStrut(10));
-        episodeFormPnl.add(new JLabel("Enter Release Date (YYYY-MM-DD)"));
-        episodeFormPnl.add(releaseDateField);
-        episodeFormPnl.add(Box.createVerticalStrut(10));
-        episodeFormPnl.add(new JLabel("Enter Runtime (in mins)"));
-        episodeFormPnl.add(runtimeField);
-        episodeFormPnl.add(new JLabel("Enter Number of Episodes"));
-        episodeFormPnl.add(epCountField);
-        episodeFormPnl.add(Box.createVerticalStrut(10));
-//        episodeFormPnl.add(Box.createVerticalGlue());
-        episodeFormPnl.add(addBtn);
-        episodeFormPnl.add(Box.createVerticalStrut(10));
-//        episodeFormPnl.add(Box.createVerticalGlue());
-        episodeFormPnl.add(updateBtn);
-        episodeFormPnl.add(Box.createVerticalGlue());
-        episodeFormPnl.setLayout(new BoxLayout(episodeFormPnl,BoxLayout.Y_AXIS));
-        episodeFormPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
-        episodeFormPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
-        episodeFormPnl.setBorder(new EmptyBorder(10,10,10,10));
-        episodeFormPnl.setBackground(Color.orange);
-        episodeFormPnl.add(addEpisodePnl);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+        seriesFormPnl.add(new JLabel("Enter Series Title"));
+        seriesFormPnl.add(titleField);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+        seriesFormPnl.add(new JLabel("Enter Genre"));
+        seriesFormPnl.add(genreField);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+        seriesFormPnl.add(new JLabel("Enter Number of Episodes"));
+        seriesFormPnl.add(epCountField);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+        seriesFormPnl.add(new JLabel("Enter Release Date (YYYY-MM-DD)"));
+        seriesFormPnl.add(releaseYearField);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+        seriesFormPnl.add(new JLabel("Set Status"));
+        seriesFormPnl.add(statusCb);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+//        seriesFormPnl.add(Box.createVerticalGlue());
+        seriesFormPnl.add(addBtn);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+//        seriesFormPnl.add(Box.createVerticalGlue());
+        seriesFormPnl.add(updateBtn);
+        seriesFormPnl.add(Box.createVerticalGlue());
+        seriesFormPnl.setLayout(new BoxLayout(seriesFormPnl,BoxLayout.Y_AXIS));
+        seriesFormPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
+        seriesFormPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
+        seriesFormPnl.setBorder(new EmptyBorder(10,10,10,10));
+        seriesFormPnl.setBackground(Color.orange);
 
-        add(episodeFormPnl,BorderLayout.CENTER);
+        add(seriesFormPnl,BorderLayout.CENTER);
 
     }
 }

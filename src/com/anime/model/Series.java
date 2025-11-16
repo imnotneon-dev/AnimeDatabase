@@ -1,3 +1,5 @@
+package com.anime.model;
+
 public class Series {
     
     private int series_id;
@@ -67,3 +69,5 @@ public class Series {
 
 
 }
+
+

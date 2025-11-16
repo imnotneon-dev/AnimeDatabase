@@ -1,0 +1,75 @@
+package com.anime.view;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+public class HeaderPanel extends JPanel {
+    private JMenuItem logoutItem = new JMenuItem();
+    private JMenuItem watchHistoryItem = new JMenuItem();
+    private JMenuItem likesItem = new JMenuItem();
+    private JMenuItem accStatsItem = new JMenuItem();
+    private JLabel homeIcon = new JLabel();
+    private JLabel accountName = new JLabel("AccountName");
+
+    public HeaderPanel(){
+        setLayout(new BorderLayout());
+        setBackground(Color.yellow);
+        setBorder(new EmptyBorder(0,10,0,10));
+        setPreferredSize(new Dimension(Integer.MAX_VALUE, 60));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+
+        init();
+    }
+
+    private void init(){
+        JPanel filler = new JPanel();
+        String TAKOROLL_LOGO = "/imgs/tako_hori.png";
+        BufferedImage biHomeIcon = loadImage(TAKOROLL_LOGO);
+        Image scaled = biHomeIcon.getScaledInstance(160,50,Image.SCALE_SMOOTH);
+        ImageIcon homeIconIcon = new ImageIcon(scaled);
+        homeIcon.setIcon(homeIconIcon);
+        homeIcon.setMaximumSize(new Dimension(160,50));
+        homeIcon.setBackground(Color.WHITE);
+        homeIcon.setOpaque(true);
+
+        JPopupMenu menu = new JPopupMenu();
+        logoutItem = new JMenuItem("Log Out");
+        watchHistoryItem = new JMenuItem("Watch History");
+        likesItem = new JMenuItem("Liked Episodes");
+        accStatsItem = new JMenuItem("Statistics");
+        menu.add(logoutItem);
+        menu.add(watchHistoryItem);
+        menu.add(likesItem);
+        menu.add(accStatsItem);
+
+        add(homeIcon, BorderLayout.WEST);
+        add(filler, BorderLayout.CENTER);
+        add(accountName,BorderLayout.EAST);
+
+        accountName.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                accountName.setForeground(Color.red);
+                menu.show(accountName,0,accountName.getHeight());
+            }
+
+        });
+    }
+
+    public static BufferedImage loadImage(String iresPath)
+    {
+        BufferedImage image = null;
+        try { image = ImageIO.read(HeaderPanel.class.getResource(iresPath)); }
+        catch (IOException e) { e.printStackTrace(); }
+        return image;
+    }
+
+
+}

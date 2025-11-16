@@ -1,10 +1,8 @@
 package com.anime.view;
 
-import com.anime.view.customcards.EpisodeCard;
+import com.anime.view.customcards.SeriesEpisodeCard;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -134,7 +132,7 @@ public class SeriesPage extends JPanel{
         episodesPnl.setBackground(Color.black);
 //        episodesPnl.setPreferredSize(new Dimension(1280,600));
         for(String s: episodeList){
-            EpisodeCard epCard = new EpisodeCard(s,"test",23, LocalDate.of(2025,9,14));
+            SeriesEpisodeCard epCard = new SeriesEpisodeCard(s,"test",23, LocalDate.of(2025,9,14));
             epCard.setAlignmentX(Component.LEFT_ALIGNMENT);
             episodesPnl.add(epCard);
         }

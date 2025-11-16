@@ -9,9 +9,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 
-public class EpisodeCard extends JPanel {
+public class SeriesEpisodeCard extends JPanel {
 //    private Episode episode;
-    public EpisodeCard(String title, String syp, int runtime, LocalDate releaseDate){
+    public SeriesEpisodeCard(String title, String syp, int runtime, LocalDate releaseDate){
 //        episode = ep;
         setOpaque(true);
         setVisible(true);

@@ -63,7 +63,7 @@ CREATE TABLE series_episodes_t (
 DROP TABLE IF EXISTS watchHistory;
 CREATE TABLE watchHistory (
     watch_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    username VARCHAR(50) NOT NULL,
     episode_id INT NOT NULL,
     watch_date DATE DEFAULT CURRENT_DATE,
     FOREIGN KEY (user_id) REFERENCES users(user_id),

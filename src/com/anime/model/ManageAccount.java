@@ -33,6 +33,26 @@ public class ManageAccount {
         return rs.next();
     }
 
+    // View user deets
+    public void viewUser(String username) throws SQLException {
+        String sql = "SELECT username, date_of_birth, country, top_genre, date_user_created " + "FROM Users WHERE username = ?";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, username);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            System.out.println("Username: " + rs.getString("username"));
+            System.out.println("DOB: " + rs.getDate("date_of_birth"));
+            System.out.println("Country: " + rs.getString("country"));
+            System.out.println("Top Genre: " + rs.getString("top_genre"));
+            System.out.println("Date Created: " + rs.getDate("date_user_created"));
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+
     // Read a user record and favorites
     public void viewUserWithFavorites(String username) throws SQLException {
         String sql = """

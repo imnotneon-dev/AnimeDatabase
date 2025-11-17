@@ -1,5 +1,6 @@
 package com.anime.view;
 
+import com.anime.model.Actor;
 import com.anime.view.customcards.RoleCard;
 
 import javax.imageio.ImageIO;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ActorPage extends JPanel{
+    private Actor actorInfo;
     private JPanel actorInfoPnl = new JPanel();
     private JPanel rolesPnl = new JPanel();
     private JLabel actorPhoto = new JLabel();
@@ -147,4 +149,27 @@ public class ActorPage extends JPanel{
         catch (IOException e) { e.printStackTrace(); }
         return image;
     }
+
+    public Actor getActorInfo() { return actorInfo; }
+    public void setActorInfo(Actor actorInfo) { this.actorInfo = actorInfo; }
+
+//    public JLabel getActorPhoto() { return actorPhoto; }
+//    public void setActorPhoto(JLabel actorPhoto) { this.actorPhoto = actorPhoto; }
+
+    public JLabel getNameLb() { return nameLb; }
+
+    public JLabel getAgeLb() { return ageLb; }
+
+    public JLabel getPlaceOfBirthLb() { return placeOfBirthLb; }
+
+    public JLabel getAgencyNameLb() { return agencyNameLb; }
+
+//    public JScrollPane getRolesScrollPane() { return rolesScrollPane; }
+//    public void setRolesScrollPane(JScrollPane rolesScrollPane) { this.rolesScrollPane = rolesScrollPane; }
+
+    public ImageIcon getActorPhotoIcon() { return actorPhotoIcon; }
+    public void setActorPhotoIcon(ImageIcon actorPhotoIcon) { this.actorPhotoIcon = actorPhotoIcon; }
+
+    public List<RoleCard> getRolesList() { return rolesList; }
+    public void setRolesList(List<RoleCard> rolesList) { this.rolesList = rolesList; }
 }

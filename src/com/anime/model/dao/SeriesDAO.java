@@ -9,7 +9,7 @@ import com.anime.model.Series;
 public class SeriesDAO{
 
     private final Connection conn;
-
+    // TODO: add throws SQL EXCEPTION
     public Series getSeriesById(int series_id) {
         String sql = "SELECT * FROM series WHERE series_id = ?";
 

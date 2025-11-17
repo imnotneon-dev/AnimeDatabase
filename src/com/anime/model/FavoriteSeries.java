@@ -4,22 +4,22 @@ import java.time.LocalDate;
 
 public class FavoriteSeries{
 
-    private int user_id;
+    private int username;
     private int series_id;
     private LocalDate added_date;
 
-    public FavoriteSeries(int user_id, int series_id, LocalDate added_date) {
-        this.user_id = user_id;
+    public FavoriteSeries(int username, int series_id, LocalDate added_date) {
+        this.username = username;
         this.series_id = series_id;
         this.added_date = added_date;
     }
 
-    public int getUserId() {
-        return user_id;
+    public int getUsername() {
+        return username;
     }
 
-    public void setUserId(int user_id) {
-        this.user_id = user_id;
+    public void setUsername(int username) {
+        this.username = username;
     }
 
     public int getSeriesId() {
@@ -37,4 +37,5 @@ public class FavoriteSeries{
     public void setAddedDate(LocalDate added_date) {
         this.added_date = added_date;
     }
+
 }

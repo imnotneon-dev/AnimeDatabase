@@ -1,11 +1,11 @@
 package com.anime.controller;
 
+import com.anime.model.WatchHistory;
 import com.anime.model.dao.*;
 import com.anime.model.*;
 import com.anime.view.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -21,7 +21,9 @@ public class AppController {
     }
 
     private void init_application(){
+        init_header_listeners();
         init_accpnl_listeners();
+
     }
 
     private void init_accpnl_listeners() {
@@ -106,6 +108,49 @@ public class AppController {
                 System.err.println("DB Error during signup: " + ex.getMessage());
                 throw new RuntimeException(ex);
             }
+        });
+    }
+
+    private void init_header_listeners(){
+        HeaderPanel header = view.getHeaderPanel();
+        String name = currentSession.getUsername();
+        header.setAccountName("Welcome, " + name);
+        header.getHomeIcon().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                view.switchView(view.HOME);
+            }
+
+        });
+        header.getLogoutItem().addActionListener(e-> {
+            view.switchView(view.LOGIN);
+        });
+
+        header.getWatchHistoryItem().addActionListener(e->{
+
+//            try {
+//                List< WatchHistory> history = model.getWatchHistoryDao()
+//                view.getWatchHistoryPage().loadHistory(history );
+                view.switchView(view.WATCH_HISTORY);
+//            }
+//            catch (SQLException ex){
+//                System.err.println("DB Error loading watch history: " + ex.getMessage());
+//                System.out.println("Could not load watch history due to a database error.");
+//            }
+        });
+
+        header.getLikesItem().addActionListener(e->{
+            view.switchView(view.LIKE_HISTORY);
+
+//            try {
+//                List< WatchHistory> history = model.getWatchHistoryDao()
+//                view.getWatchHistoryPage().loadHistory(history );
+//                view.switchView(view.LIKE_HISTORY);
+//            }
+//            catch (SQLException ex){
+//                System.err.println("DB Error loading watch history: " + ex.getMessage());
+//                System.out.println("Could not load watch history due to a database error.");
+//            }
         });
     }
 }

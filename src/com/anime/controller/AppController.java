@@ -9,6 +9,7 @@ import com.anime.view.customcards.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppController {
@@ -25,6 +26,7 @@ public class AppController {
     private void init_application(){
         init_header_listeners();
         init_accpnl_listeners();
+        init_homepage_listeners();
 
     }
 
@@ -158,38 +160,32 @@ public class AppController {
 
     private void init_homepage_listeners(){
         HomePage home = view.getHomePage();
-        List<SeriesCard> watchCards = home.getWatchingListCard();
-        List<SeriesCard> faveCards = home.getFavoriteListCard();
+        List<SeriesCard> allCards = new ArrayList<>();
+        allCards.addAll(home.getWatchingListCard());
+        allCards.addAll(home.getFavoriteListCard());
 
-        for(SeriesCard sc: watchCards){
-            Series series = sc.getSeriesDetails();
-            int series_id = series.getSeriesId();
-            sc.addMouseListener(new MouseAdapter() {
+        for(SeriesCard card: allCards){
+            card.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    // might be redundant since series alr has the info but ill keep it here still
-                    // Series actualSeries = model.getSeriesDAO().getSeriesById(series_id);
-                    // load series info
-                    view.getSeriesPage().setSeries(series);
+                    int series_id = card.getSeriesID();
+                    try {
+                        // might be redundant since series alr has the info but ill keep it here still
+                        Series series = model.getSeriesDAO().getSeriesById(series_id);
 
-                    view.switchView(view.SERIES);
+                        if(series!=null) {
+                            // load series info
+                            view.getSeriesPage().setSeries(series);
 
-                }
-            });
-        }
-
-        for(SeriesCard sc: faveCards){
-            sc.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    // might be redundant since series alr has the info but ill keep it here still
-                    // Series actualSeries = model.getSeriesDAO().getSeriesById(series_id);
-                    // load series info
-                    Series series = sc.getSeriesDetails();
-                    view.getSeriesPage().setSeries(series);
-
-                    view.switchView(view.SERIES);
-
+                            view.switchView(view.SERIES);
+                        } else {
+                            System.out.println("Series details cannot be found.");
+                        }
+                    }
+                    catch (SQLException ex) {
+                        System.err.println("DB Error during signup: " + ex.getMessage());
+                        throw new RuntimeException(ex);
+                    }
                 }
             });
         }

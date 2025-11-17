@@ -19,6 +19,15 @@ public class AnimeFrame extends JFrame {
     private AdminPage adminpg;
     private JPanel container = new JPanel();
     private CardLayout cardLayout = new CardLayout();
+    public final String LOGIN = "LOGIN_VIEW";
+    public final String HOME = "HOME_VIEW";
+    public final String CATALOG = "CATALOG_VIEW";
+    public final String SERIES = "SERIES_DETAIL_VIEW";
+    public final String EPISODE = "EPISODE_DETAIL_VIEW";
+    public final String ACTOR = "ACTOR_DETAIL_VIEW";
+    public final String WATCH_HISTORY = "WATCH_HISTORY_VIEW";
+    public final String LIKE_HISTORY = "LIKE_HISTORY_VIEW";
+    public final String ADMIN = "ADMIN_VIEW";
 
 
     /**
@@ -64,17 +73,29 @@ public class AnimeFrame extends JFrame {
         head = new HeaderPanel();
 
 
-//      container.add(login,BorderLayout.CENTER);
-      container.add(home);
-//        container.add(catalog);
-//      container.add(series);
-//        container.add(episode);
-//        container.add(actor);
-//        container.add(watch);
-//        container.add(likes);
-//        container.add(adminpg);
+      container.add(login, LOGIN);
+      container.add(home, HOME);
+        container.add(catalog, CATALOG);
+      container.add(series, SERIES);
+        container.add(episode,EPISODE);
+        container.add(actor,ACTOR);
+        container.add(watch, WATCH_HISTORY);
+        container.add(likes, LIKE_HISTORY);
+        container.add(adminpg, ADMIN);
         add(head, BorderLayout.NORTH);
         add(container);
+    }
+
+    public CardLayout getCardLayout(){
+        return cardLayout;
+    }
+
+    public JPanel getContentContainer(){
+        return container;
+    }
+
+    public void switchView(String vname){
+        cardLayout.show(container, vname);
     }
 
 }

@@ -84,13 +84,16 @@ public class ManageAccountDAO {
     }
 
     // Delete user account (in case)
-    public boolean deleteUser(int userId) throws SQLException {
+    public boolean deleteUser(int userId) {
         String sql = "DELETE FROM Users WHERE user_id = ?";
-
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, userId);
-
-        int rows = ps.executeUpdate();
-        return rows > 0;
+        
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            int rows = ps.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+        System.out.println("Error deleting user: " + e.getMessage());
+        return false;
+        }
     }
 }

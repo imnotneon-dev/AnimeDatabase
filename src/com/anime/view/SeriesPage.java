@@ -14,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 
 public class SeriesPage extends JPanel{
     private Series series;
-    private JButton button = new JButton("SeriesPage");
     private GradientPanel seriesInfoPnl;
     private JPanel episodesPnl = new JPanel();
     private JPanel contentPnl = new JPanel();
@@ -170,7 +169,31 @@ public class SeriesPage extends JPanel{
         return image;
     }
 
-    public JButton getButton(){
-        return button;
-    }
+    public Series getSeries() { return series; }
+    public void setSeries(Series series) { this.series = series; }
+
+    public JButton getFaveBtn() { return faveBtn; }
+    public void setFaveBtn(JButton faveBtn) { this.faveBtn = faveBtn; }
+
+    public JLabel getTitleLb() { return titleLb; }
+    public void setTitleLb(JLabel titleLb) { this.titleLb = titleLb; }
+
+    public JLabel getGenreLb() { return genreLb; }
+    public void setGenreLb(JLabel genreLb) { this.genreLb = genreLb; }
+
+    public JLabel getReleaseYearLb() { return releaseYearLb; }
+    public void setReleaseYearLb(JLabel releaseYearLb) { this.releaseYearLb = releaseYearLb; }
+
+    public JLabel getEpCountLb() { return epCountLb; }
+    public void setEpCountLb(JLabel epCountLb) { this.epCountLb = epCountLb; }
+
+    public JLabel getStatusLb() { return statusLb; }
+    public void setStatusLb(JLabel statusLb) { this.statusLb = statusLb; }
+
+    public List<String> getEpisodeList() { return episodeList; }
+    public void setEpisodeList(List<String> episodeList) { this.episodeList = episodeList; }
+
+    public List<String> getActorsList() { return actorsList; }
+    public void setActorsList(List<String> actorsList) { this.actorsList = actorsList; }
+
 }

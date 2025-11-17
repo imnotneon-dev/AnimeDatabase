@@ -50,6 +50,7 @@ public class AppController {
                     String accountUsername = account.getUsername();
 
                     // get the list of Favorites (user id, series id, date added)
+                    // ! make sure get Favorite is now for String not int
                     List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(accountUsername);
 
                     // declare an empty list: FaveSeries -> Series
@@ -70,7 +71,6 @@ public class AppController {
                     view.switchView(view.HOME);
                 } else {
                     System.out.println("Login failed: Invalid username or password");
-                    return;
                 }
 
 
@@ -117,7 +117,7 @@ public class AppController {
                     System.out.println("Account already exist");
                 }
                 else {
-                    model.getAccountDAO().addUser(username,password, String.valueOf(dob),country,"None");
+                    model.getAccountDAO().addUser(username,password, String.valueOf(date),country,"None");
                     Account account = model.getAccountDAO().selectAccountByUsername(username);
 
                     if(account!=null){
@@ -148,9 +148,7 @@ public class AppController {
             }
 
         });
-        header.getLogoutItem().addActionListener(e-> {
-            view.switchView(view.LOGIN);
-        });
+        header.getLogoutItem().addActionListener(e-> view.switchView(view.LOGIN));
 
         header.getWatchHistoryItem().addActionListener(e->{
 
@@ -214,9 +212,10 @@ public class AppController {
     }
 
     private void init_seriespage_listeners(){
-        SeriesPage series = view.getSeriesPage();
-        List<SeriesEpisodeCard> episodeCards = series.getEpisodeCards();
-        List<JLabel> actorLabelCards = series.getActorLabelCards();
+        SeriesPage seriesPage = view.getSeriesPage();
+        List<SeriesEpisodeCard> episodeCards = seriesPage.getEpisodeCards();
+        List<JLabel> actorLabelCards = seriesPage.getActorLabelCards();
+        Series seriesInfo = seriesPage.getSeries();
 
         for(SeriesEpisodeCard card: episodeCards){
             card.addMouseListener(new MouseAdapter() {
@@ -227,10 +226,11 @@ public class AppController {
                         // might be redundant since series alr has the info but ill keep it here still
                         // ! ensure selectEpiside param is int, not string
                         Episode episode = model.getEpisodeDAO().selectEpisodeById(ep_id);
-
+                        String seriesTitle = seriesInfo.getTitle();
                         if(episode!=null) {
                             // load series info
                             view.getEpisodePage().setEpisode(episode);
+                            view.getEpisodePage().setSeriesTitle(seriesTitle);
 
                             view.switchView(view.EPISODE);
                         } else {
@@ -272,6 +272,5 @@ public class AppController {
                 }
             });
         }
-
     }
 }

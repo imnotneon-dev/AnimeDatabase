@@ -28,6 +28,7 @@ public class AccountPanel extends JPanel{
     private JTextField signPasswordField = new JTextField(25);
     private JTextField signConfirmField = new JTextField(25);
     private JButton submitSignUpBtn = new JButton();
+    private JButton alreadyHasAccountBtn = new JButton();
     private JFormattedTextField signDobField;
     private JComboBox countrySelector;
     private JPanel signupContainer = new JPanel();
@@ -62,7 +63,7 @@ public class AccountPanel extends JPanel{
         dateFormat.setLenient(false);
         signDobField = new JFormattedTextField(dateFormat);
         String[] countryChoices = { "--- Select a Country ---", "Philippines", "Singapore", "Malaysia" };
-        countrySelector = new JComboBox(countryChoices);
+        countrySelector = new JComboBox<>(countryChoices);
 
         register.setAlignmentX(Component.LEFT_ALIGNMENT);
         // GridBagLayout centers the signupContainer panel
@@ -87,7 +88,6 @@ public class AccountPanel extends JPanel{
         signConfirmField.setPreferredSize(new Dimension(350,30));
         signConfirmField.setMaximumSize(new Dimension(350,30));
         signConfirmField.setBorder(new MatteBorder(0,0,1,0,Color.black));
-        setupGhostText(signDobField,"yyyy-mm-dd");
         signDobField.setPreferredSize(new Dimension(350,30));
         signDobField.setMaximumSize(new Dimension(350,30));
         signDobField.setBorder(new MatteBorder(0,0,1,0,Color.black));
@@ -96,6 +96,8 @@ public class AccountPanel extends JPanel{
         countrySelector.setBorder(new MatteBorder(0,0,1,0,Color.black));
         submitSignUpBtn.setText("Submit Registration");
         submitSignUpBtn.setFocusable(true);
+        alreadyHasAccountBtn.setText("Already Have Account? Login Here");
+        alreadyHasAccountBtn.setFocusable(true);
 
         BufferedImage biTakorollIcon = loadImage(TAKOROLL_LOGO);
         Image scaled = biTakorollIcon.getScaledInstance(250,250,Image.SCALE_AREA_AVERAGING);
@@ -137,6 +139,9 @@ public class AccountPanel extends JPanel{
         signupContainer.add(Box.createVerticalStrut(10));
         signupContainer.add(submitSignUpBtn);
         signupContainer.add(Box.createVerticalStrut(5));
+        signupContainer.add(alreadyHasAccountBtn);
+        signupContainer.add(Box.createVerticalStrut(5));
+
 
 //        signupContainer.add(RIGHT_GLUE);
         signupContainer.add(BOT_GLUE);
@@ -278,12 +283,16 @@ public class AccountPanel extends JPanel{
         return signDobField;
     }
 
-    public JComboBox getCountrySelector() {
-        return countrySelector;
+    public String getCountry() {
+        return String.valueOf(countrySelector);
     }
 
     public JButton getSubmitSignUpBtn() {
         return submitSignUpBtn;
+    }
+
+    public JButton getAlreadyHasAccountBtn() {
+        return alreadyHasAccountBtn;
     }
 
     public JPanel getSignupContainer() {

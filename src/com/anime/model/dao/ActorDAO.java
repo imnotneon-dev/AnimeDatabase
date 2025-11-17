@@ -1,7 +1,6 @@
 package com.anime.model.dao;
 
 import com.anime.model.Actor;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,23 +45,121 @@ public class ActorDAO {
         return roles;
     }
 
-    public void addActor(String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) {
+    public List<Actor> getActorsByEpisode(int epId) throws SQLException {
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO actors (last_name, first_name, gender, date_of_birth, place_of_birth, agency) ");
-        sql.append("VALUES (?, ?, ?, ?, ?, ?);");
+        sql.append("SELECT a.actor_id, a.name, a.role ");
+        sql.append("FROM actors a ");
+        sql.append("JOIN actor_series acs ON a.actor_id = acs.actor_id ");
+        sql.append("JOIN series s ON acs.series_id = s.series_id ");
+        sql.append("WHERE s.ep_id = ?;");
+        
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+            ps.setInt(1, epId);
+            ResultSet rs = ps.executeQuery();
+            List<Actor> actors = new ArrayList<>();
+            while(rs.next()) {
+                Actor actor = new Actor(
+                    rs.getInt("actor_id"),
+                    rs.getString("last_name"),
+                    rs.getString("first_name"),
+                    rs.getString("gender"),
+                    rs.getDate("date_of_birth").toLocalDate(),
+                    rs.getString("pob"),
+                    rs.getString("agency")
+                );
+                actors.add(actor);
+            }
+            return actors;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }   
+
     }
 
-    public void deleteActor(int actorId) {
-        String sql = "DELETE FROM actors WHERE actor_id = ?;";
+    public boolean addActor(String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) {
+        String sql = "INSERT INTO actors (last_name, first_name, gender, date_of_birth, place_of_birth, agency) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, lastName);
+            ps.setString(2, firstName);
+            ps.setString(3, gender);
+            ps.setString(4, dateOfBirth);
+            ps.setString(5, placeOfBirth);
+            ps.setString(6, agency);
+
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error adding actor: " + e.getMessage());
+            return false;
+        }
     }
 
-    public void editActor(int actorId, String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) {
-        StringBuilder sql = new StringBuilder();
-        sql.append("UPDATE actors SET last_name = ?, first_name = ?, gender = ?, date_of_birth = ?, place_of_birth = ?, agency = ? ");
-        sql.append("WHERE actor_id = ?;");
+    public boolean deleteActor(int actorId) {
+        String sql = "DELETE FROM actors WHERE actor_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, actorId);
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error deleting actor: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean editActor(int actorId, String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) {
+        String sql = "UPDATE actors SET last_name = ?, first_name = ?, gender = ?, date_of_birth = ?, place_of_birth = ?, agency = ? WHERE actor_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, lastName);
+            ps.setString(2, firstName);
+            ps.setString(3, gender);
+            ps.setString(4, dateOfBirth);
+            ps.setString(5, placeOfBirth);
+            ps.setString(6, agency);
+            ps.setInt(7, actorId);
+
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error editing actor: " + e.getMessage());
+            return false;
+        }
     }
 
     public void viewActors() {
-        String sql = "SELECT * FROM actors;";
-    }   
+        String sql = "SELECT * FROM actors";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                System.out.println(
+                    rs.getInt("actor_id") + ": " +
+                    rs.getString("first_name") + " " +
+                    rs.getString("last_name") + " | " +
+                    rs.getString("gender") + " | DOB: " +
+                    rs.getString("date_of_birth") + " | " +
+                    rs.getString("place_of_birth") + " | " +
+                    rs.getString("agency")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error viewing actors: " + e.getMessage());
+        }
+    } 
 }

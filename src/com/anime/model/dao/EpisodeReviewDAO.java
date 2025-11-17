@@ -1,52 +1,84 @@
 package com.anime.model.dao;
 
 import com.anime.model.EpisodeReview;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 
 public class EpisodeReviewDAO {
 
-    private Connection conn;
+    private final Connection conn;
 
     public EpisodeReviewDAO(Connection conn) {
         this.conn = conn;
     }
 
-    // Add new review
-    public void addReview(int user_id, int episode_id, String user_review) throws SQLException {
+    public boolean addReview(int user_id, int episode_id, String user_review) {
         String sql = "INSERT INTO EpisodeReview (user_id, episode_id, user_review) VALUES (?, ?, ?)";
-        PreparedStatement ps = conn.prepareStatement(sql);
 
-        ps.setInt(1, user_id);
-        ps.setInt(2, episode_id);
-        ps.setString(3, user_review);
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        ps.executeUpdate();
+            if (conn == null) {
+                System.err.println("Connection failed: addReview()");
+                return false;
+            }
+
+            ps.setInt(1, user_id);
+            ps.setInt(2, episode_id);
+            ps.setString(3, user_review);
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error adding review: " + e.getMessage());
+            return false;
+        }
     }
-
-    // Delete review
-    public void deleteReview(int review_id) throws SQLException {
+    public boolean deleteReview(int review_id) {
         String sql = "DELETE FROM EpisodeReview WHERE review_id = ?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, review_id);
-        ps.executeUpdate();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            if (conn == null) {
+                System.err.println("Connection failed: deleteReview()");
+                return false;
+            }
+
+            ps.setInt(1, review_id);
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error deleting review: " + e.getMessage());
+            return false;
+        }
     }
 
-    // Update review
-    public void updateReview(int review_id, String new_review) throws SQLException {
+    public boolean updateReview(int review_id, String new_review) {
         String sql = "UPDATE EpisodeReview SET user_review = ? WHERE review_id = ?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, new_review);
-        ps.setInt(2, review_id);
-        ps.executeUpdate();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            if (conn == null) {
+                System.err.println("Connection failed: updateReview()");
+                return false;
+            }
+
+            ps.setString(1, new_review);
+            ps.setInt(2, review_id);
+            ps.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error updating review: " + e.getMessage());
+            return false;
+        }
     }
 
-    // Report: Get all reviews
-
-    public List<EpisodeReview> getAllReviews() throws SQLException {
+    public List<EpisodeReview> getAllReviews() {
         List<EpisodeReview> list = new ArrayList<>();
 
         String sql = """
@@ -60,28 +92,33 @@ public class EpisodeReviewDAO {
             ORDER BY r.date_reviewed DESC
         """;
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-        while (rs.next()) {
-            EpisodeReview review = new EpisodeReview(
-                rs.getInt("review_id"),
-                rs.getInt("user_id"),
-                rs.getInt("episode_id"),
-                rs.getString("user_review"),
-                rs.getDate("date_reviewed").toLocalDate(),
-                rs.getString("username"),
-                rs.getString("episode_title")
-            );
-            list.add(review);
+            if (conn == null) {
+                System.err.println("Connection failed: getAllReviews()");
+                return list;
+            }
+
+            while (rs.next()) {
+                EpisodeReview review = new EpisodeReview(
+                    rs.getInt("review_id"),
+                    rs.getString("username"),
+                    rs.getInt("series_id"),
+                    rs.getString("comment")
+                );
+                list.add(review);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching reviews: " + e.getMessage());
         }
 
         return list;
     }
 
-    // Report: Get reviews per ep
-
-    public List<EpisodeReview> getReviewsByEpisodeId(int episode_id) throws SQLException {
+    public List<EpisodeReview> getReviewsByEpisodeId(int episode_id) {
         List<EpisodeReview> list = new ArrayList<>();
 
         String sql = """
@@ -96,24 +133,31 @@ public class EpisodeReviewDAO {
             ORDER BY r.date_reviewed DESC
         """;
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, episode_id);
-        ResultSet rs = ps.executeQuery();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        while (rs.next()) {
-            EpisodeReview review = new EpisodeReview(
-                rs.getInt("review_id"),
-                rs.getInt("user_id"),
-                rs.getInt("episode_id"),
-                rs.getString("user_review"),
-                rs.getDate("date_reviewed").toLocalDate(),
-                rs.getString("username"),
-                rs.getString("episode_title")
-            );
-            list.add(review);
+            if (conn == null) {
+                System.err.println("Connection failed: getReviewsByEpisodeId()");
+                return list;
+            }
+
+            ps.setInt(1, episode_id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                EpisodeReview review = new EpisodeReview(
+                    rs.getInt("review_id"),
+                    rs.getString("username"),
+                    rs.getInt("series_id"),
+                    rs.getString("comment")
+                );
+                list.add(review);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching reviews by episode: " + e.getMessage());
         }
 
         return list;
-        
     }
 }

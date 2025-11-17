@@ -1,14 +1,19 @@
 package com.anime.model.dao;
 
+import com.anime.model.Series;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import com.anime.model.Series;
 
 public class SeriesDAO{
 
     private final Connection conn;
+
+    public SeriesDAO(Connection conn) {
+        this.conn = conn;
+    }
+
     // TODO: add throws SQL EXCEPTION
     public Series getSeriesById(int series_id) {
         String sql = "SELECT * FROM series WHERE series_id = ?";
@@ -21,12 +26,12 @@ public class SeriesDAO{
 
             if (resSet.next()) {
                 return new Series(
-                    resSet.getInt("series_id");
-                    resSet.getString("title");
-                    resSet.getString("genre");
-                    resSet.getInt("release_year");
-                    resSet.getInt("total_episodes");
-                    resSet.getInt("status");
+                    resSet.getInt("series_id"),
+                    resSet.getString("title"),
+                    resSet.getString("genre"),
+                    resSet.getInt("release_year"),
+                    resSet.getInt("total_episodes"),
+                    resSet.getString("status")
                 );
             }
 
@@ -43,19 +48,19 @@ public class SeriesDAO{
         String sql = "SELECT * FROM series WHERE title = ?";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatements ps = conn.prepareStatement(sql)){
+             PreparedStatement ps = conn.prepareStatement(sql)){
 
                 ps.setString(1, title);
                 ResultSet resSet = ps.executeQuery();
 
                 if(resSet.next()){
                     return new Series(
-                        resSet.getInt("series_id");
-                        resSet.getString("title");
-                        resSet.getString("genre");
-                        resSet.getInt("release_year");
-                        resSet.getInt("total_episodes");
-                        resSet.getInt("status");
+                        resSet.getInt("series_id"),
+                        resSet.getString("title"),
+                        resSet.getString("genre"),
+                        resSet.getInt("release_year"),
+                        resSet.getInt("total_episodes"),
+                        resSet.getString("status")
                     );
                 }
                         
@@ -80,26 +85,26 @@ public class SeriesDAO{
 
             while (resSet.next()){
                 Series s = new Series(
-                    resSet.getInt("series_id");
-                        resSet.getString("title");
-                        resSet.getString("genre");
-                        resSet.getInt("release_year");
-                        resSet.getInt("total_episodes");
-                        resSet.getInt("status");
+                        resSet.getInt("series_id"),
+                        resSet.getString("title"),
+                        resSet.getString("genre"),
+                        resSet.getInt("release_year"),
+                        resSet.getInt("total_episodes"),
+                        resSet.getString("status")
                 );
 
                 list.add(s);
             }
 
         } catch (SQLException e) {
-            e.printStackTrace():
+            e.printStackTrace();
         }
 
         return list;
     }
 
 
-    public boolean addSeries(Series series){
+    public boolean addSeries(Series s){
         /* boolean so that we know if na insert na true or false*/
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO series");
@@ -107,7 +112,7 @@ public class SeriesDAO{
         sql.append("VALUES (?, ?, ?, ?, ?)");
 
         try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
+            PreparedStatement ps = conn.prepareStatement(sql.toString());){
 
             ps.setString(1, s.getTitle());
             ps.setString(2, s.getGenre());
@@ -126,7 +131,7 @@ public class SeriesDAO{
 
     /*made it separate cause technically updating and archive a lot better to separate instead of
     putting them together. Makes it cleaner too*/
-    public boolean updateSeries(Series series){
+    public boolean updateSeries(Series s){
        StringBuilder sql = new StringBuilder();
         sql.append("UPDATE series");
         sql.append("SET title = ?, genre = ?, release_year = ?, total_episodes = ?, status = ?");
@@ -154,8 +159,8 @@ public class SeriesDAO{
     public boolean archiveSeries(int series_id){
         String sql = "UPDATE series SET status = 'Archived' WHERE series_id = ?";
 
-        try(Connection conn = DB.Connection.getConnection();
-            PreparedStatements ps = conn.prepareStatement(sql)){
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
 
             ps.setInt(1, series_id);
             return ps.executeUpdate() > 0;
@@ -178,7 +183,7 @@ public class SeriesDAO{
         if(choice == 1) {
             statusNew = "Complete";
         } else {
-            statusNew = "On-Going":
+            statusNew = "On-Going";
         }
 
         String sql = "UPDATE series SET status = ? WHERE series_id = ?";

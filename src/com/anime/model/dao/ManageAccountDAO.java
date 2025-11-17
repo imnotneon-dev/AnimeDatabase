@@ -71,4 +71,15 @@ public class ManageAccountDAO {
             System.out.println("- " + rs.getString("title"));
         }
     }
+
+    // Delete user account (in case)
+    public boolean deleteUser(int userId) throws SQLException {
+        String sql = "DELETE FROM Users WHERE user_id = ?";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, userId);
+
+        int rows = ps.executeUpdate();
+        return rows > 0;
+    }
 }

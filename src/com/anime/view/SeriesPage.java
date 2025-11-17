@@ -19,6 +19,7 @@ public class SeriesPage extends JPanel{
     private GradientPanel seriesInfoPnl;
     private JPanel episodesPnl = new JPanel();
     private JPanel contentPnl = new JPanel();
+    private JPanel actorsContainer = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(contentPnl);
     private JButton faveBtn = new JButton("❤️", new ImageIcon());
     private JLabel titleLb = new JLabel("My Hero Acaedmia Boku No Hero Academia some gibberish to cehck");
@@ -50,11 +51,7 @@ public class SeriesPage extends JPanel{
     }*/
 
     public SeriesPage() {
-        titleLb.setText(series.getTitle());
-        genreLb.setText(series.getGenre());
-        releaseYearLb.setText("Release Year: " + series.getReleaseYear());
-        epCountLb.setText("Total Number of Episodes: " + series.getTotalEpisodes());
-        statusLb.setText("Status: " + series.getStatus());
+
         init();
     }
     private void init() {
@@ -64,8 +61,7 @@ public class SeriesPage extends JPanel{
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         initComponents();
-        revalidate();
-        repaint();
+
     }
 
     private void initComponents(){
@@ -76,8 +72,9 @@ public class SeriesPage extends JPanel{
         epInfoHSpacer.setOpaque(false);
         JPanel epInfoVSpacer = new JPanel();
         epInfoVSpacer.setOpaque(false);
-        JPanel actorsContainer = new JPanel();
+
         JLabel actorsListLb = new JLabel("Notable Actors:     ");
+        actorsContainer.add(actorsListLb);
         actorsContainer.setLayout(new BoxLayout(actorsContainer, BoxLayout.Y_AXIS));
         actorsContainer.setOpaque(false);
 
@@ -135,26 +132,12 @@ public class SeriesPage extends JPanel{
         seriesInfoPnl.add(epInfoHSpacer);
         seriesInfoPnl.add(faveBtn);
         actorsContainer.add(actorsListLb);
-        for(Actor a: actorsList){
-            JLabel actor = new JLabel(a.getLastName() + ", " + a.getFirstName());
-            actorLabelCards.add(actor);
-            actorsContainer.add(actor);
-            actorsContainer.add(Box.createVerticalStrut(5));
-        }
         seriesInfoPnl.add(actorsContainer);
 
         episodesPnl.setLayout(new GridLayout(0,4,5,5));
         episodesPnl.setBorder(new EmptyBorder(0,25,35,40));
         episodesPnl.setBackground(Color.black);
 //        episodesPnl.setPreferredSize(new Dimension(1280,600));
-        for(Episode e: episodeList){
-            SeriesEpisodeCard epCard = new SeriesEpisodeCard(
-                    e.getTitle(),e.getSypnosis(),e.getRuntime(),
-                    e.getReleaseDate());
-            epCard.setAlignmentX(Component.LEFT_ALIGNMENT);
-            episodeCards.add(epCard);
-            episodesPnl.add(epCard);
-        }
         episodesPnl.setMaximumSize(new Dimension(1280,Integer.MAX_VALUE));
         episodesPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
         episodesPnl.setPreferredSize(new Dimension(1200, (int) (Math.ceil(episodeList.size() / 5.0) * 150)));
@@ -182,9 +165,76 @@ public class SeriesPage extends JPanel{
         return image;
     }
 
+    private void defaultLabels() {
+        titleLb.setText("No Series Selected");
+        genreLb.setText("");
+        releaseYearLb.setText("");
+        epCountLb.setText("");
+        statusLb.setText("");
+    }
+
+    private void reloadSeriesPage(){
+        if(this.series==null){
+            defaultLabels();
+            return;
+        }
+
+        titleLb.setText(this.series.getTitle());
+        genreLb.setText(this.series.getGenre());
+        releaseYearLb.setText("Release Year: " + this.series.getReleaseYear());
+        epCountLb.setText("Total Number of Episodes: " + this.series.getTotalEpisodes());
+        statusLb.setText("Status: " + this.series.getStatus());
+
+        loadEpisodeCards();
+        loadActorLabelCards();
+
+        contentPnl.revalidate();
+        contentPnl.repaint();
+
+    }
+    public void loadEpisodeCards(){
+        episodesPnl.removeAll();
+        episodeCards.clear();
+        if(episodeList!=null){
+            for(Episode e: episodeList){
+                SeriesEpisodeCard epCard = new SeriesEpisodeCard(
+                        e.getTitle(),e.getSypnosis(),e.getRuntime(),
+                        e.getReleaseDate());
+                epCard.setAlignmentX(Component.LEFT_ALIGNMENT);
+                episodeCards.add(epCard);
+                episodesPnl.add(epCard);
+            }
+            episodesPnl.setPreferredSize(new Dimension(1200, (int) (Math.ceil(episodeList.size() / 5.0) * 150)));
+        }
+        else {
+            episodesPnl.add(new JLabel("No episodes yet..."));
+        }
+        episodesPnl.revalidate();
+        episodesPnl.repaint();
+    }
+
+    public void loadActorLabelCards(){
+        actorsContainer.removeAll();
+        actorLabelCards.clear();
+        JLabel actorsListLb = new JLabel("Notable Actors:     ");
+        actorsContainer.add(actorsListLb);
+        if(actorsList!=null){
+            for(Actor a: actorsList){
+                JLabel actor = new JLabel(a.getLastName() + ", " + a.getFirstName());
+                actorLabelCards.add(actor);
+                actorsContainer.add(actor);
+                actorsContainer.add(Box.createVerticalStrut(5));
+            }
+        }
+        actorsContainer.revalidate();
+        actorsContainer.repaint();
+    }
     public Series getSeries() { return series; }
 
-    public void setSeries(Series series) { this.series = series; }
+    public void setSeries(Series series) {
+        this.series = series;
+        reloadSeriesPage();
+    }
 
     public List<SeriesEpisodeCard> getEpisodeCards(){
         return episodeCards;
@@ -198,6 +248,9 @@ public class SeriesPage extends JPanel{
 
     public List<Actor> getActorsList() { return actorsList; }
 
-    public void setActorsList(List<Actor> actorsList) { this.actorsList = actorsList; }
+    public void setActorsList(List<Actor> actorsList) {
+        this.actorsList = actorsList;
+        reloadSeriesPage();
+    }
 
 }

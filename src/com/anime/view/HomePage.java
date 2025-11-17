@@ -144,7 +144,8 @@ public class HomePage extends JPanel{
         seriesContentScroller.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
 
         shelfPnl.setBorder(new EmptyBorder(10,10,15,10));
-        loadShelf(new ArrayList<>(), cards, seriesContentPnl,msg);
+        loadShelf(watchingList, cards, seriesContentPnl,msg);
+        loadShelf(favoriteList, cards, seriesContentPnl,msg);
 //        seriesContentPnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, seriesContentPnl.getPreferredSize().height));
         shelfPnl.add(seriesTitle);
         shelfPnl.add(seriesContentScroller);
@@ -153,6 +154,7 @@ public class HomePage extends JPanel{
 
     private void loadShelf(List<Series> sList, List<SeriesCard> sCards, JPanel container, String msg){
         container.removeAll();
+        sCards.clear();
         JLabel message = new JLabel(msg);
         if(sList !=null) {
             for (Series s : sList) {

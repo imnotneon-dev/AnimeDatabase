@@ -135,4 +135,37 @@ public class EpisodeDAO {
         return null;
     }
 
+
+    // Get ep titles for JComboBox in the EpisodeReviewPanel.java GUI
+    public List<String> getAllEpisodeTitles() throws SQLException {
+        List<String> titles = new ArrayList<>();
+        String sql = "SELECT title FROM Episodes ORDER BY title ASC";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                titles.add(rs.getString("title"));
+            }
+        }
+
+        return titles;
+    }
+
+    // Convert ep title to episode_id
+    public int getEpisodeIdByTitle(String title) throws SQLException {
+        String sql = "SELECT episode_id FROM Episodes WHERE title = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, title);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("episode_id");
+            }
+        }
+
+        return -1; // not found
+    }
+
 }

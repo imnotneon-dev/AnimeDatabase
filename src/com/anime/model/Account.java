@@ -2,7 +2,7 @@ package com.anime.model;
 
 import java.sql.Date;
 
-public class ManageAccount {
+public class Account {
 
     private int userId;
     private String username;
@@ -12,8 +12,7 @@ public class ManageAccount {
     private String topGenre;
     private Date dateCreated;
 
-    public ManageAccount(int userId, String username, String password, Date dateOfBirth, String country, String topGenre, Date dateCreated) {
-        this.userId = userId;
+    public Account(String username, String password, Date dateOfBirth, String country, String topGenre, Date dateCreated) {
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
@@ -22,7 +21,7 @@ public class ManageAccount {
         this.dateCreated = dateCreated;
     }
 
-    public ManageAccount(String username, String password, Date dateOfBirth, String country, String topGenre) {
+    public Account(String username, String password, Date dateOfBirth, String country, String topGenre) {
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;

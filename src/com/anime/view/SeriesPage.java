@@ -237,7 +237,9 @@ public class SeriesPage extends JPanel{
         this.series = series;
         reloadSeriesPage();
     }
-
+    public JButton getFaveBtn(){
+        return faveBtn;
+    }
     public List<SeriesEpisodeCard> getEpisodeCards(){
         return episodeCards;
     }

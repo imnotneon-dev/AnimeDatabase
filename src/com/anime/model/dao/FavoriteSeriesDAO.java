@@ -1,5 +1,6 @@
-package com.anime.model;
+package com.anime.model.dao;
 
+import com.anime.model.FavoriteSeries;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

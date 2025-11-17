@@ -23,7 +23,7 @@ public class ManageAccountDAO {
 
     // Login
     public boolean login(String username, String password) throws SQLException {
-        String sql = "SELECT * FROM Users WHERE username = ? AND password = ?";
+        String sql = "SELECT user_id FROM Users WHERE username = ? AND password = ?";
 
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, username);
@@ -56,19 +56,30 @@ public class ManageAccountDAO {
     // Read a user record and favorites
     public void viewUserWithFavorites(String username) throws SQLException {
         String sql = """
-            SELECT u.username, u.country, u.top_genre, s.title
+            SELECT u.username, s.title
             FROM Users u
             LEFT JOIN FavoriteSeries f ON u.user_id = f.user_id
             LEFT JOIN Series s ON f.series_id = s.series_id
             WHERE u.username = ?;
         """;
+
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, username);
         ResultSet rs = ps.executeQuery();
 
         System.out.println("Favorites for " + username + ":");
+        boolean hasFavorites = false;
+
         while (rs.next()) {
-            System.out.println("- " + rs.getString("title"));
+            String title = rs.getString("title");
+            if (title != null) {
+                hasFavorites = true;
+                System.out.println("- " + title);
+            }
+        }
+
+        if (!hasFavorites) {
+            System.out.println("(No favorites yet)");
         }
     }
 

@@ -6,6 +6,7 @@ import com.anime.model.*;
 import com.anime.view.*;
 import com.anime.view.customcards.*;
 
+import javax.swing.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -203,7 +204,7 @@ public class AppController {
                         }
                     }
                     catch (SQLException ex) {
-                        System.err.println("DB Error during signup: " + ex.getMessage());
+                        System.err.println("DB Error during series loading: " + ex.getMessage());
                         throw new RuntimeException(ex);
                     }
                 }
@@ -213,7 +214,35 @@ public class AppController {
 
     private void init_series_listener(){
         SeriesPage series = view.getSeriesPage();
+        List<SeriesEpisodeCard> episodeCards = series.getEpisodeCards();
+        List<JLabel> actorLabelCards = series.getActorLabelCards();
 
-//        series.
+        for(SeriesEpisodeCard card: episodeCards){
+            card.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    int ep_id = card.getEpisodeId();
+                    try {
+                        // might be redundant since series alr has the info but ill keep it here still
+                        Episode episode = model.getEpisodeDAO().selectEpisodeById(ep_id);
+
+                        if(episode!=null) {
+                            // load series info
+                            view.getEpisodePage().setEpisode(episode);
+
+                            view.switchView(view.EPISODE);
+                        } else {
+                            System.out.println("Episode details cannot be found.");
+                        }
+                    }
+                    catch (SQLException ex) {
+                        System.err.println("DB Error during episode loading: " + ex.getMessage());
+                        throw new RuntimeException(ex);
+                    }
+
+                }
+            });
+        }
+
     }
 }

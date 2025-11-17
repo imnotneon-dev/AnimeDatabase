@@ -28,6 +28,7 @@ public class AppController {
         init_header_listeners();
         init_accpnl_listeners();
         init_homepage_listeners();
+        init_seriespage_listeners();
 
     }
 
@@ -212,7 +213,7 @@ public class AppController {
         }
     }
 
-    private void init_series_listener(){
+    private void init_seriespage_listeners(){
         SeriesPage series = view.getSeriesPage();
         List<SeriesEpisodeCard> episodeCards = series.getEpisodeCards();
         List<JLabel> actorLabelCards = series.getActorLabelCards();
@@ -224,6 +225,7 @@ public class AppController {
                     int ep_id = card.getEpisodeId();
                     try {
                         // might be redundant since series alr has the info but ill keep it here still
+                        // ! ensure selectEpiside param is int, not string
                         Episode episode = model.getEpisodeDAO().selectEpisodeById(ep_id);
 
                         if(episode!=null) {
@@ -231,6 +233,33 @@ public class AppController {
                             view.getEpisodePage().setEpisode(episode);
 
                             view.switchView(view.EPISODE);
+                        } else {
+                            System.out.println("Episode details cannot be found.");
+                        }
+                    }
+                    catch (SQLException ex) {
+                        System.err.println("DB Error during episode loading: " + ex.getMessage());
+                        throw new RuntimeException(ex);
+                    }
+
+                }
+            });
+        }
+        for(JLabel labelCard: actorLabelCards){
+            labelCard.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JLabel sourceLb = (JLabel) e.getSource();
+                    int actor_id = (int)sourceLb.getClientProperty("actor_id");
+                    try {
+                        // might be redundant since series alr has the info but ill keep it here still
+                        Actor actor = model.getActorDAO().getActorById(actor_id);
+
+                        if(actor!=null) {
+                            // load series info
+                            view.getActorPage().setActorInfo(actor);
+
+                            view.switchView(view.ACTOR);
                         } else {
                             System.out.println("Episode details cannot be found.");
                         }

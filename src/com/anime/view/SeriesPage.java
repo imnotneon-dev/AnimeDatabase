@@ -221,6 +221,7 @@ public class SeriesPage extends JPanel{
         if(actorsList!=null){
             for(Actor a: actorsList){
                 JLabel actor = new JLabel(a.getLastName() + ", " + a.getFirstName());
+                actor.putClientProperty("actor_id",a.getId());
                 actorLabelCards.add(actor);
                 actorsContainer.add(actor);
                 actorsContainer.add(Box.createVerticalStrut(5));

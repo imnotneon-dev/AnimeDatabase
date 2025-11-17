@@ -29,6 +29,7 @@ public class AppController {
         init_accpnl_listeners();
         init_homepage_listeners();
         init_seriespage_listeners();
+        init_episodepage_listeners();
 
     }
 
@@ -233,9 +234,12 @@ public class AppController {
                         Episode episode = model.getEpisodeDAO().selectEpisodeById(ep_id);
                         String seriesTitle = seriesInfo.getTitle();
                         if(episode!=null) {
-                            // load series info
                             view.getEpisodePage().setEpisode(episode);
                             view.getEpisodePage().setSeriesTitle(seriesTitle);
+
+                            // load review list
+                            List<EpisodeReview> reviewList = model.getEpisodeReviewDAO().getReviewsByEpisodeId(ep_id);
+                            view.getEpisodePage().setReviewsList(reviewList);
 
                             view.switchView(view.EPISODE);
                         } else {
@@ -261,9 +265,9 @@ public class AppController {
                         Actor actor = model.getActorDAO().getActorById(actor_id);
 
                         if(actor!=null) {
-                            // load series info
                             view.getActorPage().setActorInfo(actor);
-
+                            view.getActorPage().set
+                            // load roles info
                             view.switchView(view.ACTOR);
                         } else {
                             System.out.println("Episode details cannot be found.");
@@ -311,6 +315,34 @@ public class AppController {
             }
             episodePage.getReviewTextArea().setText("");
         });
+    }
+
+    private void init_actorpage_listeners(){
+        ActorPage actor = view.getActorPage();
+        List<RoleCard> rolesCards = actor.getRolesCard();
+
+        for(RoleCard card: rolesCards){
+            card.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    int series_id = card.getRole_s_SeriesId();
+                    Series series = model.getSeriesDAO().getSeriesById(series_id);
+                    // get episode list of the series
+                    // List<Episode> episodeList = model.getEpisodeDAO().
+                    // List<ActorSeries> actorList = model.getActorDAO().
+                    if(series!=null) {
+                        // load series info
+                        view.getSeriesPage().setSeries(series);
+                        view.getSeriesPage().setEpisodeList();
+                        view.getSeriesPage().setActorsList();
+                        view.switchView(view.SERIES);
+                    } else {
+                        System.out.println("Series details cannot be found.");
+                    }
+
+                }
+            });
+        }
     }
 }
 

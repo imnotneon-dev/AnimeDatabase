@@ -45,6 +45,26 @@ public class AppController {
                 if(account!=null){
                     this.currentSession = account;
                     System.out.println("Login Success");
+                    String accountUsername = account.getUsername();
+
+                    // get the list of Favorites (user id, series id, date added)
+                    List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(accountUsername);
+
+                    // declare an empty list: FaveSeries -> Series
+                    List<Series> favoriteListConverted = new ArrayList<>();
+                    List<Series> watchHistoryConverted = new ArrayList<>();
+                    // Loop through the favoriteSeries list, getting the series_id to get the
+                    // Series details to store into a Series object
+                    for(FavoriteSeries f: favoriteSeries){
+                        int series_id = f.getSeriesId();
+                        Series series = model.getSeriesDAO().getSeriesById(series_id);
+                        favoriteListConverted.add(series);
+                    }
+
+                    /* TODO: WATCH HISTORY INTIALIZATION */
+
+                    view.getHomePage().setFavoriteList(favoriteListConverted);
+                    view.getHomePage().setWatchingList(watchHistoryConverted);
                     view.switchView(view.HOME);
                 } else {
                     System.out.println("Login failed: Invalid username or password");
@@ -189,5 +209,11 @@ public class AppController {
                 }
             });
         }
+    }
+
+    private void init_series_listener(){
+        SeriesPage series = view.getSeriesPage();
+
+//        series.
     }
 }

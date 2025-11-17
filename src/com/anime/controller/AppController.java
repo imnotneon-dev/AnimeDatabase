@@ -4,10 +4,12 @@ import com.anime.model.WatchHistory;
 import com.anime.model.dao.*;
 import com.anime.model.*;
 import com.anime.view.*;
+import com.anime.view.customcards.*;
 
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class AppController {
     private AnimeFrame view = new AnimeFrame();
@@ -152,5 +154,44 @@ public class AppController {
 //                System.out.println("Could not load watch history due to a database error.");
 //            }
         });
+    }
+
+    private void init_homepage_listeners(){
+        HomePage home = view.getHomePage();
+        List<SeriesCard> watchCards = home.getWatchingListCard();
+        List<SeriesCard> faveCards = home.getFavoriteListCard();
+
+        for(SeriesCard sc: watchCards){
+            Series series = sc.getSeriesDetails();
+            int series_id = series.getSeriesId();
+            sc.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // might be redundant since series alr has the info but ill keep it here still
+                    // Series actualSeries = model.getSeriesDAO().getSeriesById(series_id);
+                    // load series info
+                    view.getSeriesPage().setSeries(series);
+
+                    view.switchView(view.SERIES);
+
+                }
+            });
+        }
+
+        for(SeriesCard sc: faveCards){
+            sc.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // might be redundant since series alr has the info but ill keep it here still
+                    // Series actualSeries = model.getSeriesDAO().getSeriesById(series_id);
+                    // load series info
+                    Series series = sc.getSeriesDetails();
+                    view.getSeriesPage().setSeries(series);
+
+                    view.switchView(view.SERIES);
+
+                }
+            });
+        }
     }
 }

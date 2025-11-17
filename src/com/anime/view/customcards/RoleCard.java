@@ -18,8 +18,12 @@ public class RoleCard extends JPanel {
     //    private Review review;
     private JPanel container = new JPanel();
     private ImageIcon seriesPosterIcon   = new ImageIcon("/resources/imgs/takoroll_logo.png");
+    private int series_id;
+    private String seriesTitle;
 
-    public RoleCard(String seriesTitle, String roleName){
+    public RoleCard(int series_id, String roleName){
+        this.series_id = series_id;
+
         JLabel role = new JLabel(roleName);
         JLabel title = new JLabel(seriesTitle);
         JLabel seriesPosterLb = new JLabel();
@@ -73,4 +77,37 @@ public class RoleCard extends JPanel {
         catch (IOException e) { e.printStackTrace(); }
         return image;
     }
+
+    public JPanel getContainer() {
+        return container;
+    }
+
+    public void setContainer(JPanel container) {
+        this.container = container;
+    }
+
+    public ImageIcon getSeriesPosterIcon() {
+        return seriesPosterIcon;
+    }
+
+    public void setSeriesPosterIcon(ImageIcon seriesPosterIcon) {
+        this.seriesPosterIcon = seriesPosterIcon;
+    }
+
+    public int getRole_s_SeriesId() {
+        return series_id;
+    }
+
+    public void setSeriesId(int series_id) {
+        this.series_id = series_id;
+    }
+
+    public String getSeriesTitle() {
+        return seriesTitle;
+    }
+
+    public void setSeriesTitle(String seriesTitle) {
+        this.seriesTitle = seriesTitle;
+    }
+
 }

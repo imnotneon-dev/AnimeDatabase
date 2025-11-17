@@ -88,4 +88,55 @@ public class AdminPage extends JPanel implements ItemListener {
         }
     }
 
+    public ManageSeriesPanel getMngSeriesPnl() {
+        return mngSeriesPnl;
+    }
+
+    public void setMngSeriesPnl(ManageSeriesPanel mngSeriesPnl) {
+        this.mngSeriesPnl = mngSeriesPnl;
+    }
+
+    public ManageEpisodePanel getMngEpisodePnl() {
+        return mngEpisodePnl;
+    }
+
+    public void setMngEpisodePnl(ManageEpisodePanel mngEpisodePnl) {
+        this.mngEpisodePnl = mngEpisodePnl;
+    }
+
+    public ManageActorPanel getMngActorPnl() {
+        return mngActorPnl;
+    }
+
+    public void setMngActorPnl(ManageActorPanel mngActorPnl) {
+        this.mngActorPnl = mngActorPnl;
+    }
+
+    public JPanel getPanelContainer() {
+        return panelContainer;
+    }
+
+    public void setPanelContainer(JPanel panelContainer) {
+        this.panelContainer = panelContainer;
+    }
+
+    public JComboBox<String> getCb() {
+        return cb;
+    }
+
+    public void setCb(JComboBox<String> cb) {
+        this.cb = cb;
+    }
+
+    public CardLayout getCl() {
+        return cl;
+    }
+
+    public void setCl(CardLayout cl) {
+        this.cl = cl;
+    }
+}
+
+
+
 }

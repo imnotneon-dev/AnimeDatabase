@@ -1,16 +1,22 @@
 package com.anime.view;
 
 import com.anime.view.customcards.SeriesCard;
-
+import com.anime.model.Series;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePage extends JPanel{
-    private List<SeriesCard> watchingList = null;
+    private List<SeriesCard> watchingListCard = new ArrayList<>();
+    private List<SeriesCard> favoriteListCard = new ArrayList<>();
+
+    private List<Series> watchingList = new ArrayList<>();
+    private List<Series> favoriteList = new ArrayList<>();
             //List.of(
             //new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"));
+    /*
     private List<SeriesCard> favoriteList = List.of(
             new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
             new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
@@ -52,11 +58,15 @@ public class HomePage extends JPanel{
             new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
             new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
             new SeriesCard("Inazuma Eleven"));
-
-    private GridBagLayout gb = new GridBagLayout();
+*/
     private JPanel container = new JPanel();
+    private JPanel watchContainer = new JPanel();
+    private JPanel favoriteContainer = new JPanel();
+
+    private final String WATCH_MSG = "Not watching anything? Check out the catalog!";
+    private final String FAVE_MSG = "Add your favorite shows by clicking the heart on a series";
+
 //    private JPanel catalogWrapperPanel = new JPanel();
-    private JScrollPane homePageScrollPane = new JScrollPane(container);
 
     public HomePage() {
         init();
@@ -74,10 +84,10 @@ public class HomePage extends JPanel{
     }
 
     private void initComponents(){
-        JPanel watchShelf = createShelf("Watching",
-                "Not watching anything? Check out the catalog!", watchingList);
-        JPanel favoriteShelf = createShelf("Favorite Shows",
-                "Add your favorite shows by clicking the heart on a series",favoriteList);
+          JPanel watchShelf = createShelf("Watching",
+                WATCH_MSG, watchContainer, watchingListCard );
+          JPanel favoriteShelf = createShelf("Favorite Shows",
+                FAVE_MSG,favoriteContainer, favoriteListCard);
         watchShelf.setBackground(Color.MAGENTA);
         favoriteShelf.setBackground(Color.ORANGE);
 
@@ -93,25 +103,27 @@ public class HomePage extends JPanel{
         container.add(favoriteShelf);
         container.add(Box.createVerticalGlue());
 //        container.add(shelf2);
+/*
 
-//        homePageScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-//        homePageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        homePageScrollPane.getVerticalScrollBar().setUnitIncrement(10);
-//        homePageScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(10,Integer.MAX_VALUE));
-//        homePageScrollPane.getVerticalScrollBar().setVisible(false);
-//        homePageScrollPane.setWheelScrollingEnabled(true);
-//        homePageScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-//        homePageScrollPane.setBorder(new EmptyBorder(20,20,20,20));
+        homePageScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        homePageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        homePageScrollPane.getVerticalScrollBar().setUnitIncrement(10);
+        homePageScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(10,Integer.MAX_VALUE));
+        homePageScrollPane.getVerticalScrollBar().setVisible(false);
+        homePageScrollPane.setWheelScrollingEnabled(true);
+        homePageScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        homePageScrollPane.setBorder(new EmptyBorder(20,20,20,20));
+*/
 
         add(container);
 //        add(homePageScrollPane, BorderLayout.CENTER);
     }
 
-    private JPanel createShelf(String title, String msg, List<SeriesCard> seriesList){
+    private JPanel createShelf(String title, String msg, JPanel container, List<SeriesCard> cards){
         JLabel seriesTitle = new JLabel(title);
-        JLabel message = new JLabel(msg);
         JPanel shelfPnl = new JPanel();
-        JPanel seriesContentPnl = new JPanel();
+        JPanel seriesContentPnl = container;
+//        JLabel message = new JLabel(msg);
         JScrollPane seriesContentScroller = new JScrollPane(seriesContentPnl);
 
         seriesTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -132,60 +144,59 @@ public class HomePage extends JPanel{
         seriesContentScroller.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
 
         shelfPnl.setBorder(new EmptyBorder(10,10,15,10));
-        if(seriesList !=null) {
-            for (SeriesCard s : seriesList) {
-//            JButton series = new JButton();
-//            series.setText(s);
-                s.setAlignmentX(Component.LEFT_ALIGNMENT);
-                seriesContentPnl.add(s);
-            }
-        } else {
-            seriesContentPnl.add(message);
-        }
+        loadShelf(new ArrayList<>(), cards, seriesContentPnl,msg);
 //        seriesContentPnl.setMaximumSize(new Dimension(Integer.MAX_VALUE, seriesContentPnl.getPreferredSize().height));
         shelfPnl.add(seriesTitle);
         shelfPnl.add(seriesContentScroller);
         return shelfPnl;
     }
 
-    private JPanel createCatalog(String title, List<SeriesCard> seriesList){
-        JLabel seriesTitle = new JLabel(title);
-        JPanel shelfPnl = new JPanel();
-        JPanel seriesContentPnl = new JPanel();
-        JPanel catalogWrapperPanel = new JPanel();
-        JScrollPane seriesContentScroller = new JScrollPane(catalogWrapperPanel);
-
-        seriesTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        shelfPnl.setLayout(new BoxLayout(shelfPnl, BoxLayout.Y_AXIS));
-        shelfPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        seriesContentPnl.setLayout(new GridLayout(0,7,15,15));
-        seriesContentPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        catalogWrapperPanel.setLayout(new FlowLayout(FlowLayout.LEFT,0,0));
-        catalogWrapperPanel.setBackground(Color.CYAN);
-        catalogWrapperPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-        catalogWrapperPanel.add(seriesContentPnl);
-
-        seriesContentScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        seriesContentScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        seriesContentScroller.setWheelScrollingEnabled(true);
-        seriesContentScroller.setAlignmentX(Component.LEFT_ALIGNMENT);
-        seriesContentScroller.getVerticalScrollBar().setUnitIncrement(10);
-        seriesContentScroller.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
-
-
-        shelfPnl.setBorder(new EmptyBorder(10,10,15,10));
-
-        for (SeriesCard s: seriesList){
-            SeriesCard series = s;
-//            series.setText(s);
-            series.setAlignmentX(Component.LEFT_ALIGNMENT);
-            seriesContentPnl.add(series);
+    private void loadShelf(List<Series> sList, List<SeriesCard> sCards, JPanel container, String msg){
+        container.removeAll();
+        JLabel message = new JLabel(msg);
+        if(sList !=null) {
+            for (Series s : sList) {
+                SeriesCard sc = new SeriesCard(s);
+                sc.setAlignmentX(Component.LEFT_ALIGNMENT);
+                sCards.add(sc);
+                container.add(sc);
+            }
+        } else {
+            container.add(message);
         }
-        shelfPnl.add(seriesTitle);
-        shelfPnl.add(seriesContentScroller);
-        return shelfPnl;
+        container.revalidate();
+        container.repaint();
+    }
+    public JPanel getWatchContentPanel() {
+        return watchContainer;
+    }
+    public JPanel getFavoriteContentPanel() {
+        return favoriteContainer;
+    }
+    public List<SeriesCard> getWatchingListCard() {
+        return watchingListCard;
+    }
+
+    public List<SeriesCard> getFavoriteListCard() {
+        return favoriteListCard;
+    }
+
+    public List<Series> getWatchingList() {
+        return watchingList;
+    }
+
+    public void setWatchingList(List<Series> seriesList) {
+        this.watchingList = seriesList;
+        loadShelf(this.watchingList, this.watchingListCard, this.watchContainer, WATCH_MSG);
+    }
+
+    public List<Series> getFavoriteList() {
+        return favoriteList;
+    }
+
+    public void setFavoriteList(List<Series> favoriteList) {
+        this.favoriteList = favoriteList;
+        loadShelf(this.favoriteList, this.favoriteListCard, this.favoriteContainer, FAVE_MSG);
     }
 }
+

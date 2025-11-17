@@ -21,6 +21,7 @@ public class SeriesPage extends JPanel{
     private JPanel contentPnl = new JPanel();
     private JPanel actorsContainer = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(contentPnl);
+
     private JButton faveBtn = new JButton("❤️", new ImageIcon());
     private JLabel titleLb = new JLabel("My Hero Acaedmia Boku No Hero Academia some gibberish to cehck");
     private JLabel genreLb = new JLabel("Action");
@@ -51,8 +52,8 @@ public class SeriesPage extends JPanel{
     }*/
 
     public SeriesPage() {
-
         init();
+        reloadSeriesPage();
     }
     private void init() {
         setOpaque(true);
@@ -192,7 +193,7 @@ public class SeriesPage extends JPanel{
         contentPnl.repaint();
 
     }
-    public void loadEpisodeCards(){
+    private void loadEpisodeCards(){
         episodesPnl.removeAll();
         episodeCards.clear();
         if(episodeList!=null){
@@ -213,7 +214,7 @@ public class SeriesPage extends JPanel{
         episodesPnl.repaint();
     }
 
-    public void loadActorLabelCards(){
+    private void loadActorLabelCards(){
         actorsContainer.removeAll();
         actorLabelCards.clear();
         JLabel actorsListLb = new JLabel("Notable Actors:     ");
@@ -245,13 +246,18 @@ public class SeriesPage extends JPanel{
     }
     public List<Episode> getEpisodeList() { return episodeList; }
 
-    public void setEpisodeList(List<Episode> episodeList) { this.episodeList = episodeList; }
+    public void setEpisodeList(List<Episode> episodeList) {
+        this.episodeList = episodeList;
+        loadEpisodeCards();
+    }
 
     public List<Actor> getActorsList() { return actorsList; }
 
     public void setActorsList(List<Actor> actorsList) {
         this.actorsList = actorsList;
-        reloadSeriesPage();
+        loadActorLabelCards();
+//        reloadSeriesPage();
+
     }
 
 }

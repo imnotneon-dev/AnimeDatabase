@@ -240,7 +240,16 @@ public class AccountPanel extends JPanel{
             }
         });
     }
+    public JButton getLoginBtn() {
+        return loginBtn;
+    }
 
+    public JButton getSignupBtn() {
+        return signupBtn;
+    }
+    public String getLoginName() {
+        return loginNameField.getText();
+    }
     public String getLoginPassword() {
         return loginPasswordField.getText();
     }

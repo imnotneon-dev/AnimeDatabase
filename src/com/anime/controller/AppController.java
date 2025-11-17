@@ -385,5 +385,10 @@ public class AppController {
             });
         }
     }
+    private void init_admin_panel(){
+        AdminPage adminPage = view.getAdminPage();
+
+
+    }
 }
 

@@ -1,4 +1,6 @@
-package com.anime.model;
+package com.anime.model.dao;
+
+import com.anime.model.ActorSeries;
 
 import java.sql.*;
 import java.util.ArrayList;

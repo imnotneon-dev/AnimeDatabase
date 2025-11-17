@@ -1,4 +1,6 @@
-package com.anime.model;
+package com.anime.model.dao;
+
+import com.anime.model.EpisodeReview;
 
 import java.sql.*;
 import java.util.ArrayList;

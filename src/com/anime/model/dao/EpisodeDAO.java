@@ -1,4 +1,7 @@
-package com.anime.model;
+package com.anime.model.dao;
+
+import com.anime.model.Episode;
+import com.anime.model.EpisodeReview;
 
 import java.sql.*;
 

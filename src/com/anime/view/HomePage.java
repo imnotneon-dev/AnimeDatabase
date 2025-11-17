@@ -156,7 +156,7 @@ public class HomePage extends JPanel{
         JLabel message = new JLabel(msg);
         if(sList !=null) {
             for (Series s : sList) {
-                SeriesCard sc = new SeriesCard(s);
+                SeriesCard sc = new SeriesCard(s.getSeriesId(),s.getTitle());
                 sc.setAlignmentX(Component.LEFT_ALIGNMENT);
                 sCards.add(sc);
                 container.add(sc);

@@ -18,12 +18,12 @@ public class SeriesCard extends JPanel {
 //    private Episode episode;
     private String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
     private ImageIcon seriesPosterIcon;
-    private Series series;
+    private final int series_id;
 
-    public SeriesCard(Series series){
+    public SeriesCard(int sid, String title){
 //        episode = ep;
-        this.series = series;
-        String title = series.getTitle();
+        this.series_id = sid;
+        // TODO: FIGURE OUT HOW TO INIT THE SERIES PHOTO
 
         setOpaque(true);
         setVisible(true);
@@ -85,7 +85,7 @@ public class SeriesCard extends JPanel {
         this.seriesPosterIcon = seriesPosterIcon;
     }
 
-    public Series getSeriesDetails() {
-        return series;
+    public int getSeriesID() {
+        return series_id;
     }
 }

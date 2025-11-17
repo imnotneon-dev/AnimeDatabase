@@ -30,6 +30,7 @@ public class AppController {
         init_homepage_listeners();
         init_seriespage_listeners();
         init_episodepage_listeners();
+        init_actorpage_listeners();
 
     }
 
@@ -297,6 +298,18 @@ public class AppController {
     private void init_episodepage_listeners(){
         EpisodePage episodePage = view.getEpisodePage();
         Episode episodeInfo = episodePage.getEpisode();
+        episodePage.getLikeEpisodeBtn().addActionListener(e->{
+            // same logic
+            /*LikeEpisode checker = model.getFavoriteSeriesDAO().getFavoriteSeriesByUser(currentSession.getUsername(), seriesInfo.getSeriesId());
+            if(checker) {
+                // if true, meaning it has been favorited before, delete the favorited series
+                model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUsername(), seriesInfo.getSeriesId());
+            }
+            else {
+                // if false meaning it has NOT been favorited before, add the favorited series
+                model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUsername(), seriesInfo.getSeriesId());
+            }*/
+        });
         episodePage.getSubmitCommentBtn().addActionListener(e-> {
             try {
                 // might be redundant since series alr has the info but ill keep it here still

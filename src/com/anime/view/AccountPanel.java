@@ -241,15 +241,48 @@ public class AccountPanel extends JPanel{
         });
     }
 
-    public String getLoginName() {
-        return loginNameField.getText();
+    public String getLoginPassword() {
+        return loginPasswordField.getText();
     }
 
-    public JButton getLoginBtn(){
-        return loginBtn;
+    public JPanel getLoginContainer() {
+        return loginContainer;
     }
 
-    public JButton getSignupBtn(){
-        return signupBtn;
+    public String getSignName() {
+        return signNameField.getText();
+    }
+
+    public String getSignPassword() {
+        return signPasswordField.getText();
+    }
+
+    public String getSignConfirm() {
+        return signConfirmField.getText();
+    }
+
+    public String getSignDob() {
+        return signDobField.getText();
+    }
+
+    public JFormattedTextField getSignDobField() {
+        return signDobField;
+    }
+
+    public JComboBox getCountrySelector() {
+        return countrySelector;
+    }
+
+    public JButton getSubmitSignUpBtn() {
+        return submitSignUpBtn;
+    }
+
+    public JPanel getSignupContainer() {
+        return signupContainer;
+    }
+
+    public ImageIcon getTakorollIcon() {
+        return takorollIcon;
     }
 }
+

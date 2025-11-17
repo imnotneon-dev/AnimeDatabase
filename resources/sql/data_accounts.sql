@@ -20,7 +20,7 @@ INSERT INTO Users (username, password, date_of_birth, country, top_genre)
 VALUES ('_zafibleh', 'm3oW!', '2005-10-28', 'Canada', 'Romance');
 
 INSERT INTO Users (username, password, date_of_birth, country, top_genre)
-VALUES ('icep0p', 'xD_rul3z', '2005-07-27', 'South Korea', 'Horror');
+VALUES ('icep0p', 'xD_rul3z', '2006-07-27', 'South Korea', 'Horror');
 
 INSERT INTO Users (username, password, date_of_birth, country, top_genre)
 VALUES ('Mother_Coco', 'AFDG2028.switz!', '2004-12-18', 'Switzerland', 'Ecchi');
@@ -39,4 +39,5 @@ VALUES ('aridesu', 'gl@ssy!!', '2012-08-10', 'Romania', 'Drama');
 
 INSERT INTO Users (username, password, date_of_birth, country, top_genre)
 VALUES ('RYAN12345801', 's3cret!S4NT4', '2007-12-05', 'Philippines', 'Sci-Fi');
+
 

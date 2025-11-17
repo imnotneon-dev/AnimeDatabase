@@ -16,7 +16,7 @@ public class HeaderPanel extends JPanel {
     private JMenuItem likesItem = new JMenuItem();
     private JMenuItem accStatsItem = new JMenuItem();
     private JLabel homeIcon = new JLabel();
-    private JLabel accountName = new JLabel("AccountName");
+    private JLabel accountName = new JLabel();
 
     public HeaderPanel(){
         setLayout(new BorderLayout());
@@ -56,7 +56,7 @@ public class HeaderPanel extends JPanel {
         accountName.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                accountName.setForeground(Color.red);
+//                accountName.setForeground(Color.red);
                 menu.show(accountName,0,accountName.getHeight());
             }
 
@@ -71,5 +71,11 @@ public class HeaderPanel extends JPanel {
         return image;
     }
 
-
+    public JMenuItem getLogoutItem() { return logoutItem; }
+    public JMenuItem getWatchHistoryItem() { return watchHistoryItem; }
+    public JMenuItem getLikesItem() { return likesItem; }
+    public JMenuItem getAccStatsItem() { return accStatsItem; }
+    public JLabel getHomeIcon() { return homeIcon; }
+    public JLabel getAccountName() { return accountName; }
+    public void setAccountName(String name) { accountName.setText(name); }
 }

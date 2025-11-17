@@ -1,6 +1,7 @@
 package com.anime.view;
 
 import com.anime.model.Actor;
+import com.anime.model.ActorSeries;
 import com.anime.view.customcards.RoleCard;
 
 import javax.imageio.ImageIO;
@@ -9,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActorPage extends JPanel{
@@ -17,12 +19,17 @@ public class ActorPage extends JPanel{
     private JPanel rolesPnl = new JPanel();
     private JLabel actorPhoto = new JLabel();
     private JLabel nameLb = new JLabel("Name");
-    private JLabel ageLb = new JLabel("40");
+    private JLabel genderLb = new JLabel("Gender");
+    private JLabel dateOfBirthLb = new JLabel("yyyy-mm-dd");
     private JLabel placeOfBirthLb = new JLabel("Tokyo");
     private JLabel agencyNameLb = new JLabel("Agency");
     private JScrollPane rolesScrollPane = new JScrollPane(rolesPnl);
     private ImageIcon actorPhotoIcon   = new ImageIcon("/resources/imgs/takoroll_logo.png");
-//    private List<ActorRole> rolesList;
+
+    private List<ActorSeries> rolesList = new ArrayList<>();
+    private List<RoleCard> rolesCard = new ArrayList<>();
+
+    /*
     private List<RoleCard> rolesList = List.of(
             new RoleCard("My Hero Academia: Final Season", "Katsuki Bakugo"),
             new RoleCard("My Hero Academia: 3rd Season", "Katsuki Bakugo"),
@@ -44,7 +51,7 @@ public class ActorPage extends JPanel{
         new RoleCard("My Hero Academia", "Katsuki Bakugo"),
         new RoleCard("My Hero Academia", "Katsuki Bakugo"),
         new RoleCard("My Hero Academia", "Katsuki Bakugo"),
-        new RoleCard("My Hero Academia", "Katsuki Bakugo"));
+        new RoleCard("My Hero Academia", "Katsuki Bakugo"));*/
     /*
     * public ActorPage(Actor actor, List<ActorRole> roles){
     *   actorPhoto.
@@ -68,6 +75,7 @@ public class ActorPage extends JPanel{
     }
 
     private void initComponents(){
+
         JLabel actorInfo = new JLabel("Actor's Information");
         JLabel filmography = new JLabel("Filmography");
 
@@ -96,7 +104,8 @@ public class ActorPage extends JPanel{
 
         actorPhoto.setAlignmentX(Component.CENTER_ALIGNMENT);
         nameLb.setAlignmentX(Component.CENTER_ALIGNMENT);
-        ageLb.setAlignmentX(Component.CENTER_ALIGNMENT);
+        genderLb.setAlignmentX(Component.CENTER_ALIGNMENT);
+        dateOfBirthLb.setAlignmentX(Component.CENTER_ALIGNMENT);
         placeOfBirthLb.setAlignmentX(Component.CENTER_ALIGNMENT);
         agencyNameLb.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -106,7 +115,8 @@ public class ActorPage extends JPanel{
         actorInfoPnl.add(Box.createVerticalGlue());
         actorInfoPnl.add(actorPhoto);
         actorInfoPnl.add(nameLb);
-        actorInfoPnl.add(ageLb);
+        actorInfoPnl.add(genderLb);
+        actorInfoPnl.add(dateOfBirthLb);
         actorInfoPnl.add(placeOfBirthLb);
         actorInfoPnl.add(agencyNameLb);
 
@@ -124,12 +134,7 @@ public class ActorPage extends JPanel{
 
         rolesPnl.add(filmography);
         rolesPnl.add(Box.createVerticalStrut(10));
-        for(RoleCard r: rolesList){
-            RoleCard role = r;
-            role.setAlignmentX(Component.LEFT_ALIGNMENT);
-            rolesPnl.add(role);
-            rolesPnl.add(Box.createVerticalStrut(10));
-        }
+        loadRolesCards();
 
         rolesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         rolesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -141,6 +146,11 @@ public class ActorPage extends JPanel{
 
         add(actorInfoPnl, BorderLayout.WEST);
         add(rolesScrollPane, BorderLayout.CENTER);
+
+        actorInfoPnl.revalidate();
+        actorInfoPnl.repaint();
+        rolesScrollPane.revalidate();
+        rolesScrollPane.repaint();
     }
     public static BufferedImage loadImage(String iresPath)
     {
@@ -151,14 +161,44 @@ public class ActorPage extends JPanel{
     }
 
     public Actor getActorInfo() { return actorInfo; }
-    public void setActorInfo(Actor actorInfo) { this.actorInfo = actorInfo; }
+
+    public void setActorInfo(Actor actorInfo) {
+        this.actorInfo = actorInfo;
+        loadActorPageLabels();
+    }
 
 //    public JLabel getActorPhoto() { return actorPhoto; }
 //    public void setActorPhoto(JLabel actorPhoto) { this.actorPhoto = actorPhoto; }
+    private void loadActorPageLabels(){
+        nameLb.setText(this.actorInfo.getLastName() +
+                ", " +
+                this.actorInfo.getFirstName());
+        genderLb.setText(this.actorInfo.getGender());
+        dateOfBirthLb.setText(String.valueOf(this.actorInfo.getDob()));
+        placeOfBirthLb.setText(this.actorInfo.getPob());
+        agencyNameLb.setText(this.actorInfo.getAgency());
+
+        actorInfoPnl.revalidate();
+        actorInfoPnl.repaint();
+
+    }
+    public void loadRolesCards(){
+        rolesPnl.removeAll();
+        rolesCard.clear();
+        for(ActorSeries r: rolesList){
+            RoleCard card = new RoleCard(r.getSeriesId(),r.getCharacterName());
+            card.setAlignmentX(Component.LEFT_ALIGNMENT);
+            rolesCard.add(card);
+            rolesPnl.add(card);
+            rolesPnl.add(Box.createVerticalStrut(10));
+        }
+        rolesPnl.revalidate();
+        rolesPnl.repaint();
+    }
 
     public JLabel getNameLb() { return nameLb; }
 
-    public JLabel getAgeLb() { return ageLb; }
+    public JLabel getDateOfBirthLb() { return dateOfBirthLb; }
 
     public JLabel getPlaceOfBirthLb() { return placeOfBirthLb; }
 
@@ -170,6 +210,14 @@ public class ActorPage extends JPanel{
     public ImageIcon getActorPhotoIcon() { return actorPhotoIcon; }
     public void setActorPhotoIcon(ImageIcon actorPhotoIcon) { this.actorPhotoIcon = actorPhotoIcon; }
 
-    public List<RoleCard> getRolesList() { return rolesList; }
-    public void setRolesList(List<RoleCard> rolesList) { this.rolesList = rolesList; }
+    public List<ActorSeries> getRolesList() { return rolesList; }
+
+    public void setRolesList(List<ActorSeries> rolesList) {
+        this.rolesList = rolesList;
+        loadRolesCards();
+    }
+
+    public List<RoleCard> getRolesCard(){
+        return rolesCard;
+    }
 }

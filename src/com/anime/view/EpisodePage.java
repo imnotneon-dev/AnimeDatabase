@@ -1,20 +1,36 @@
 package com.anime.view;
 
+import com.anime.model.Episode;
+import com.anime.model.EpisodeReview;
 import com.anime.view.customcards.ReviewCard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class EpisodePage extends JPanel{
-    private JButton button = new JButton("SeriesPage");
+    private Episode episode;
     private JPanel videoPanel = new JPanel();
+
     private JPanel episodeInfoPnl = new JPanel();
     private JLabel titleLb = new JLabel("Episode Title");
     private JLabel seriesLb = new JLabel("Series Title");
     private JButton likeEpisodeBtn = new JButton("👍");
-    private List<ReviewCard> reviews = List.of(new ReviewCard("user1", "review 1 wowee"),
+
+    private JPanel reviewsPanel = new JPanel();
+    private JLabel commentsLb = new JLabel("Comments");
+    private JTextArea reviewTextArea = new JTextArea(3, 15);
+    private JButton submitCommentBtn = new JButton("Submit");
+    private JScrollPane reviewTextAreaScroll = new JScrollPane(reviewTextArea);
+    private JScrollPane reviewsScrollPane = new JScrollPane(reviewsPanel);
+
+    private List<ReviewCard> reviewCards = new ArrayList<>();
+    private List<EpisodeReview> reviewsList = new ArrayList<EpisodeReview>();
+    private GridBagLayout gb = new GridBagLayout();
+
+    /*private List<ReviewCard> reviews = List.of(new ReviewCard("user1", "review 1 wowee"),
                                         new ReviewCard("user2",
                                                 "jeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdsh" +
                                                         "jeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdsh" +
@@ -27,14 +43,8 @@ public class EpisodePage extends JPanel{
                                                         "jeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdsh" +
                                                         "jeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdsh" +
                                                         "jeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdsh" +
-                                                        "jeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshend"));
-    private JLabel commentsLb = new JLabel("Comments");
-    private JTextArea reviewTextArea = new JTextArea(3, 15);
-    private JPanel reviewsPanel = new JPanel();
-    private JButton submitCommentBtn = new JButton("Submit");
-    private JScrollPane reviewTextAreaScroll = new JScrollPane(reviewTextArea);
-    private JScrollPane reviewsScrollPane = new JScrollPane(reviewsPanel);
-    private GridBagLayout gb = new GridBagLayout();
+                                                        "jeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshjeladhsalkdshend"));*/
+
     public EpisodePage() {
         init();
     }
@@ -107,8 +117,7 @@ public class EpisodePage extends JPanel{
         episodeInfoPnl.add(epInfoHSpacer);
         episodeInfoPnl.add(likeEpisodeBtn);
 
-
-        /**
+        /*
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setWheelScrollingEnabled(true);
@@ -152,12 +161,6 @@ public class EpisodePage extends JPanel{
         reviewsPanel.add(Box.createVerticalStrut(5));
         reviewsPanel.add(commentsLb);
         reviewsPanel.add(Box.createVerticalStrut(10));
-        for(ReviewCard r: reviews){
-            ReviewCard revCard = r;
-            revCard.setAlignmentX(Component.LEFT_ALIGNMENT);
-            reviewsPanel.add(revCard);
-            reviewsPanel.add(Box.createVerticalStrut(10));
-        }
 
         reviewsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         reviewsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -172,6 +175,8 @@ public class EpisodePage extends JPanel{
 
         add(videoPanel);
         add(episodeInfoPnl);
+
+        loadReviewCards();
         add(reviewsScrollPane);
         add(Box.createVerticalGlue());
     }
@@ -182,8 +187,64 @@ public class EpisodePage extends JPanel{
         reviewsPanel.add(reviewLabel);
         reviewsPanel.add(Box.createVerticalStrut(5));
     }
-
-    public JButton getButton(){
-        return button;
+    public void loadEpisodeLabels(){
+        titleLb.setText(this.episode.getTitle());
+        // Assuming Episode has getSeriesTitle() or similar access
+        seriesLb.setText("From Series: " +
+                (titleLb.getText() != null ?
+                        seriesLb.getText() : "N/A"));
     }
+    public void loadReviewCards(){
+        reviewsPanel.removeAll();
+        reviewCards.clear();
+        for(EpisodeReview r: reviewsList){
+            ReviewCard revCard = new ReviewCard(r.getUsername(),r.getUserReview());
+            revCard.setAlignmentX(Component.LEFT_ALIGNMENT);
+            reviewCards.add(revCard);
+            reviewsPanel.add(revCard);
+            reviewsPanel.add(Box.createVerticalStrut(10));
+        }
+
+        reviewsPanel.revalidate();
+        reviewsPanel.repaint();
+    }
+    public JPanel getVideoPanel() { return videoPanel; }
+    public void setVideoPanel(JPanel videoPanel) { this.videoPanel = videoPanel; }
+
+    public JPanel getEpisodeInfoPnl() { return episodeInfoPnl; }
+    public void setEpisodeInfoPnl(JPanel episodeInfoPnl) { this.episodeInfoPnl = episodeInfoPnl; }
+
+    public JLabel getTitleLb() { return titleLb; }
+    public void setTitleLb(JLabel titleLb) { this.titleLb = titleLb; }
+
+    public JLabel getSeriesLb() { return seriesLb; }
+    public void setSeriesTitle(String seriesTitle) {
+        seriesLb.setText(seriesTitle);
+    }
+
+    public JButton getLikeEpisodeBtn() { return likeEpisodeBtn; }
+    public void setLikeEpisodeBtn(JButton likeEpisodeBtn) { this.likeEpisodeBtn = likeEpisodeBtn; }
+
+    public List<ReviewCard> getReviewsCards() { return reviewCards; }
+    public void setReviews(List<ReviewCard> reviewCards) { this.reviewCards = reviewCards; }
+
+    public JTextArea getReviewTextArea() { return reviewTextArea; }
+    public void setReviewTextArea(JTextArea reviewTextArea) { this.reviewTextArea = reviewTextArea; }
+
+    public JPanel getReviewsPanel() { return reviewsPanel; }
+    public void setReviewsPanel(JPanel reviewsPanel) { this.reviewsPanel = reviewsPanel; }
+
+    public JButton getSubmitCommentBtn() { return submitCommentBtn; }
+    public void setSubmitCommentBtn(JButton submitCommentBtn) { this.submitCommentBtn = submitCommentBtn; }
+
+    public Episode getEpisode() { return episode; }
+    public void setEpisode(Episode episode) { this.episode = episode; loadEpisodeLabels(); }
+
+    public List<EpisodeReview> getReviewsList(){ return reviewsList; }
+    public void setReviewsList(List<EpisodeReview> reviewsList){
+        this.reviewsList = reviewsList;
+        loadReviewCards();
+        // update after adding new reviews
+    }
+
 }

@@ -98,4 +98,43 @@ public class AnimeFrame extends JFrame {
         cardLayout.show(container, vname);
     }
 
+    public AccountPanel getLoginPanel() {
+        return login;
+    }
+
+    public HomePage getHomePage() {
+        return home;
+    }
+
+    public CatalogPage getCatalogPage() {
+        return catalog;
+    }
+
+    public SeriesPage getSeriesPage() {
+        return series;
+    }
+
+    public EpisodePage getEpisodePage() {
+        return episode;
+    }
+
+    public ActorPage getActorPage() {
+        return actor;
+    }
+
+    public WatchHistory getWatchHistoryPage() {
+        return watch;
+    }
+
+    public LikeHistory getLikeHistoryPage() {
+        return likes;
+    }
+
+    public HeaderPanel getHeaderPanel() {
+        return head;
+    }
+
+    public AdminPage getAdminPage() {
+        return adminpg;
+    }
 }

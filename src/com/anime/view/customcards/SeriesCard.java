@@ -2,7 +2,7 @@ package com.anime.view.customcards;
 
 import com.anime.view.AccountPanel;
 import com.anime.view.HomePage;
-
+import com.anime.model.Series;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,8 +18,13 @@ public class SeriesCard extends JPanel {
 //    private Episode episode;
     private String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
     private ImageIcon seriesPosterIcon;
-    public SeriesCard(String title){
+    private final int series_id;
+
+    public SeriesCard(int sid, String title){
 //        episode = ep;
+        this.series_id = sid;
+        // TODO: FIGURE OUT HOW TO INIT THE SERIES PHOTO
+
         setOpaque(true);
         setVisible(true);
         setBackground(Color.WHITE);
@@ -70,5 +75,17 @@ public class SeriesCard extends JPanel {
         try { image = ImageIO.read(SeriesCard.class.getResource(iresPath)); }
         catch (IOException e) { e.printStackTrace(); }
         return image;
+    }
+
+    public ImageIcon getSeriesPosterIcon() {
+        return seriesPosterIcon;
+    }
+
+    public void setSeriesPosterIcon(ImageIcon seriesPosterIcon) {
+        this.seriesPosterIcon = seriesPosterIcon;
+    }
+
+    public int getSeriesID() {
+        return series_id;
     }
 }

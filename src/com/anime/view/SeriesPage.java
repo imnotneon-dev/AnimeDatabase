@@ -1,12 +1,14 @@
 package com.anime.view;
 
+import com.anime.model.Actor;
+import com.anime.model.Episode;
 import com.anime.model.Series;
 import com.anime.view.customcards.SeriesEpisodeCard;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,13 +26,20 @@ public class SeriesPage extends JPanel{
     private JLabel releaseYearLb = new JLabel("2025");
     private JLabel epCountLb = new JLabel("Episodes: 5");
     private JLabel statusLb = new JLabel("Ongoing");
-//    private List<Episode> episodeList;
+
+    private List<Episode> episodeList = new ArrayList<>();
+    private List<Actor> actorsList = new ArrayList<>();
+
+    private List<SeriesEpisodeCard> episodeCards = new ArrayList<>();
+    private List<JLabel> actorLabelCards = new ArrayList<>();
+    /*
     private List<String> episodeList = List.of(
             "Episode 1","Episode 2","Episode 3","Episode 4","Episode 5",
         "Episode 6","Episode 7","Episode 8","Episode 9","Episode 10",
         "Episode 11","Episode 12");
     private List<String> actorsList = List.of("Actor 1", "Actor 2", "Actor 3");
-    private GridBagLayout gb = new GridBagLayout();
+    */
+  private GridBagLayout gb = new GridBagLayout();
     /*public SeriesPage (Series series, List<Episodes> epList){
         // take the info from the series passed then use that to display stuff
         titleLb.setText();
@@ -126,8 +135,9 @@ public class SeriesPage extends JPanel{
         seriesInfoPnl.add(epInfoHSpacer);
         seriesInfoPnl.add(faveBtn);
         actorsContainer.add(actorsListLb);
-        for(String a: actorsList){
-            JLabel actor = new JLabel(a);
+        for(Actor a: actorsList){
+            JLabel actor = new JLabel(a.getLastName() + ", " + a.getFirstName());
+            actorLabelCards.add(actor);
             actorsContainer.add(actor);
             actorsContainer.add(Box.createVerticalStrut(5));
         }
@@ -137,9 +147,12 @@ public class SeriesPage extends JPanel{
         episodesPnl.setBorder(new EmptyBorder(0,25,35,40));
         episodesPnl.setBackground(Color.black);
 //        episodesPnl.setPreferredSize(new Dimension(1280,600));
-        for(String s: episodeList){
-            SeriesEpisodeCard epCard = new SeriesEpisodeCard(s,"test",23, LocalDate.of(2025,9,14));
+        for(Episode e: episodeList){
+            SeriesEpisodeCard epCard = new SeriesEpisodeCard(
+                    e.getTitle(),e.getSypnosis(),e.getRuntime(),
+                    e.getReleaseDate());
             epCard.setAlignmentX(Component.LEFT_ALIGNMENT);
+            episodeCards.add(epCard);
             episodesPnl.add(epCard);
         }
         episodesPnl.setMaximumSize(new Dimension(1280,Integer.MAX_VALUE));
@@ -170,30 +183,21 @@ public class SeriesPage extends JPanel{
     }
 
     public Series getSeries() { return series; }
+
     public void setSeries(Series series) { this.series = series; }
 
-    public JButton getFaveBtn() { return faveBtn; }
-    public void setFaveBtn(JButton faveBtn) { this.faveBtn = faveBtn; }
+    public List<SeriesEpisodeCard> getEpisodeCards(){
+        return episodeCards;
+    }
+    public List<JLabel> getActorLabelCards(){
+        return actorLabelCards;
+    }
+    public List<Episode> getEpisodeList() { return episodeList; }
 
-    public JLabel getTitleLb() { return titleLb; }
-    public void setTitleLb(JLabel titleLb) { this.titleLb = titleLb; }
+    public void setEpisodeList(List<Episode> episodeList) { this.episodeList = episodeList; }
 
-    public JLabel getGenreLb() { return genreLb; }
-    public void setGenreLb(JLabel genreLb) { this.genreLb = genreLb; }
+    public List<Actor> getActorsList() { return actorsList; }
 
-    public JLabel getReleaseYearLb() { return releaseYearLb; }
-    public void setReleaseYearLb(JLabel releaseYearLb) { this.releaseYearLb = releaseYearLb; }
-
-    public JLabel getEpCountLb() { return epCountLb; }
-    public void setEpCountLb(JLabel epCountLb) { this.epCountLb = epCountLb; }
-
-    public JLabel getStatusLb() { return statusLb; }
-    public void setStatusLb(JLabel statusLb) { this.statusLb = statusLb; }
-
-    public List<String> getEpisodeList() { return episodeList; }
-    public void setEpisodeList(List<String> episodeList) { this.episodeList = episodeList; }
-
-    public List<String> getActorsList() { return actorsList; }
-    public void setActorsList(List<String> actorsList) { this.actorsList = actorsList; }
+    public void setActorsList(List<Actor> actorsList) { this.actorsList = actorsList; }
 
 }

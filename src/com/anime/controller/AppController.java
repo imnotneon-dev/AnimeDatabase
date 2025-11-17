@@ -298,6 +298,34 @@ public class AppController {
     private void init_episodepage_listeners(){
         EpisodePage episodePage = view.getEpisodePage();
         Episode episodeInfo = episodePage.getEpisode();
+
+        episodePage.getSeriesLb().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int series_id = episodePage.getEpisode().getSeriesId();
+                try {
+                    // might be redundant since series alr has the info but ill keep it here still
+                    Series series = model.getSeriesDAO().getSeriesById(series_id);
+                    // get episode list of the series
+                    // List<Episode> episodeList = model.getEpisodeDAO().
+                    // List<ActorSeries> actorList = model.getActorDAO().
+                    if(series!=null) {
+                        // load series info
+                        view.getSeriesPage().setSeries(series);
+                        view.getSeriesPage().setEpisodeList();
+                        view.getSeriesPage().setActorsList();
+                        view.switchView(view.SERIES);
+                    } else {
+                        System.out.println("Series details cannot be found.");
+                    }
+                }
+                catch (SQLException ex) {
+                    System.err.println("DB Error during series loading: " + ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+
+            }
+        });
         episodePage.getLikeEpisodeBtn().addActionListener(e->{
             // same logic
             /*LikeEpisode checker = model.getFavoriteSeriesDAO().getFavoriteSeriesByUser(currentSession.getUsername(), seriesInfo.getSeriesId());

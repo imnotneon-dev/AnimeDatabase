@@ -197,7 +197,7 @@ public class SeriesPage extends JPanel{
         episodeCards.clear();
         if(episodeList!=null){
             for(Episode e: episodeList){
-                SeriesEpisodeCard epCard = new SeriesEpisodeCard(
+                SeriesEpisodeCard epCard = new SeriesEpisodeCard(e.getEpisodeId(),
                         e.getTitle(),e.getSypnosis(),e.getRuntime(),
                         e.getReleaseDate());
                 epCard.setAlignmentX(Component.LEFT_ALIGNMENT);

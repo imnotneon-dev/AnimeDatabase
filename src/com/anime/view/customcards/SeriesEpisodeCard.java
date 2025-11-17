@@ -11,8 +11,10 @@ import java.time.LocalDate;
 
 public class SeriesEpisodeCard extends JPanel {
 //    private Episode episode;
-    public SeriesEpisodeCard(String title, String syp, int runtime, LocalDate releaseDate){
+    private final int episode_id;
+    public SeriesEpisodeCard(int eid, String title, String syp, int runtime, LocalDate releaseDate){
 //        episode = ep;
+        this.episode_id = eid;
         setOpaque(true);
         setVisible(true);
         setBackground(Color.WHITE);
@@ -42,5 +44,9 @@ public class SeriesEpisodeCard extends JPanel {
                 setBackground(Color.WHITE);
             }
         });
+    }
+
+    public int getEpisodeId(){
+        return episode_id;
     }
 }

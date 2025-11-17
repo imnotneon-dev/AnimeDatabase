@@ -1,5 +1,6 @@
 package com.anime.view;
 
+import com.anime.model.Series;
 import com.anime.view.customcards.SeriesEpisodeCard;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class SeriesPage extends JPanel{
+    private Series series;
     private JButton button = new JButton("SeriesPage");
     private GradientPanel seriesInfoPnl;
     private JPanel episodesPnl = new JPanel();
@@ -20,7 +22,7 @@ public class SeriesPage extends JPanel{
     private JButton faveBtn = new JButton("❤️", new ImageIcon());
     private JLabel titleLb = new JLabel("My Hero Acaedmia Boku No Hero Academia some gibberish to cehck");
     private JLabel genreLb = new JLabel("Action");
-    private JLabel releaseYearLb = new JLabel("2025-09-08");
+    private JLabel releaseYearLb = new JLabel("2025");
     private JLabel epCountLb = new JLabel("Episodes: 5");
     private JLabel statusLb = new JLabel("Ongoing");
 //    private List<Episode> episodeList;
@@ -40,6 +42,11 @@ public class SeriesPage extends JPanel{
     }*/
 
     public SeriesPage() {
+        titleLb.setText(series.getTitle());
+        genreLb.setText(series.getGenre());
+        releaseYearLb.setText("Release Year: " + series.getReleaseYear());
+        epCountLb.setText("Total Number of Episodes: " + series.getTotalEpisodes());
+        statusLb.setText("Status: " + series.getStatus());
         init();
     }
     private void init() {

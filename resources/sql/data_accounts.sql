@@ -38,4 +38,5 @@ INSERT INTO Users (username, password, date_of_birth, country, top_genre)
 VALUES ('aridesu', 'gl@ssy!!', '2012-08-10', 'Romania', 'Drama');
 
 INSERT INTO Users (username, password, date_of_birth, country, top_genre)
-VALUES ('RYAN1205', 's3cret!S4NT4', '2007-12-05', 'Philippines', 'Sci-Fi');
+VALUES ('RYAN12345801', 's3cret!S4NT4', '2007-12-05', 'Philippines', 'Sci-Fi');
+

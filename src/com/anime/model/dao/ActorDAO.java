@@ -1,7 +1,6 @@
 package com.anime.model.dao;
 
 import com.anime.model.Actor;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +44,40 @@ public class ActorDAO {
         }
         return roles;
     }
+
+    public List<Actor> getActorsByEpisode(int epId) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT a.actor_id, a.name, a.role ");
+        sql.append("FROM actors a ");
+        sql.append("JOIN actor_series acs ON a.actor_id = acs.actor_id ");
+        sql.append("JOIN series s ON acs.series_id = s.series_id ");
+        sql.append("WHERE s.ep_id = ?;");
+        
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+            ps.setInt(1, epId);
+            ResultSet rs = ps.executeQuery();
+            List<Actor> actors = new ArrayList<>();
+            while(rs.next()) {
+                Actor actor = new Actor(
+                    rs.getInt("actor_id"),
+                    rs.getString("last_name"),
+                    rs.getString("first_name"),
+                    rs.getString("gender"),
+                    rs.getDate("date_of_birth").toLocalDate(),
+                    rs.getString("pob"),
+                    rs.getString("agency")
+                );
+                actors.add(actor);
+            }
+            return actors;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }   
+
+    }
+
 
     public void addActor(String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) {
         StringBuilder sql = new StringBuilder();

@@ -122,8 +122,10 @@ public class AppController {
 
                     if(account!=null){
                         this.currentSession = account;
-                    System.out.println("Signup Success. Logging in...");
-                    view.switchView(view.HOME);
+                        System.out.println("Signup Success. Logging in...");
+//                        view.getHomePage().setWatchingList();
+//                        view.getHomePage().setFavoriteList();
+                        view.switchView(view.HOME);
                     }
                     else{
                         System.out.println("Account created, but auto login failed.");
@@ -192,11 +194,14 @@ public class AppController {
                     try {
                         // might be redundant since series alr has the info but ill keep it here still
                         Series series = model.getSeriesDAO().getSeriesById(series_id);
-
+                        // get episode list of the series
+                        // List<Episode> episodeList = model.getEpisodeDAO().
+                        // List<ActorSeries> actorList = model.getActorDAO().
                         if(series!=null) {
                             // load series info
                             view.getSeriesPage().setSeries(series);
-
+                            view.getSeriesPage().setEpisodeList();
+                            view.getSeriesPage().setActorsList();
                             view.switchView(view.SERIES);
                         } else {
                             System.out.println("Series details cannot be found.");
@@ -265,12 +270,47 @@ public class AppController {
                         }
                     }
                     catch (SQLException ex) {
-                        System.err.println("DB Error during episode loading: " + ex.getMessage());
+                        System.err.println("DB Error during episode/actor loading: " + ex.getMessage());
                         throw new RuntimeException(ex);
                     }
 
                 }
             });
         }
+        seriesPage.getFaveBtn().addActionListener(e->{
+            FavoriteSeries checker = model.getFavoriteSeriesDAO().getFavoriteSeriesByUser(currentSession.getUsername(), seriesInfo.getSeriesId());
+            if(checker) {
+                // if true, meaning it has been favorited before, delete the favorited series
+                model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUsername(), seriesInfo.getSeriesId());
+            }
+            else {
+                // if false meaning it has NOT been favorited before, add the favorited series
+                model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUsername(), seriesInfo.getSeriesId());
+            }
+        });
+    }
+
+    private void init_episodepage_listeners(){
+        EpisodePage episodePage = view.getEpisodePage();
+        Episode episodeInfo = episodePage.getEpisode();
+        episodePage.getSubmitCommentBtn().addActionListener(e-> {
+            try {
+                // might be redundant since series alr has the info but ill keep it here still
+                String username = currentSession.getUsername();
+                int ep_id = episodeInfo.getEpisodeId();
+                String reviewText = episodePage.getReviewTextArea().getText();
+                // ! make sure username is String, not int
+                model.getEpisodeReviewDAO().addReview(username, ep_id, reviewText);
+                List<EpisodeReview> reviewList = model.getEpisodeReviewDAO().getReviewsByEpisodeId(ep_id);
+                // load series info
+                view.getEpisodePage().setReviewsList(reviewList);
+                view.switchView(view.EPISODE);
+            } catch (SQLException ex) {
+                System.err.println("DB Error during reviews loading: " + ex.getMessage());
+                throw new RuntimeException(ex);
+            }
+            episodePage.getReviewTextArea().setText("");
+        });
     }
 }
+

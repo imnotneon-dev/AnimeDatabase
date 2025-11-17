@@ -1,6 +1,4 @@
-package com.anime.model.dao;
-
-import com.anime.model.FavoriteSeries;
+package com.anime.model;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -12,25 +10,6 @@ public class FavoriteSeriesDAO {
 
     public FavoriteSeriesDAO(Connection conn) {
         this.conn = conn;
-    }
-
-    public boolean addFavoriteSeries(int user_id, int series_id) {
-        String sql = "INSERT INTO FavoriteSeries (user_id, series_id, added_date) VALUES (?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            
-            ps.setInt(1, user_id);
-            ps.setInt(2, series_id);
-            ps.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
-            
-            int rowsAffected = ps.executeUpdate();
-            
-            return rowsAffected > 0;
-        
-        } catch (SQLException e) {
-            e.printStackTrace();
-            
-            return false;
-        }
     }
 
     public int countFavorites(int user_id) {
@@ -49,6 +28,32 @@ public class FavoriteSeriesDAO {
         
         }
         return 0;
+    }
+
+    public boolean addFavoriteSeries(int user_id, int series_id) {
+        
+        int currentCount = countFavorites(user_id);
+        if (currentCount >= 100) {
+            System.out.println("Cannot add more favorite series. 100 favorite series limit reached.");
+            return false; 
+        }
+
+        String sql = "INSERT INTO FavoriteSeries (user_id, series_id, added_date) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, user_id);
+            ps.setInt(2, series_id);
+            ps.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
+            
+            int rowsAffected = ps.executeUpdate();
+            
+            return rowsAffected > 0;
+        
+        } catch (SQLException e) {
+            e.printStackTrace();
+            
+            return false;
+        }
     }
 
     public boolean removeFavoriteSeries(int user_id, int series_id) {

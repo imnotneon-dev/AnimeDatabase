@@ -119,7 +119,7 @@ public class CatalogPage extends JPanel{
         seriesContentPnl.removeAll();
         seriesCards.clear();
         for (Series s: seriesList){
-            SeriesCard series = new SeriesCard(s.getSeriesId(), s.getTitle());
+            SeriesCard series = new SeriesCard(s.getSeriesId(), s.getTitle(), s.getSeriesPhoto());
             series.setAlignmentX(Component.LEFT_ALIGNMENT);
             seriesCards.add(series);
             seriesContentPnl.add(series);

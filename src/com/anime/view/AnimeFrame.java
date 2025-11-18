@@ -96,6 +96,9 @@ public class AnimeFrame extends JFrame {
         container.add(wrapped, WRAPPED);
         add(head, BorderLayout.NORTH);
         add(container);
+
+        // display account first
+        switchView(LOGIN);
     }
 
     public CardLayout getCardLayout(){
@@ -154,7 +157,7 @@ public class AnimeFrame extends JFrame {
         return reportpg;
     }
 
-    public AnimeWrappedPage getWrappedPage(){
+    public AnimeWrappedPanel getWrappedPage(){
         return wrapped;
     }
 }

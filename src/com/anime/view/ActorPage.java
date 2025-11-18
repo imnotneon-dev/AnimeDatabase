@@ -25,7 +25,7 @@ public class ActorPage extends JPanel{
     private JLabel agencyNameLb = new JLabel("Agency");
     private JScrollPane rolesScrollPane = new JScrollPane(rolesPnl);
     private ImageIcon actorPhotoIcon   = new ImageIcon("/resources/imgs/takoroll_logo.png");
-
+    String ACTOR_PHOTO = "/imgs/takoroll_logo.png";
     private List<ActorSeries> rolesList = new ArrayList<>();
     private List<RoleCard> rolesCard = new ArrayList<>();
 
@@ -94,8 +94,8 @@ public class ActorPage extends JPanel{
         // fix this line
         actorInfoPnl.setBorder(new EmptyBorder(10,10,10,10));
 
-        String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
-        BufferedImage biActorPic = loadImage(TAKOROLL_LOGO);
+
+        BufferedImage biActorPic = loadImage(ACTOR_PHOTO);
         Image scaled = biActorPic.getScaledInstance(360,500,Image.SCALE_SMOOTH);
         actorPhotoIcon = new ImageIcon(scaled);
         actorPhoto.setIcon(actorPhotoIcon);
@@ -177,6 +177,7 @@ public class ActorPage extends JPanel{
         dateOfBirthLb.setText(String.valueOf(this.actorInfo.getDob()));
         placeOfBirthLb.setText(this.actorInfo.getPob());
         agencyNameLb.setText(this.actorInfo.getAgency());
+        ACTOR_PHOTO = this.actorInfo.getActorPhoto();
 
         actorInfoPnl.revalidate();
         actorInfoPnl.repaint();
@@ -220,4 +221,6 @@ public class ActorPage extends JPanel{
     public List<RoleCard> getRolesCard(){
         return rolesCard;
     }
+
+
 }

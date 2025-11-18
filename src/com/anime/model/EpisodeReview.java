@@ -3,13 +3,13 @@ package com.anime.model;
 public class EpisodeReview {
 
     private int review_id;
-    private String username;
+    private int user_id;
     private int episode_id;
     private String comment;
 
-    public EpisodeReview(int review_id, String username, int episode_id, String comment) {
+    public EpisodeReview(int review_id, int user_id, int episode_id, String comment) {
         this.review_id = review_id;
-        this.username = username;
+        this.user_id = user_id;
         this.episode_id = episode_id;
         this.comment = comment;
     }
@@ -22,12 +22,12 @@ public class EpisodeReview {
         this.review_id = review_id;
     }
 
-    public String getUsername() {
-        return username;
+    public int getUsername() {
+        return user_id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(int user_id) {
+        this.user_id = user_id;
     }
 
     public int getEpisode_id() {

@@ -8,14 +8,14 @@ import java.util.Scanner;
 
 public class SeriesDAO{
 
-    private final Connection conn;
-
-    public SeriesDAO(Connection conn) {
-        this.conn = conn;
-    }
+//    private final Connection conn;
+//
+//    public SeriesDAO(Connection conn) {
+//        this.conn = conn;
+//    }
 
     // TODO: add throws SQL EXCEPTION
-    public Series getSeriesById(int series_id) {
+    public Series getSeriesById(int series_id) throws SQLException{
         String sql = "SELECT * FROM series WHERE series_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -45,7 +45,7 @@ public class SeriesDAO{
 
 
     
-    public Series getSeriesByTitle(String title){
+    public Series getSeriesByTitle(String title) throws SQLException{
         String sql = "SELECT * FROM series WHERE title = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -76,7 +76,7 @@ public class SeriesDAO{
 
 
     
-    public List<Series> getAllSeries(){
+    public List<Series> getAllSeries() throws SQLException{
         List<Series> list = new ArrayList<>();
 
         String sql = "SELECT * FROM series";
@@ -107,7 +107,7 @@ public class SeriesDAO{
     }
 
 
-    public boolean addSeries(Series s){
+    public boolean addSeries(Series s) throws SQLException{
         /* boolean so that we know if na insert na true or false*/
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO series");
@@ -134,7 +134,7 @@ public class SeriesDAO{
 
     /*made it separate cause technically updating and archive a lot better to separate instead of
     putting them together. Makes it cleaner too*/
-    public boolean updateSeries(Series s){
+    public boolean updateSeries(Series s) throws SQLException{
        StringBuilder sql = new StringBuilder();
         sql.append("UPDATE series");
         sql.append("SET title = ?, genre = ?, release_year = ?, total_episodes = ?, status = ?");
@@ -159,7 +159,7 @@ public class SeriesDAO{
         return false;
     }
 
-    public boolean archiveSeries(int series_id){
+    public boolean archiveSeries(int series_id) throws SQLException{
         String sql = "UPDATE series SET status = 'Archived' WHERE series_id = ?";
 
         try(Connection conn = DBConnection.getConnection();
@@ -175,7 +175,7 @@ public class SeriesDAO{
         return false;
     }
 
-    public boolean unarchiveSeries(int series_id){
+    public boolean unarchiveSeries(int series_id) throws SQLException{
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Unarchiving this series? Select it's current status: 1 - Complete, 2 - On-going");

@@ -9,11 +9,11 @@ import java.util.List;
 
 public class LikedEpisodeDAO {
 
-    private Connection conn;
-
-    public LikedEpisodeDAO(Connection conn) {
-        this.conn = conn;
-    }
+//    private Connection conn;
+//
+//    public LikedEpisodeDAO(Connection conn) {
+//        this.conn = conn;
+//    }
 
     // Like an ep (can only like an ep once)
     public boolean addLike(int userId, int episodeId) throws SQLException {

@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteSeriesDAO {
-    private Connection conn;
-
-    public FavoriteSeriesDAO(Connection conn) {
-        this.conn = conn;
-    }
+//    private Connection conn;
+//
+//    public FavoriteSeriesDAO(Connection conn) {
+//        this.conn = conn;
+//    }
 
     public int countFavorites(int username) {
         String sql = "SELECT COUNT(*) AS total FROM FavoriteSeries WHERE username = ?";

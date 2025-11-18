@@ -8,11 +8,11 @@ import java.util.List;
 
 public class ActorSeriesDAO {
 
-    private final Connection conn;
-
-    public ActorSeriesDAO(Connection conn) {
-        this.conn = conn;
-    }
+//    private final Connection conn;
+//
+//    public ActorSeriesDAO(Connection conn) {
+//        this.conn = conn;
+//    }
 
     public List<ActorSeries> getAllActorSeries() throws SQLException {
         List<ActorSeries> actorSeriesList = new ArrayList<>();
@@ -46,16 +46,16 @@ public class ActorSeriesDAO {
 
             ps.setInt(1, actId);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+                if (rs.next()) {
                     ActorSeries a = new ActorSeries(
                             rs.getInt("act_id"),
                             rs.getInt("actors_id"),
                             rs.getInt("series_id"),
                             rs.getString("character_name")
                     );
-                    list.add(a);
+
+                    return a;
                 }
-            return list;
             }
 
         } catch (SQLException e) {
@@ -64,7 +64,7 @@ public class ActorSeriesDAO {
         return null;
     }
 
-    public List<ActorSeries> getCharacterByActor(int actors_id) {
+    public List<ActorSeries> getCharacterByActor(int actors_id) throws SQLException {
         String sql = "SELECT * FROM actorSeries WHERE actors_id = ?";
         List<ActorSeries> list = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection();
@@ -83,7 +83,7 @@ public class ActorSeriesDAO {
                 }
                 return list;
             }
-            return null;
+//            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;

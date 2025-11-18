@@ -8,11 +8,11 @@ import java.util.List;
 
 public class ActorDAO {
 
-    private final Connection conn;
+//    private final Connection conn;
 
-    public ActorDAO(Connection conn) {
-        this.conn = conn;
-    }
+//    public ActorDAO(Connection conn) {
+//        this.conn = conn;
+//    }
 
     public Actor getActorById(int id) throws SQLException {
         String sql = "SELECT * FROM actors WHERE id = ?";

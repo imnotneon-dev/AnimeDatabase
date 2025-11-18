@@ -14,7 +14,7 @@ public class WatchHistoryDAO {
 //        this.conn = conn;
 //    }
 
-    public List<WatchHistory> getWatchedListByUser(int user_id) {
+    public List<WatchHistory> getWatchedListByUser(int user_id) throws SQLException{
         List<WatchHistory> watched = new ArrayList<>();
         String sql = " SELECT DISTINCT watch_id, user_id, episode_id, watch_date " +
                 "FROM watchHistory w " +

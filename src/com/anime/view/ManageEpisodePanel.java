@@ -1,5 +1,8 @@
 package com.anime.view;
 
+import com.anime.model.ActorSeries;
+import com.anime.model.Episode;
+import com.anime.model.Series;
 import com.anime.view.customcards.PlainEpisodeCard;
 
 import javax.swing.*;
@@ -13,10 +16,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ManageEpisodePanel extends JPanel {
+    private JPanel episodeListPnl = new JPanel();
 
     private JTextField titleField = new JTextField();
 
@@ -29,16 +34,19 @@ public class ManageEpisodePanel extends JPanel {
     private JButton updateBtn = new JButton("Update");
     private JButton clearBtn = new JButton("Clear");
 
+    private List<Episode> episodeList = new ArrayList<>();
+    private List<Series> seriesList = new ArrayList<>();
+    private List<PlainEpisodeCard> episodeCards = new ArrayList<>();
 
 
-    private List<String> episodeList = List.of(
+    /*private List<String> episodeList = List.of(
             "Episode 1","Episode 2","Episode 3","Episode 4","Episode 5",
             "Episode 6","Episode 7","Episode 8","Episode 9","Episode 10",
             "Episode 11","Episode 12");
     private List<String> seriesList = List.of(
             "Series 1","Series 2","Series 3","Series 4","Series 5",
             "Series 6","Series 7","Series 8","Series 9","Series 10",
-            "Series 11","Series 12");
+            "Series 11","Series 12");*/
 
     public ManageEpisodePanel(){
         setLayout(new BorderLayout());
@@ -47,7 +55,7 @@ public class ManageEpisodePanel extends JPanel {
         setupEpisodePanel();
     }
     private void setupEpisodePanel(){
-        JPanel episodeListPnl = new JPanel();
+//        JPanel episodeListPnl = new JPanel();
         JPanel episodeFormPnl = new JPanel();
         JScrollPane epListScrollPane = new JScrollPane(episodeListPnl);
 
@@ -56,9 +64,11 @@ public class ManageEpisodePanel extends JPanel {
         episodeListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         episodeListPnl.setBorder(new EmptyBorder(10,10,10,10));
         episodeListPnl.setBackground(Color.magenta);
-        for(String e: episodeList){
+        for(Episode e: episodeList){
+
             PlainEpisodeCard pec = new PlainEpisodeCard("Seriesname", e);
             episodeListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
+            episodeCards.add(pec);
             episodeListPnl.add(pec);
             episodeListPnl.add(Box.createVerticalStrut(5));
         }
@@ -143,6 +153,26 @@ public class ManageEpisodePanel extends JPanel {
 //        episodeFormPnl.add(addEpisodePnl);
 
         add(episodeFormPnl,BorderLayout.CENTER);
+    }
 
+    private void setupRenderers() {
+        seriesTitleCb.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected,
+                                                          boolean cellHasFocus) {
+
+                Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                if (value instanceof Series series) {
+                    ((JLabel) component).setText(series.getTitle());
+                } else if (value != null) {
+                    ((JLabel) component).setText(value.toString());
+                } else {
+                    ((JLabel) component).setText("Select a Series");
+                }
+                return component;
+            }
+        });
     }
 }

@@ -90,6 +90,7 @@ CREATE TABLE episodeReviews (
     username VARCHAR(50) NOT NULL,
     episode_id INT NOT NULL,
     comment TEXT,
+	date_reviewed DATE DEFAULT CURRENT_DATE,
     FOREIGN KEY (username) REFERENCES users(username),
     FOREIGN KEY (episode_id) REFERENCES episodes(episode_id)
 );

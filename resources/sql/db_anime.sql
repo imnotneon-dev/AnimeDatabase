@@ -28,7 +28,9 @@ CREATE TABLE episodes (
     release_date DATE NOT NULL,
     synopsis VARCHAR(100),
     no_of_views INT DEFAULT 0,
+    series_id INT
     runtime INT NOT NULL
+    FOREIGN KEY (series_id) REFERENCES series(series_id)
 );
 DROP TABLE IF EXISTS actors;
 CREATE TABLE actors (
@@ -51,14 +53,14 @@ CREATE TABLE likedEpisode(
   FOREIGN KEY (episode_id) REFERENCES Episodes(episode_id) --episode_id variable name depends on what variable name will be used in the episodes.sql file
 );
 
-DROP TABLE IF EXISTS seriesEpisodes;
-CREATE TABLE series_episodes_t (
-    series_id INT NOT NULL,
-    episode_id INT NOT NULL,
-    PRIMARY KEY (series_id, episode_id),
-    FOREIGN KEY (series_id) REFERENCES series(series_id),
-    FOREIGN KEY (episode_id) REFERENCES episodes_t(episode_id)
-);
+--DROP TABLE IF EXISTS seriesEpisodes;
+--CREATE TABLE series_episodes_t (
+--    series_id INT NOT NULL,
+--    episode_id INT NOT NULL,
+--    PRIMARY KEY (series_id, episode_id),
+--    FOREIGN KEY (series_id) REFERENCES series(series_id),
+--    FOREIGN KEY (episode_id) REFERENCES episodes_t(episode_id)
+--);
 
 DROP TABLE IF EXISTS watchHistory;
 CREATE TABLE watchHistory (

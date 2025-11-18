@@ -1,6 +1,5 @@
 package com.anime.model.dao;
 
-import com.anime.model.Actor;
 import com.anime.model.ActorSeries;
 import java.sql.*;
 import java.util.ArrayList;
@@ -116,7 +115,7 @@ public class ActorSeriesDAO {
         }
     }
 
-    public void insertActorSeries(ActorSeries as) throws SQLException {
+    public boolean insertActorSeries(ActorSeries as) throws SQLException {
         String sql = "INSERT INTO actorSeries (actors_id, series_id, character_name) VALUES (?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
@@ -130,6 +129,7 @@ public class ActorSeriesDAO {
             e.printStackTrace();
             throw e;
         }
+        return false;
     }
 
     public void deleteActorSeries(int actId) throws SQLException {

@@ -28,11 +28,11 @@ public class EpisodeReview {
         this.review_id = review_id;
     }
 
-    public int getUsername() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUsername(int user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 

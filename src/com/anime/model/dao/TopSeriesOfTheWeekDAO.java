@@ -27,26 +27,10 @@ public class TopSeriesOfTheWeekDAO {
                       .append("LIMIT 5");
 
         int totalUsers = 0;
-        try (PreparedStatement totalStmt = connection.prepareStatement(totalUsersQuery)) {
-            totalStmt.setInt(1, weekNo);
-            ResultSet rs = totalStmt.executeQuery();
-            if (rs.next()) {
-                totalUsers = rs.getInt("total_users");
-            }
-        }
-
-        try (PreparedStatement topStmt = connection.prepareStatement(topSeriesQuery.toString())) {
-            topStmt.setInt(1, weekNo);
-            ResultSet rs = topStmt.executeQuery();
-            while (rs.next()) {
-                String title = rs.getString("title");
-                int viewers = rs.getInt("viewers");
-                double percentage = totalUsers > 0 ? (viewers * 100.0 / totalUsers) : 0.0;
-                topSeriesList.add(new TopSeriesOfTheWeek(title, viewers, percentage));
-            }
-        }
-
+    
+    
         return topSeriesList;
     }
 
 }
+

@@ -3,17 +3,12 @@ package com.anime.view;
 import com.anime.model.Actor;
 import com.anime.model.Series;
 import com.anime.view.customcards.PlainActorCard;
-import com.anime.view.customcards.PlainEpisodeCard;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ManageActorSeriesPanel extends JPanel {
     private JPanel actorListPnl = new JPanel();
@@ -22,6 +17,7 @@ public class ManageActorSeriesPanel extends JPanel {
     private JTextField actorRole = new JTextField();
 
     private JComboBox<Object> seriesTitleCb = new JComboBox<Object>();
+    private JComboBox<Object> actorSeriesCb = new JComboBox<Object>();
     private List<PlainActorCard> actorCards = new ArrayList<>();
 
     private JButton addBtn = new JButton("Add");
@@ -63,6 +59,11 @@ public class ManageActorSeriesPanel extends JPanel {
         seriesTitleCb.setMaximumSize(new Dimension(350,30));
         seriesTitleCb.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        actorSeriesCb = new JComboBox<Object>(allSeriesList.toArray());
+        actorSeriesCb.setMaximumSize(new Dimension(350,30));
+        actorSeriesCb.setAlignmentX(Component.LEFT_ALIGNMENT);
+        actorSeriesCb.setEditable(false);
+
         addBtn.setPreferredSize(new Dimension(200,35));
         addBtn.setMaximumSize(new Dimension(200,35));
         addBtn.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -82,6 +83,9 @@ public class ManageActorSeriesPanel extends JPanel {
         actorFormPnl.add(Box.createVerticalStrut(10));
         actorFormPnl.add(new JLabel("Select Series"));
         actorFormPnl.add(seriesTitleCb);
+        actorFormPnl.add(Box.createVerticalStrut(10));
+        actorFormPnl.add(new JLabel("Existing Series For Deleting Actor"));
+        actorFormPnl.add(actorSeriesCb);
         actorFormPnl.add(Box.createVerticalStrut(10));
         actorFormPnl.add(new JLabel("Enter Role"));
         actorFormPnl.add(actorRole);
@@ -162,7 +166,7 @@ public class ManageActorSeriesPanel extends JPanel {
         loadPACards();
     }
 
-    public List<Series> getAllSeriesList() {
+    public List<Series> getSeriesList() {
         return allSeriesList;
     }
 

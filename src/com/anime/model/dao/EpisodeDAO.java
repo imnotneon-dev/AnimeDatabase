@@ -66,7 +66,7 @@ public class EpisodeDAO {
         }
       return null;
     }
-    public Episode selectEpisodeBySeries(int series_id) throws SQLException {
+    public List<Episode> selectEpisodeBySeries(int series_id) throws SQLException {
         String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM Episodes WHERE series_id = ? ";
 
         try(PreparedStatement ps = conn.prepareStatement(sql)){

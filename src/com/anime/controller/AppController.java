@@ -392,13 +392,124 @@ public class AppController {
         ManageSeriesPanel series = adminPage.getMngSeriesPnl();
         ManageActorSeriesPanel role = adminPage.getMngActorSeriesPnl();
 
+        init_admin_actor_panel(actor);
         init_admin_actorseries_panel(role);
     }
     private Integer selectedActorId = null;
 
+    private void init_admin_actor_panel(ManageActorPanel actor){
+        List<PlainActorCard> actorCards = actor.getActorCards();
+
+        for(PlainActorCard card: actorCards){
+            card.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    selectedActorId = (Integer)card.getClientProperty("actor_id");
+                    try{
+                        Actor actorInfo = model.getActorDAO().getActorById(selectedActorId);
+//                        actor.getDeleteBtn().setEnabled(true);
+//                        actor.getAddBtn().setEnabled(false);
+//                        actor.getSeriesTitleCb().setEnabled(false);
+//                        actor.getActorSeriesCb().setEnabled(true);
+//                        actor.getActorNameField().setEditable(false);
+//                        actor.getActorRole().setEditable(false);
+//
+//                        actor.getActorNameField().setText(card.getNameLabel().getText());
+//
+//                        List<ActorSeries> actorSeriesList = model.getActorSeriesDAO().getCharacterByActor(selectedActorId);
+//                        actor.setActorSeriesList(actorSeriesList);
+                        actor.getAddBtn().setEnabled(false);
+                        actor.getUpdateBtn().setEnabled(true);
+                        actor.getClearBtn().setEnabled(true);
+
+                        actor.getFirstNameField().setText(actorInfo.getFirstName());
+                        actor.getLastNameField().setText(actorInfo.getLastName());
+                        actor.getSexCb().setSelectedItem(String.valueOf(actorInfo.getGender()));
+                        actor.getDobField().setText(String.valueOf(actorInfo.getDob()));
+                        actor.getPobField().setText(actorInfo.getPob());
+                        actor.getAgencyField().setText(actorInfo.getAgency());
+
+                    } catch(SQLException ex){
+                        System.err.println("DB Error during reviews loading: " + ex.getMessage());
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        }
+
+        actor.getClearBtn().addActionListener(e->{
+            actor.getFirstNameField().setText("");
+            actor.getLastNameField().setText("");
+            actor.getSexCb().setSelectedItem("Other");
+            actor.getDobField().setText("");
+            actor.getPobField().setText("");
+            actor.getAgencyField().setText("");
+        });
+
+        actor.getAddBtn().addActionListener(e->{
+            String ln = actor.getLastNameField().getText().trim();
+            String fn = actor.getFirstNameField().getText().trim();
+            String g = actor.getSexCb().getSelectedItem().toString().trim();
+            String dob = actor.getDobField().getText().trim();
+            String pob = actor.getPobField().getText().trim();
+            String a = actor.getAgencyField().getText().trim();
+
+            if(ln.isEmpty() || fn.isEmpty() || g.isEmpty() || dob.isEmpty() ||
+                pob.isEmpty() || a.isEmpty()){
+                System.out.println("No field can be empty");
+            }
+
+            try {
+                boolean check = model.getActorDAO().addActor(ln, fn, g, dob, pob, a);
+                if (check) {
+                    actor.getFirstNameField().setText("");
+                    actor.getLastNameField().setText("");
+                    actor.getSexCb().setSelectedItem("Other");
+                    actor.getDobField().setText("");
+                    actor.getPobField().setText("");
+                    actor.getAgencyField().setText("");
+                } else {
+                    System.out.println("Failed to add actor.");
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        actor.getUpdateBtn().addActionListener(e->{
+
+            String ln = actor.getLastNameField().getText().trim();
+            String fn = actor.getFirstNameField().getText().trim();
+            String g = actor.getSexCb().getSelectedItem().toString().trim();
+            String dob = actor.getDobField().getText().trim();
+            String pob = actor.getPobField().getText().trim();
+            String a = actor.getAgencyField().getText().trim();
+
+            if(ln.isEmpty() || fn.isEmpty() || g.isEmpty() || dob.isEmpty() ||
+                    pob.isEmpty() || a.isEmpty()){
+                System.out.println("No field can be empty");
+            }
+
+            try {
+                boolean check = model.getActorDAO().editActor(selectedActorId, ln, fn, g, dob, pob, a);
+                if (check) {
+                    actor.getFirstNameField().setText("");
+                    actor.getLastNameField().setText("");
+                    actor.getSexCb().setSelectedItem("Other");
+                    actor.getDobField().setText("");
+                    actor.getPobField().setText("");
+                    actor.getAgencyField().setText("");
+                } else {
+                    System.out.println("Failed to add actor.");
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+    }
+
     private void init_admin_actorseries_panel(ManageActorSeriesPanel role){
         List<PlainActorCard> actorCards = role.getActorSeriesCards();
-        int actor_id = Integer.parseInt(null);
 
         role.getActorSeriesCb().addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {

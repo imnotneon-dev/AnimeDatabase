@@ -54,12 +54,17 @@ public class AppController {
                     String accountUsername = account.getUsername();
 
                     // get the list of Favorites (user id, series id, date added)
-                    // ! make sure get Favorite is now for String not int
                     List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(accountUsername);
+
+                    // get the list of WatchHistory (user id, episode id, date added)
+                    List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(accountUsername);
 
                     // declare an empty list: FaveSeries -> Series
                     List<Series> favoriteListConverted = new ArrayList<>();
+
+                    // declare an empty list: WatchHistory -> Series
                     List<Series> watchHistoryConverted = new ArrayList<>();
+
                     // Loop through the favoriteSeries list, getting the series_id to get the
                     // Series details to store into a Series object
                     for(FavoriteSeries f: favoriteSeries){
@@ -68,7 +73,14 @@ public class AppController {
                         favoriteListConverted.add(series);
                     }
 
-                    /* TODO: WATCH HISTORY INTIALIZATION */
+                    // Loop through the favoriteSeries list, getting the series_id to get the
+                    // Series details to store into a Series object
+                    for(WatchHistory w: watchedSeries){
+                        int episode_id = w.getEpisodeId();
+                        int series_id = model.getEpisodeDAO().selectEpisodeById(episode_id).getSeriesId();
+                        Series series = model.getSeriesDAO().getSeriesById(series_id);
+                        watchHistoryConverted.add(series);
+                    }
 
                     view.getHomePage().setFavoriteList(favoriteListConverted);
                     view.getHomePage().setWatchingList(watchHistoryConverted);
@@ -165,7 +177,7 @@ public class AppController {
         header.getWatchHistoryItem().addActionListener(e->{
 
 //            try {
-//                List< WatchHistory> history = model.getWatchHistoryDao()
+//                List< WatchHistoryPage> history = model.getWatchHistoryDao()
 //                view.getWatchHistoryPage().loadHistory(history );
                 view.switchView(view.WATCH_HISTORY);
 //            }
@@ -179,7 +191,7 @@ public class AppController {
             view.switchView(view.LIKE_HISTORY);
 
 //            try {
-//                List< WatchHistory> history = model.getWatchHistoryDao()
+//                List< WatchHistoryPage> history = model.getWatchHistoryDao()
 //                view.getWatchHistoryPage().loadHistory(history );
 //                view.switchView(view.LIKE_HISTORY);
 //            }

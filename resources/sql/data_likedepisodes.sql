@@ -1,5 +1,5 @@
 CREATE TABLE LikedEpisode(
-  user_id INT,
+  username VARCHAR(50),
   episode_id INT,
   date_added DATE DEFAULT CURRENT_DATE,
   PRIMARY KEY (user_id, episode_id),

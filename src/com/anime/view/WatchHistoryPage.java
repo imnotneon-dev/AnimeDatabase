@@ -8,7 +8,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class WatchHistory extends JPanel{
+public class WatchHistoryPage extends JPanel{
 //    private JPanel actorInfoPnl = new JPanel();
     private JPanel historyPnl = new JPanel();
 //    private JLabel actorPhoto = new JLabel();
@@ -30,7 +30,7 @@ public class WatchHistory extends JPanel{
     *   rolesList = roles;
     * }
     * */
-    public WatchHistory() {
+    public WatchHistoryPage() {
         init();
     }
     private void init() {

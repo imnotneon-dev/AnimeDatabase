@@ -13,14 +13,14 @@ public class EpisodeReviewDAO {
 //        this.conn = conn;
 //    }
 
-    public void addReview(int userId, int episodeId, String userReview) throws SQLException {
-        String sql = "INSERT INTO EpisodeReview (user_id, episode_id, user_review) VALUES (?, ?, ?)";
+    public void addReview(String username, int episodeId, String comment) throws SQLException {
+        String sql = "INSERT INTO episodeReviews (username, episode_id, comment) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, userId);
+            ps.setInt(1, username);
             ps.setInt(2, episodeId);
-            ps.setString(3, userReview);
+            ps.setString(3, comment);
             ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -30,7 +30,7 @@ public class EpisodeReviewDAO {
     }
 
     public void deleteReview(int reviewId) throws SQLException {
-        String sql = "DELETE FROM EpisodeReview WHERE review_id = ?";
+        String sql = "DELETE FROM episodeReviews WHERE review_id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -43,12 +43,12 @@ public class EpisodeReviewDAO {
         }
     }
 
-    public void updateReview(int reviewId, String newReview) throws SQLException {
-        String sql = "UPDATE EpisodeReview SET user_review = ? WHERE review_id = ?";
+    public void updateReview(int reviewId, String newComment) throws SQLException {
+        String sql = "UPDATE episodeReviews SET comment = ? WHERE review_id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, newReview);
+            ps.setString(1, newComment);
             ps.setInt(2, reviewId);
             ps.executeUpdate();
 
@@ -62,12 +62,10 @@ public class EpisodeReviewDAO {
         List<EpisodeReview> list = new ArrayList<>();
         String sql = """
             SELECT 
-                r.review_id, r.user_id, r.episode_id, r.user_review, r.date_reviewed,
-                u.username,
+                r.review_id, r.username, r.episode_id, r.comment, r.date_reviewed,
                 e.title AS episode_title
-            FROM EpisodeReview r
-            JOIN Users u ON r.user_id = u.user_id
-            JOIN Episodes e ON r.episode_id = e.episode_id
+            FROM episodeReviews r
+            JOIN episodes e ON r.episode_id = e.episode_id
             ORDER BY r.date_reviewed DESC
         """;
 
@@ -80,7 +78,9 @@ public class EpisodeReviewDAO {
                     rs.getInt("review_id"),
                     rs.getString("username"),
                     rs.getInt("episode_id"),
-                    rs.getString("user_review")
+                    rs.getString("comment")
+                    rs.getDate("date_reviewed").toLocalDate(),
+                    rs.getString("episode_title")
                 );
                 list.add(review);
             }
@@ -97,12 +97,11 @@ public class EpisodeReviewDAO {
         List<EpisodeReview> list = new ArrayList<>();
         String sql = """
             SELECT 
-                r.review_id, r.user_id, r.episode_id, r.user_review, r.date_reviewed,
+                r.review_id, r.username, r.episode_id, r.comment, r.date_reviewed,
                 u.username,
                 e.title AS episode_title
-            FROM EpisodeReview r
-            JOIN Users u ON r.user_id = u.user_id
-            JOIN Episodes e ON r.episode_id = e.episode_id
+            FROM episodeReviews r
+            JOIN episodes e ON r.episode_id = e.episode_id
             WHERE r.episode_id = ?
             ORDER BY r.date_reviewed DESC
         """;

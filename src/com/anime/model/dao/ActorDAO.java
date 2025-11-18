@@ -2,7 +2,6 @@ package com.anime.model.dao;
 
 import com.anime.model.Actor;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +125,7 @@ public class ActorDAO {
         }
     }
 
-    public void addActor (String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) throws SQLException {
+    public boolean addActor (String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) throws SQLException {
         String sql = "INSERT INTO actors (last_name, first_name, gender, date_of_birth, place_of_birth, agency) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
@@ -143,6 +142,7 @@ public class ActorDAO {
             e.printStackTrace();
             throw e;
         }
+        return false;
     }
 
     public void deleteActor ( int actorId) throws SQLException {
@@ -159,7 +159,7 @@ public class ActorDAO {
         }
     }
 
-    public void editActor ( int actorId, String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) throws SQLException {
+    public boolean editActor (int actorId, String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) throws SQLException {
         String sql = "UPDATE actors SET last_name = ?, first_name = ?, gender = ?, date_of_birth = ?, place_of_birth = ?, agency = ? WHERE actor_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -177,6 +177,7 @@ public class ActorDAO {
             e.printStackTrace();
             throw e;
         }
+        return false;
     }
 
     public List<Actor> viewActors () throws SQLException {

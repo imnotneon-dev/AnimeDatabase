@@ -172,7 +172,7 @@ public class AnimeWrapped {
         public int getActorId() { 
             return actorId; 
         }
-        
+
         public int getSeriesId() { 
             return seriesId; 
         }

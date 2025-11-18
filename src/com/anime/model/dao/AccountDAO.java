@@ -186,17 +186,16 @@ public class ManageAccountDAO {
         }
     }
 
-    // Delete user account (in case)
-    public boolean deleteUser(int userId) {
-        String sql = "DELETE FROM Users WHERE user_id = ?";
+    // Archive account
+    public boolean archiveUser(int userId) {
+        String sql = "UPDATE Users SET status = 'Archived' WHERE user_id = ?";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, userId);
-                int rows = ps.executeUpdate();
-                return rows > 0;
+                return ps.executeUpdate() > 0;
             } catch (SQLException e) {
-                System.out.println("Error deleting user: " + e.getMessage());
+                e.printStackTrace();
                 return false;
             }
     }

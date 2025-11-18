@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +52,13 @@ public class AppController {
                 if(account!=null){
                     this.currentSession = account;
                     System.out.println("Login Success");
-                    String accountUsername = account.getUsername();
+                    int acc_id = account.getUserId();
 
                     // get the list of Favorites (user id, series id, date added)
-                    List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(accountUsername);
+                    List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(acc_id);
 
                     // get the list of WatchHistory (user id, episode id, date added)
-                    List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(accountUsername);
+                    List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(acc_id);
 
                     // declare an empty list: FaveSeries -> Series
                     List<Series> favoriteListConverted = new ArrayList<>();
@@ -139,13 +140,13 @@ public class AppController {
                     if(account!=null){
                         this.currentSession = account;
                         System.out.println("Signup Success. Logging in...");
-                        String accountUsername = account.getUsername();
+                        int acc_id = account.getUserId();
 
                         // get the list of Favorites (user id, series id, date added)
-                        List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(accountUsername);
+                        List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(acc_id);
 
                         // get the list of WatchHistory (user id, episode id, date added)
-                        List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(accountUsername);
+                        List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(acc_id);
 
                         // declare an empty list: FaveSeries -> Series
                         List<Series> favoriteListConverted = new ArrayList<>();
@@ -367,7 +368,7 @@ public class AppController {
         }
         seriesPage.getFaveBtn().addActionListener(e->{
             // TODO: use appropriate Favorite Checker function
-            FavoriteSeries checker = model.getFavoriteSeriesDAO().getFavoriteSeriesByUser(currentSession.getUsername(), seriesInfo.getSeriesId());
+            boolean checker = model.getFavoriteSeriesDAO().favoriteChecker(currentSession.getUserId(), seriesInfo.getSeriesId());
             if(checker) {
                 // if true, meaning it has been favorited before, delete the favorited series
                 model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUserId(), seriesInfo.getSeriesId());
@@ -412,15 +413,21 @@ public class AppController {
             }
         });
         episodePage.getLikeEpisodeBtn().addActionListener(e->{
-            // same logic
-            LikedEpisode checker = model.getLikedEpisodeDAO().isLiked(currentSession.getUserId(),episodeInfo.getId());
-            if(checker) {
-                // if true, meaning it has been favorited before, delete the favorited series
-                status = model.getLikedEpisodeDAO().removeLike(currentSession.getUserId(),episodeInfo.getId());
-            }
-            else {
-                // if false meaning it has NOT been favorited before, add the favorited series
-                status = model.getLikedEpisodeDAO().addLike(currentSession.getUserId(),episodeInfo.getId());
+            // same logic !
+            boolean checker;
+            try {
+                checker = model.getLikedEpisodeDAO().isLiked(currentSession.getUserId(),episodeInfo.getEpisodeId());
+
+                if(checker) {
+                    // if true, meaning it has been liked before, delete the liked series
+                    model.getLikedEpisodeDAO().removeLike(currentSession.getUserId(),episodeInfo.getEpisodeId());
+                }
+                else {
+                    // if false meaning it has NOT been liked before, add the liked series
+                    model.getLikedEpisodeDAO().addLike(currentSession.getUserId(),episodeInfo.getEpisodeId());
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         });
         episodePage.getSubmitCommentBtn().addActionListener(e-> {
@@ -429,9 +436,11 @@ public class AppController {
                 String username = currentSession.getUsername();
                 int ep_id = episodeInfo.getEpisodeId();
                 String reviewText = episodePage.getReviewTextArea().getText();
-                model.getEpisodeReviewDAO().addReview(currentSession.getId(), ep_id, reviewText);
-                List<EpisodeReview> reviewList = model.getEpisodeReviewDAO().getReviewsByEpisodeId(ep_id);
+
+                model.getEpisodeReviewDAO().addReview(currentSession.getUserId(), ep_id, reviewText);
+
                 // reload series info after adding the new reviews
+                List<EpisodeReview> reviewList = model.getEpisodeReviewDAO().getReviewsByEpisodeId(ep_id);
                 view.getEpisodePage().setReviewsList(reviewList);
                 view.switchView(view.EPISODE);
             } catch (SQLException ex) {
@@ -452,21 +461,25 @@ public class AppController {
                 public void mouseClicked(MouseEvent e) {
                     int series_id = card.getRole_s_SeriesId();
 
-                    // might be redundant since series alr has the info but ill keep it here still
-                    Series series = model.getSeriesDAO().getSeriesById(series_id);
-                    // get episode list of the series
-                    List<Episode> episodeList = model.getEpisodeDAO().selectEpisodeBySeries(series.getSeriesId());
-                    // get actor list of the series
-                    List<Actor> actorList = model.getActorDAO().getActorsBySeries(series.getSeriesId());
+                    try {
+                        // might be redundant since series alr has the info but ill keep it here still
+                        Series series = model.getSeriesDAO().getSeriesById(series_id);
+                        // get episode list of the series
+                        List<Episode> episodeList = model.getEpisodeDAO().selectEpisodeBySeries(series.getSeriesId());
+                        // get actor list of the series
+                        List<Actor> actorList = model.getActorDAO().getActorsBySeries(series.getSeriesId());
 
-                    if(series!=null) {
-                        // load series info
-                        view.getSeriesPage().setSeries(series);
-                        view.getSeriesPage().setEpisodeList(episodeList);
-                        view.getSeriesPage().setActorsList(actorList);
-                        view.switchView(view.SERIES);
-                    } else {
-                        System.out.println("Series details cannot be found.");
+                        if(series!=null) {
+                            // load series info
+                            view.getSeriesPage().setSeries(series);
+                            view.getSeriesPage().setEpisodeList(episodeList);
+                            view.getSeriesPage().setActorsList(actorList);
+                            view.switchView(view.SERIES);
+                        } else {
+                            System.out.println("Series details cannot be found.");
+                        }
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
                     }
 
                 }
@@ -612,6 +625,7 @@ public class AppController {
                    series.getAddBtn().setEnabled(false);
                    series.getClearBtn().setEnabled(true);
                    series.getUpdateBtn().setEnabled(true);
+                   series.getFilepathToPosterField().setEditable(false);
                    try{
                        Series seriesInfo = model.getSeriesDAO().getSeriesById(selectedEpisodeId);
 
@@ -620,6 +634,7 @@ public class AppController {
                        series.getReleaseYearField().setText(String.valueOf(seriesInfo.getReleaseYear()));
                        series.getEpCountField().setText(String.valueOf(seriesInfo.getTotalEpisodes()));
                        series.getStatusCb().setSelectedItem(String.valueOf(seriesInfo.getStatus()));
+                       series.getFilepathToPosterField().setText(seriesInfo.getSeriesPhoto());
                    } catch(SQLException ex){
                        System.err.println("DB Error during episode loading: " + ex.getMessage());
                        throw new RuntimeException(ex);
@@ -632,12 +647,14 @@ public class AppController {
             series.getAddBtn().setEnabled(true);
             series.getClearBtn().setEnabled(true);
             series.getUpdateBtn().setEnabled(false);
+            series.getFilepathToPosterField().setEditable(true);
 
             series.getTitleField().setText("");
             series.getGenreField().setText("");
             series.getReleaseYearField().setText("");
             series.getEpCountField().setText("");
             series.getStatusCb().setSelectedItem("On-Going");
+            series.getFilepathToPosterField().setText("");
 
         });
 
@@ -647,6 +664,8 @@ public class AppController {
             String ry = series.getReleaseYearField().getText().trim();
             String c = series.getEpCountField().getText().trim();
             String s = series.getStatusCb().getSelectedItem().toString().trim();
+            String photo = series.getFilepathToPosterField().getText();
+
 
             int intRy;
             int intC;
@@ -666,7 +685,7 @@ public class AppController {
             }
 
             try{
-                Series seriesToBeAdded = new Series(t,g,intRy,intC,s);
+                Series seriesToBeAdded = new Series(t,g,intRy,intC,s, photo);
                 boolean check = model.getSeriesDAO().addSeries(seriesToBeAdded);
                 if(check){
                     series.getTitleField().setText("");
@@ -674,6 +693,7 @@ public class AppController {
                     series.getReleaseYearField().setText("");
                     series.getEpCountField().setText("");
                     series.getStatusCb().setSelectedItem("On-Going");
+                    series.getFilepathToPosterField().setText("");
 
                     // updating gui/list
                     List<Series> sList = model.getSeriesDAO().getAllSeries();
@@ -691,6 +711,7 @@ public class AppController {
             String ry = series.getReleaseYearField().getText().trim();
             String c = series.getEpCountField().getText().trim();
             String s = series.getStatusCb().getSelectedItem().toString().trim();
+            String photo = series.getFilepathToPosterField().getText();
 
             int intRy;
             int intC;
@@ -710,7 +731,7 @@ public class AppController {
             }
 
             try{
-                Series seriesToBeAdded = new Series(selectedSeriesId,t,g,intRy,intC,s);
+                Series seriesToBeAdded = new Series(selectedSeriesId,t,g,intRy,intC,s,photo);
                 boolean check = model.getSeriesDAO().updateSeries(seriesToBeAdded);
                 if(check){
                     series.getTitleField().setText("");
@@ -718,6 +739,8 @@ public class AppController {
                     series.getReleaseYearField().setText("");
                     series.getEpCountField().setText("");
                     series.getStatusCb().setSelectedItem("On-Going");
+                    series.getFilepathToPosterField().setText("");
+
 
                     // updating gui/list
                     List<Series> sList = model.getSeriesDAO().getAllSeries();
@@ -729,15 +752,20 @@ public class AppController {
             }
         });
     }
-    private void init_admin_episode_panel(ManageEpisodePanel episode){
+    private void init_admin_episode_panel(ManageEpisodePanel episode) throws SQLException {
         List<PlainEpisodeCard> episodeCards = episode.getEpisodeCards();
 //        int series_id;
 
         for(PlainEpisodeCard card: episodeCards){
-            int series_id = (int)card.getClientProperty("series_id");
-            final Series parentSeries = model.getSeriesDAO().getSeriesById(series_id);
-            String series_title = parentSeries.getTitle();
-            card.setSeriesTitle(series_title);
+            final Series parentSeries;
+            try {
+                int series_id = (int)card.getClientProperty("series_id");
+                parentSeries = model.getSeriesDAO().getSeriesById(series_id);
+                String series_title = parentSeries.getTitle();
+                card.setSeriesTitle(series_title);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             card.addMouseListener(new MouseAdapter(){
                 @Override
@@ -795,10 +823,9 @@ public class AppController {
             int intRun;
 
             try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                dateFormat.setLenient(false);
+                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-                ldRd = LocalDate.parse(rd,dateFormat);
+                ldRd = LocalDate.parse(rd, dateFormat);
                 intRun = Integer.parseInt(run);
 
             } catch (NumberFormatException ex) {
@@ -806,8 +833,8 @@ public class AppController {
                 return;
             }
 
-            if(t.isEmpty() || st.isEmpty() || syn.isEmpty() || rd.isEmpty() ||
-                    run.isEmpty()){
+            if(t.isEmpty() || syn.isEmpty() || rd.isEmpty() || run.isEmpty() ||
+                    st.equals("Select a Series") || !(selectedSeries instanceof Series)){
                 System.out.println("No field can be empty");
             }
 
@@ -828,7 +855,7 @@ public class AppController {
                     // updating gui/list
                     List<Episode> eList = model.getEpisodeDAO().selectAllEpisodes();
                     // todo
-                    episode.setSeriesList(eList);
+                    episode.setEpisodeList(eList);
                 }
             } catch (SQLException ex){
                 System.err.println("DB Error during episode loading: " + ex.getMessage());
@@ -837,6 +864,14 @@ public class AppController {
         });
 
         episode.getUpdateBtn().addActionListener(e->{
+            Object selectedSeries = episode.getSeriesTitleCb().getSelectedItem();
+
+            if(!(selectedSeries instanceof Series selectedS)){
+                System.out.println("Please select a series title");
+                return;
+            }
+            int series_id = selectedS.getSeriesId();
+
             String t = episode.getTitleField().getText().trim();
             String st = episode.getSeriesTitleCb().getSelectedItem().toString().trim();
             String syn = episode.getSynopsisTA().getText().trim();
@@ -847,10 +882,9 @@ public class AppController {
             int intRun;
 
             try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                dateFormat.setLenient(false);
+                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-                ldRd = LocalDate.parse(rd,dateFormat);
+                ldRd = LocalDate.parse(rd, dateFormat);
                 intRun = Integer.parseInt(run);
 
             } catch (NumberFormatException ex) {
@@ -858,8 +892,8 @@ public class AppController {
                 return;
             }
 
-            if(t.isEmpty() || st.isEmpty() || syn.isEmpty() || rd.isEmpty() ||
-                    run.isEmpty()){
+            if(t.isEmpty() || syn.isEmpty() || rd.isEmpty() || run.isEmpty() ||
+                    st.equals("Select a Series") || !(selectedSeries instanceof Series)){
                 System.out.println("No field can be empty");
             }
 
@@ -980,6 +1014,7 @@ public class AppController {
                 int actIdToDelete = selectedRole.getActId();
 
                 try {
+                    // TODO: use archive account instead
                     boolean success = model.getActorSeriesDAO().deleteActorSeries(actIdToDelete);
 
                     if (success) {

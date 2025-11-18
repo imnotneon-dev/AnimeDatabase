@@ -1,5 +1,7 @@
 package com.anime.view;
 
+import com.anime.model.Actor;
+import com.anime.model.Series;
 import com.anime.view.customcards.PlainActorCard;
 import com.anime.view.customcards.PlainEpisodeCard;
 
@@ -27,12 +29,9 @@ public class ManageActorSeriesPanel extends JPanel {
     private JButton clearBtn = new JButton("Clear");
 
 
-    private List<String> actorList = List.of(
-            "Episode 1","Episode 2","Episode 3","Episode 4","Episode 5",
-            "Episode 6","Episode 7","Episode 8","Episode 9","Episode 10",
-            "Episode 11","Episode 12");
-    private List<String> allSeriesList = new ArrayList<>();
-    private List<String> actorSeriesList = new ArrayList<>();
+    private List<Actor> actorList = new ArrayList<>();
+    private List<Series> allSeriesList = new ArrayList<>();
+    private List<Series> actorSeriesList = new ArrayList<>();
 
     public ManageActorSeriesPanel(){
         setLayout(new BorderLayout());
@@ -106,8 +105,9 @@ public class ManageActorSeriesPanel extends JPanel {
     private void loadPACards(){
         actorListPnl.removeAll();
         actorCards.clear();
-        for(String e: actorList){
-            PlainActorCard pac = new PlainActorCard(e);
+        for(Actor e: actorList){
+            PlainActorCard pac = new PlainActorCard(e.getLastName() + ", " + e.getFirstName());
+            pac.putClientProperty("actor_id", e.getId());
             actorListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
             actorCards.add(pac);
             actorListPnl.add(pac);
@@ -142,6 +142,9 @@ public class ManageActorSeriesPanel extends JPanel {
         this.seriesTitleCb = seriesTitleCb;
     }
 
+    public List<PlainActorCard> getActorSeriesCards(){
+        return actorCards;
+    }
     public JButton getAddBtn() {
         return addBtn;
     }
@@ -150,28 +153,28 @@ public class ManageActorSeriesPanel extends JPanel {
         return deleteBtn;
     }
 
-    public List<String> getActorList() {
+    public List<Actor> getActorList() {
         return actorList;
     }
 
-    public void setActorList(List<String> actorList) {
+    public void setActorList(List<Actor> actorList) {
         this.actorList = actorList;
         loadPACards();
     }
 
-    public List<String> getAllSeriesList() {
+    public List<Series> getAllSeriesList() {
         return allSeriesList;
     }
 
-    public void setAllSeriesList(List<String> allSeriesList) {
+    public void setAllSeriesList(List<Series> allSeriesList) {
         this.allSeriesList = allSeriesList;
     }
 
-    public List<String> getActorSeriesList() {
+    public List<Series> getActorSeriesList() {
         return actorSeriesList;
     }
 
-    public void setActorSeriesList(List<String> actorSeriesList) {
+    public void setActorSeriesList(List<Series> actorSeriesList) {
         this.actorSeriesList = actorSeriesList;
     }
 }

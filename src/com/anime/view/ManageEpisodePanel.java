@@ -96,8 +96,14 @@ public class ManageEpisodePanel extends JPanel {
         synopsisTA.setAlignmentX(Component.LEFT_ALIGNMENT);
 //        synopsisTA.setBorder(new MatteBorder(1,1,1,1,Color.BLACK));
         synopsisTA.setBackground(Color.WHITE);
-        synopsisTA.setPreferredSize(new Dimension(600,200));
-        synopsisTA.setMaximumSize(new Dimension(600,200));
+//        synopsisTA.setPreferredSize(new Dimension(600,200));
+//        synopsisTA.setMaximumSize(new Dimension(600,200));
+
+        JScrollPane synopsisScrollPane = new JScrollPane(synopsisTA);
+        synopsisScrollPane.setPreferredSize(new Dimension(600, 200));
+        synopsisScrollPane.setMaximumSize(new Dimension(600, 200));
+        synopsisScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+        synopsisScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         seriesTitleCb = new JComboBox<Object>(seriesList.toArray());
         seriesTitleCb.setMaximumSize(new Dimension(350,30));
@@ -121,8 +127,8 @@ public class ManageEpisodePanel extends JPanel {
         episodeFormPnl.add(new JLabel("Select Series"));
         episodeFormPnl.add(seriesTitleCb);
         episodeFormPnl.add(Box.createVerticalStrut(10));
-        episodeFormPnl.add(new JLabel("Enter Synopsis"));
-        episodeFormPnl.add(synopsisTA);
+        episodeFormPnl.add(new JLabel("Enter Synopsis (Max 200 characters)"));
+        episodeFormPnl.add(synopsisScrollPane);
         episodeFormPnl.add(Box.createVerticalStrut(10));
         episodeFormPnl.add(new JLabel("Enter Release Date (YYYY-MM-DD)"));
         episodeFormPnl.add(releaseDateField);
@@ -284,7 +290,4 @@ public class ManageEpisodePanel extends JPanel {
     public void setEpisodeCards(List<PlainEpisodeCard> episodeCards) {
         this.episodeCards = episodeCards != null ? episodeCards : new ArrayList<>();
     }
-}
-
-
 }

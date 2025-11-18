@@ -9,6 +9,7 @@ import com.anime.view.customcards.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -636,6 +637,152 @@ public class AppController {
                     List<Series> sList = model.getSeriesDAO().getAllSeries();
                     series.setSeriesList(sList);
                 }
+            } catch (SQLException ex){
+                System.err.println("DB Error during episode loading: " + ex.getMessage());
+                throw new RuntimeException(ex);
+            }
+        });
+    }
+    private void init_admin_episode_panel(ManageEpisodePanel episode){
+        List<PlainEpisodeCard> episodeCards = episode.getEpisodeCards();
+        int series_id;
+
+        for(PlainEpisodeCard card: episodeCards){
+            series_id = (int)card.getClientProperty("series_id");
+            String series_title = model.getSeriesDAO().getSeriesById(series_id).getTitle();
+            card.setSeriesTitle(series_title);
+            card.addMouseListener(new MouseAdapter(){
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    selectedEpisodeId = (Integer)card.getClientProperty("episode_id");
+                    episode.getAddBtn().setEnabled(false);
+                    episode.getClearBtn().setEnabled(true);
+                    episode.getUpdateBtn().setEnabled(true);
+                    try{
+                        Episode episodeInfo = model.getEpisodeDAO().selectEpisodeById(selectedEpisodeId);
+
+                        episode.getTitleField().setText(episodeInfo.getTitle());
+                        episode.getSeriesTitleCb().setSelectedItem(String.valueOf(series_title));
+                        episode.getSynopsisTA().setText(episodeInfo.getSypnosis());
+                        episode.getReleaseDateField().setText(String.valueOf((episodeInfo.getReleaseDate())));
+                        episode.getRuntimeField().setText(String.valueOf(episodeInfo.getRuntime()));
+                    } catch(SQLException ex){
+                        System.err.println("DB Error during episode loading: " + ex.getMessage());
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        }
+
+        episode.getClearBtn().addActionListener(e->{
+            episode.getAddBtn().setEnabled(true);
+            episode.getClearBtn().setEnabled(true);
+            episode.getUpdateBtn().setEnabled(false);
+
+            episode.getTitleField().setText("");
+            episode.getSeriesTitleCb().setSelectedItem("Select a Series");
+            episode.getSynopsisTA().setText("");
+            episode.getReleaseDateField().setText("");
+            episode.getRuntimeField().setText("");
+
+        });
+
+        episode.getAddBtn().addActionListener(e->{
+            String t = episode.getTitleField().getText().trim();
+            String st = episode.getSeriesTitleCb().getSelectedItem().toString().trim();
+            String syn = episode.getSynopsisTA().getText().trim();
+            String rd = episode.getReleaseDateField().getText().trim();
+            String run = episode.getRuntimeField().getText().trim();
+
+            LocalDate ldRd;
+            int intRun;
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                dateFormat.setLenient(false);
+
+                ldRd = LocalDate.parse(rd,dateFormat);
+                intRun = Integer.parseInt(run);
+
+            } catch (NumberFormatException ex) {
+                System.err.println("Input Error: Release Year or Episode Count is not a valid number.");
+                return;
+            }
+
+            if(t.isEmpty() || st.isEmpty() || syn.isEmpty() || rd.isEmpty() ||
+                    run.isEmpty()){
+                System.out.println("No field can be empty");
+            }
+
+            try{
+//                Episode seriesToBeAdded = new Series(t,g,intRy,intC,s);
+                boolean check = model.getEpisodeDAO().addEpisode(t, ldRd, syn,intRun, series_id);
+                if(check){
+                    episode.getAddBtn().setEnabled(true);
+                    episode.getClearBtn().setEnabled(true);
+                    episode.getUpdateBtn().setEnabled(false);
+
+                    episode.getTitleField().setText("");
+                    episode.getSeriesTitleCb().setSelectedItem("Select a Series");
+                    episode.getSynopsisTA().setText("");
+                    episode.getReleaseDateField().setText("");
+                    episode.getRuntimeField().setText("");
+
+                    // updating gui/list
+                    List<Episode> eList = model.getEpisodeDAO().selectAllEpisodes();
+                    episode.setSeriesList(eList);
+                }
+            } catch (SQLException ex){
+                System.err.println("DB Error during episode loading: " + ex.getMessage());
+                throw new RuntimeException(ex);
+            }
+        });
+
+        episode.getUpdateBtn().addActionListener(e->{
+            String t = episode.getTitleField().getText().trim();
+            String st = episode.getSeriesTitleCb().getSelectedItem().toString().trim();
+            String syn = episode.getSynopsisTA().getText().trim();
+            String rd = episode.getReleaseDateField().getText().trim();
+            String run = episode.getRuntimeField().getText().trim();
+
+            LocalDate ldRd;
+            int intRun;
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                dateFormat.setLenient(false);
+
+                ldRd = LocalDate.parse(rd,dateFormat);
+                intRun = Integer.parseInt(run);
+
+            } catch (NumberFormatException ex) {
+                System.err.println("Input Error: Release Year or Episode Count is not a valid number.");
+                return;
+            }
+
+            if(t.isEmpty() || st.isEmpty() || syn.isEmpty() || rd.isEmpty() ||
+                    run.isEmpty()){
+                System.out.println("No field can be empty");
+            }
+
+            try{
+//                Episode seriesToBeAdded = new Series(t,g,intRy,intC,s);
+                model.getEpisodeDAO().updateEpisode(selectedEpisodeId,t, ldRd, syn,intRun);
+
+                    episode.getAddBtn().setEnabled(true);
+                    episode.getClearBtn().setEnabled(true);
+                    episode.getUpdateBtn().setEnabled(false);
+
+                    episode.getTitleField().setText("");
+                    episode.getSeriesTitleCb().setSelectedItem("Select a Series");
+                    episode.getSynopsisTA().setText("");
+                    episode.getReleaseDateField().setText("");
+                    episode.getRuntimeField().setText("");
+
+                    // updating gui/list
+                    List<Episode> eList = model.getEpisodeDAO().selectAllEpisodes();
+                    episode.setEpisodeList(eList);
+
             } catch (SQLException ex){
                 System.err.println("DB Error during episode loading: " + ex.getMessage());
                 throw new RuntimeException(ex);

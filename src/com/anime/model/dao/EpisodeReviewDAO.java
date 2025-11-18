@@ -102,6 +102,7 @@ public class EpisodeReviewDAO {
             FROM episodeReviews r
             JOIN episodes e ON r.episode_id = e.episode_id
             WHERE r.episode_id = ?
+                AND u.status = 'Active'
             ORDER BY r.date_reviewed DESC
         """;
 

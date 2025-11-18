@@ -24,5 +24,6 @@ VALUES
 ('Kaguya-sama: Love Is War', 'Comedy, Romance', '2019', '12', 'Complete'),
 ('Paradise Kiss', 'Drama, Romance', '2005', '12', 'Complete'),
 ('Given', 'Boys Love, Drama', '2019', '11', 'Complete'),
-('Elfen Lied', 'Action, Drama, Horror, Romance, Suspense', '2004', '13', 'Complete'),
+('Elfen Lied', 'Action, Drama, Horror, Romance, Suspense', '2004', '13', 'Complete');
+
 

@@ -249,9 +249,6 @@ public class AnimeWrappedPanel extends JPanel {
         return card;
     }
     
-    /**
-     * Load Top 3 Voice Actors with their roles
-     */
     private void loadTop3Actors(List<ActorStats> actors, List<ActorRole> allRoles) {
         actorsPanel.removeAll();
         

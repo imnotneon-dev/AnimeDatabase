@@ -12,8 +12,8 @@ public class ActorSeriesDAO {
     public ActorSeriesDAO(Connection conn) {
         this.conn = conn;
     }
-    
-    public List<ActorSeries> getAllActorSeries() {
+
+    public List<ActorSeries> getAllActorSeries() throws SQLException {
         List<ActorSeries> actorSeriesList = new ArrayList<>();
         String sql = "SELECT * FROM actorSeries";
 
@@ -30,16 +30,16 @@ public class ActorSeriesDAO {
                 );
                 actorSeriesList.add(as);
             }
-
+            return actorSeriesList;
         } catch (SQLException e) {
-            System.err.println("Error fetching all ActorSeries: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
-
-        return actorSeriesList;
     }
 
-    public ActorSeries getById(int actId) {
+    public ActorSeries getById(int actId) throws SQLException {
         String sql = "SELECT * FROM actorSeries WHERE act_id = ?";
+
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -54,14 +54,14 @@ public class ActorSeriesDAO {
                     );
                 }
             }
-
+            return null;
         } catch (SQLException e) {
-            System.err.println("Error fetching ActorSeries by ID: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
-        return null;
     }
 
-    public List<ActorSeries> getByCharacterName(String characterName) {
+    public List<ActorSeries> getByCharacterName(String characterName) throws SQLException {
         List<ActorSeries> actorSeriesList = new ArrayList<>();
         String sql = "SELECT * FROM actorSeries WHERE character_name = ?";
 
@@ -80,15 +80,14 @@ public class ActorSeriesDAO {
                     actorSeriesList.add(as);
                 }
             }
-
+            return actorSeriesList;
         } catch (SQLException e) {
-            System.err.println("Error fetching ActorSeries by character name: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
-
-        return actorSeriesList;
     }
 
-    public boolean insertActorSeries(ActorSeries as) {
+    public void insertActorSeries(ActorSeries as) throws SQLException {
         String sql = "INSERT INTO actorSeries (actors_id, series_id, character_name) VALUES (?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
@@ -98,15 +97,13 @@ public class ActorSeriesDAO {
             ps.setInt(2, as.getSeriesId());
             ps.setString(3, as.getCharacterName());
             ps.executeUpdate();
-            return true;
-
         } catch (SQLException e) {
-            System.err.println("Error inserting ActorSeries: " + e.getMessage());
-            return false;
+            e.printStackTrace();
+            throw e;
         }
     }
 
-    public boolean deleteActorSeries(int actId) {
+    public void deleteActorSeries(int actId) throws SQLException {
         String sql = "DELETE FROM actorSeries WHERE act_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -114,15 +111,13 @@ public class ActorSeriesDAO {
 
             ps.setInt(1, actId);
             ps.executeUpdate();
-            return true;
-
         } catch (SQLException e) {
-            System.err.println("Error deleting ActorSeries: " + e.getMessage());
-            return false;
+            e.printStackTrace();
+            throw e;
         }
     }
 
-    public boolean updateActorSeries(ActorSeries as) {
+    public void updateActorSeries(ActorSeries as) throws SQLException {
         String sql = "UPDATE actorSeries SET actors_id = ?, series_id = ?, character_name = ? WHERE act_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -133,11 +128,9 @@ public class ActorSeriesDAO {
             ps.setString(3, as.getCharacterName());
             ps.setInt(4, as.getActId());
             ps.executeUpdate();
-            return true;
-
         } catch (SQLException e) {
-            System.err.println("Error updating ActorSeries: " + e.getMessage());
-            return false;
+            e.printStackTrace();
+            throw e;
         }
     }
 }

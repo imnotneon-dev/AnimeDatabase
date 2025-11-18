@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class SeriesDAO{
+public class SeriesDAO {
 
     private final Connection conn;
 
@@ -14,46 +14,13 @@ public class SeriesDAO{
         this.conn = conn;
     }
 
-    // TODO: add throws SQL EXCEPTION
-    public Series getSeriesById(int series_id) {
+    public Series getSeriesById(int seriesId) throws SQLException {
         String sql = "SELECT * FROM series WHERE series_id = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, series_id);
-            ResultSet resSet = ps.executeQuery();
-
-            if (resSet.next()) {
-                return new Series(
-                    resSet.getInt("series_id"),
-                    resSet.getString("title"),
-                    resSet.getString("genre"),
-                    resSet.getInt("release_year"),
-                    resSet.getInt("total_episodes"),
-                    resSet.getString("status")
-                );
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-
-    
-    public Series getSeriesByTitle(String title){
-        String sql = "SELECT * FROM series WHERE title = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)){
-
-                ps.setString(1, title);
-                ResultSet resSet = ps.executeQuery();
-
-                if(resSet.next()){
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, seriesId);
+            try (ResultSet resSet = ps.executeQuery()) {
+                if (resSet.next()) {
                     return new Series(
                         resSet.getInt("series_id"),
                         resSet.getString("title"),
@@ -63,146 +30,128 @@ public class SeriesDAO{
                         resSet.getString("status")
                     );
                 }
-                        
-        } catch (SQLException e){
-            e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+            throw e;            
         }
-        
+
         return null;
     }
 
+    public Series getSeriesByTitle(String title) throws SQLException {
+        String sql = "SELECT * FROM series WHERE title = ?";
 
-
-    
-    public List<Series> getAllSeries(){
-        List<Series> list = new ArrayList<>();
-
-        String sql = "SELECT * FROM series";
-
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet resSet = ps.executeQuery()) {
-
-            while (resSet.next()){
-                Series s = new Series(
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, title);
+            try (ResultSet resSet = ps.executeQuery()) {
+                if (resSet.next()) {
+                    return new Series(
                         resSet.getInt("series_id"),
                         resSet.getString("title"),
                         resSet.getString("genre"),
                         resSet.getInt("release_year"),
                         resSet.getInt("total_episodes"),
                         resSet.getString("status")
-                );
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
 
-                list.add(s);
+        return null;
+    }
+
+    public List<Series> getAllSeries() throws SQLException {
+        List<Series> list = new ArrayList<>();
+        String sql = "SELECT * FROM series";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet resSet = ps.executeQuery()) {
+
+            while (resSet.next()) {
+                list.add(new Series(
+                    resSet.getInt("series_id"),
+                    resSet.getString("title"),
+                    resSet.getString("genre"),
+                    resSet.getInt("release_year"),
+                    resSet.getInt("total_episodes"),
+                    resSet.getString("status")
+                ));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
         }
 
         return list;
     }
 
+    public void addSeries(Series s) throws SQLException {
+        String sql = "INSERT INTO series (title, genre, release_year, total_episodes, status) VALUES (?, ?, ?, ?, ?)";
 
-    public boolean addSeries(Series s){
-        /* boolean so that we know if na insert na true or false*/
-        StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO series");
-        sql.append("(title, genre, release_year, total_episodes, status)");
-        sql.append("VALUES (?, ?, ?, ?, ?)");
-
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql.toString());){
-
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, s.getTitle());
             ps.setString(2, s.getGenre());
             ps.setInt(3, s.getReleaseYear());
             ps.setInt(4, s.getTotalEpisodes());
             ps.setString(5, s.getStatus());
-
-            return ps.executeUpdate() > 0;
-
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
         }
-
-        return false;
     }
 
-    /*made it separate cause technically updating and archive a lot better to separate instead of
-    putting them together. Makes it cleaner too*/
-    public boolean updateSeries(Series s){
-       StringBuilder sql = new StringBuilder();
-        sql.append("UPDATE series");
-        sql.append("SET title = ?, genre = ?, release_year = ?, total_episodes = ?, status = ?");
-        sql.append("WHERE series_id = ?");
+    public void updateSeries(Series s) throws SQLException {
+        String sql = "UPDATE series SET title = ?, genre = ?, release_year = ?, total_episodes = ?, status = ? WHERE series_id = ?";
 
-        try(Connection conn = DBConnection.getConnection();
-           PreparedStatement ps = conn.prepareStatement(sql.toString())){
-
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, s.getTitle());
             ps.setString(2, s.getGenre());
             ps.setInt(3, s.getReleaseYear());
             ps.setInt(4, s.getTotalEpisodes());
             ps.setString(5, s.getStatus());
             ps.setInt(6, s.getSeriesId());
-
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e){
+            ps.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
         }
-
-        return false;
     }
 
-    public boolean archiveSeries(int series_id){
+    public void archiveSeries(int seriesId) throws SQLException {
         String sql = "UPDATE series SET status = 'Archived' WHERE series_id = ?";
 
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
-
-            ps.setInt(1, series_id);
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e){
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, seriesId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
         }
-
-        return false;
     }
 
-    public boolean unarchiveSeries(int series_id){
+    public void unarchiveSeries(int seriesId) throws SQLException {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Unarchiving this series? Select it's current status: 1 - Complete, 2 - On-going");
+        System.out.println("Unarchiving this series? Select its current status: 1 - Complete, 2 - On-going");
         int choice = sc.nextInt();
 
-        String statusNew;
-
-        if(choice == 1) {
-            statusNew = "Complete";
-        } else {
-            statusNew = "On-Going";
-        }
+        String statusNew = (choice == 1) ? "Complete" : "On-Going";
 
         String sql = "UPDATE series SET status = ? WHERE series_id = ?";
 
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, statusNew);
-            ps.setInt(2, series_id);
-            
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e){
+            ps.setInt(2, seriesId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
+            
         }
-
-        return false;
-        
     }
 }
-
-

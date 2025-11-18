@@ -23,14 +23,14 @@ public class ActorDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new Actor(
-                        rs.getInt("id"),
-                        rs.getString("last_name"),
-                        rs.getString("first_name"),
-                        rs.getString("gender"),
-                        rs.getDate("date_of_birth").toLocalDate(),
-                        rs.getString("place_of_birth"),
-                        rs.getString("agency"),
-                        rs.getString("series_photo")
+                            rs.getInt("id"),
+                            rs.getString("last_name"),
+                            rs.getString("first_name"),
+                            rs.getString("gender"),
+                            rs.getDate("date_of_birth").toLocalDate(),
+                            rs.getString("place_of_birth"),
+                            rs.getString("agency"),
+                            rs.getString("series_photo")
                     );
                 }
             }
@@ -74,7 +74,7 @@ public class ActorDAO {
             ResultSet rs = ps.executeQuery();
             List<Actor> actors = new ArrayList<>();
             while (rs.next()) {
-                    actors.add(new Actor(
+                actors.add(new Actor(
                         rs.getInt("actor_id"),
                         rs.getString("last_name"),
                         rs.getString("first_name"),
@@ -83,22 +83,22 @@ public class ActorDAO {
                         rs.getString("place_of_birth"),
                         rs.getString("agency"),
                         rs.getString("series_photo")
-                    ));
-                }
-                return actors;
+                ));
             }
-        } catch (SQLException e) {
+            return actors;
+        }catch (SQLException e) {
             e.printStackTrace();
             throw e;
         }
     }
-    public List<Actor> getActorsByEpisode(int epId) throws SQLException {
+
+    public List<Actor> getActorsByEpisode ( int epId) throws SQLException {
         String sql =
-            "SELECT a.actor_id, a.last_name, a.first_name, a.gender, a.date_of_birth, a.place_of_birth, a.agency " +
-            "FROM actors a " +
-            "JOIN actor_series acs ON a.actor_id = acs.actor_id " +
-            "JOIN series s ON acs.series_id = s.series_id " +
-            "WHERE s.ep_id = ?";
+                "SELECT a.actor_id, a.last_name, a.first_name, a.gender, a.date_of_birth, a.place_of_birth, a.agency " +
+                        "FROM actors a " +
+                        "JOIN actor_series acs ON a.actor_id = acs.actor_id " +
+                        "JOIN series s ON acs.series_id = s.series_id " +
+                        "WHERE s.ep_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -108,14 +108,14 @@ public class ActorDAO {
                 List<Actor> actors = new ArrayList<>();
                 while (rs.next()) {
                     actors.add(new Actor(
-                        rs.getInt("actor_id"),
-                        rs.getString("last_name"),
-                        rs.getString("first_name"),
-                        rs.getString("gender"),
-                        rs.getDate("date_of_birth").toLocalDate(),
-                        rs.getString("place_of_birth"),
-                        rs.getString("agency"),
-                        rs.getString("series_photo")
+                            rs.getInt("actor_id"),
+                            rs.getString("last_name"),
+                            rs.getString("first_name"),
+                            rs.getString("gender"),
+                            rs.getDate("date_of_birth").toLocalDate(),
+                            rs.getString("place_of_birth"),
+                            rs.getString("agency"),
+                            rs.getString("series_photo")
                     ));
                 }
                 return actors;
@@ -126,7 +126,7 @@ public class ActorDAO {
         }
     }
 
-    public void addActor(String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) throws SQLException {
+    public void addActor (String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) throws SQLException {
         String sql = "INSERT INTO actors (last_name, first_name, gender, date_of_birth, place_of_birth, agency) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
@@ -145,7 +145,7 @@ public class ActorDAO {
         }
     }
 
-    public void deleteActor(int actorId) throws SQLException {
+    public void deleteActor ( int actorId) throws SQLException {
         String sql = "DELETE FROM actors WHERE actor_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -159,7 +159,7 @@ public class ActorDAO {
         }
     }
 
-    public void editActor(int actorId, String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) throws SQLException {
+    public void editActor ( int actorId, String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) throws SQLException {
         String sql = "UPDATE actors SET last_name = ?, first_name = ?, gender = ?, date_of_birth = ?, place_of_birth = ?, agency = ? WHERE actor_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -179,7 +179,7 @@ public class ActorDAO {
         }
     }
 
-    public List<Actor> viewActors() throws SQLException {
+    public List<Actor> viewActors () throws SQLException {
         String sql = "SELECT * FROM actors";
 
         try (Connection conn = DBConnection.getConnection();
@@ -189,14 +189,14 @@ public class ActorDAO {
             List<Actor> list = new ArrayList<>();
             while (rs.next()) {
                 list.add(new Actor(
-                    rs.getInt("actor_id"),
-                    rs.getString("last_name"),
-                    rs.getString("first_name"),
-                    rs.getString("gender"),
-                    rs.getDate("date_of_birth").toLocalDate(),
-                    rs.getString("place_of_birth"),
-                    rs.getString("agency"),
-                    rs.getString("series_photo")
+                        rs.getInt("actor_id"),
+                        rs.getString("last_name"),
+                        rs.getString("first_name"),
+                        rs.getString("gender"),
+                        rs.getDate("date_of_birth").toLocalDate(),
+                        rs.getString("place_of_birth"),
+                        rs.getString("agency"),
+                        rs.getString("series_photo")
                 ));
             }
             return list;

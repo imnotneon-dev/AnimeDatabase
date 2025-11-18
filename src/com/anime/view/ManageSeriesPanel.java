@@ -21,6 +21,7 @@ public class ManageSeriesPanel extends JPanel {
     private JTextField genreField = new JTextField();
     private JTextField releaseYearField = new JTextField();
     private JTextField epCountField = new JTextField();
+    private JTextField filepathToPosterField = new JTextField();
     private JComboBox<String> statusCb = new JComboBox<>();
 
     private JButton addBtn = new JButton("Add");
@@ -78,6 +79,9 @@ public class ManageSeriesPanel extends JPanel {
         epCountField.setMaximumSize(new Dimension(350,30));
         epCountField.setAlignmentX(LEFT_ALIGNMENT);
 
+        filepathToPosterField.setMaximumSize(new Dimension(350,30));
+        filepathToPosterField.setAlignmentX(LEFT_ALIGNMENT);
+
         statusCb = new JComboBox<>(new String[]{ "On-Going", "Complete", "Archived" });
         statusCb.setMaximumSize(new Dimension(350,30));
         statusCb.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -108,6 +112,9 @@ public class ManageSeriesPanel extends JPanel {
         seriesFormPnl.add(Box.createVerticalStrut(10));
         seriesFormPnl.add(new JLabel("Set Status"));
         seriesFormPnl.add(statusCb);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+        seriesFormPnl.add(new JLabel("Filepath to poster"));
+        seriesFormPnl.add(filepathToPosterField);
         seriesFormPnl.add(Box.createVerticalStrut(10));
 //        seriesFormPnl.add(Box.createVerticalGlue());
         seriesFormPnl.add(addBtn);
@@ -183,6 +190,14 @@ public class ManageSeriesPanel extends JPanel {
         this.epCountField = epCountField;
     }
 
+    public JTextField getFilepathToPosterField() {
+        return filepathToPosterField;
+    }
+
+    public void setFilepathToPosterField(JTextField filepathToPosterField) {
+        this.filepathToPosterField = filepathToPosterField;
+    }
+
     public JComboBox<String> getStatusCb() {
         return statusCb;
     }
@@ -231,4 +246,5 @@ public class ManageSeriesPanel extends JPanel {
     public void setSeriesCards(List<PlainSeriesCard> seriesCards) {
         this.seriesCards = seriesCards;
     }
+
 }

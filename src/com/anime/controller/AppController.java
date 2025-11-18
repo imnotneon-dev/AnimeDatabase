@@ -9,7 +9,6 @@ import com.anime.view.customcards.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,6 +29,7 @@ public class AppController {
         init_header_listeners();
         init_accpnl_listeners();
         init_homepage_listeners();
+        init_catalog_listeners();
         init_seriespage_listeners();
         init_episodepage_listeners();
         init_actorpage_listeners();
@@ -220,6 +220,8 @@ public class AppController {
         });
 
         header.getLikesItem().addActionListener(e->{
+//            List<LikedEpisode> accountWatchHist = model.getWatchHistoryDAO().getWatchedListByUser(currentSession.getUserId());
+//            view.getWatchHistoryPage().setWatchedEpisodesList(accountWatchHist);
             view.switchView(view.LIKE_HISTORY);
 
 //            try {
@@ -231,6 +233,14 @@ public class AppController {
 //                System.err.println("DB Error loading watch history: " + ex.getMessage());
 //                System.out.println("Could not load watch history due to a database error.");
 //            }
+        });
+
+        header.getAccStatsItem().addActionListener(e->{
+            view.switchView(view.REPORT);
+        });
+
+        header.getWrappedItem().addActionListener(e->{
+            view.switchView(view.REPORT);
         });
     }
 
@@ -752,7 +762,7 @@ public class AppController {
             }
         });
     }
-    private void init_admin_episode_panel(ManageEpisodePanel episode) throws SQLException {
+    private void init_admin_episode_panel(ManageEpisodePanel episode){
         List<PlainEpisodeCard> episodeCards = episode.getEpisodeCards();
 //        int series_id;
 

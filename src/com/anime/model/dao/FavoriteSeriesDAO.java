@@ -90,7 +90,8 @@ public class FavoriteSeriesDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     favorites.add(new FavoriteSeries(
-                            rs.getInt("username"),
+                            rs.getInt("favorite_id"),
+                            rs.getString("username"),
                             rs.getInt("series_id"),
                             rs.getDate("added_date").toLocalDate()
                     ));

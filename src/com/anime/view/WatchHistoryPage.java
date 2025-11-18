@@ -1,11 +1,15 @@
 package com.anime.view;
 
+import com.anime.model.Episode;
+import com.anime.model.WatchHistory;
 import com.anime.view.customcards.PlainEpisodeCard;
+import com.anime.view.customcards.SeriesEpisodeCard;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WatchHistoryPage extends JPanel{
@@ -18,8 +22,8 @@ public class WatchHistoryPage extends JPanel{
 //    private JLabel agencyNameLb = new JLabel("Agency");
     private JScrollPane watchHistoryScrollPane = new JScrollPane(historyPnl);
 //    private List<ActorRole> rolesList;
-    private List<PlainEpisodeCard> episodeList = List.of(
-            new PlainEpisodeCard("Kaiju No. 8: Season 2", "Second Wave", LocalDate.now()));
+//    private List<PlainEpisodeCard> episodeList = List.of(
+//            new PlainEpisodeCard("Kaiju No. 8: Season 2", "Second Wave", LocalDate.now()));
     /*
     * public ActorPage(Actor actor, List<ActorRole> roles){
     *   actorPhoto.
@@ -30,6 +34,10 @@ public class WatchHistoryPage extends JPanel{
     *   rolesList = roles;
     * }
     * */
+
+    private List<PlainEpisodeCard> watchedEpisodesCards = new ArrayList<>();
+    private List<WatchHistory> watchedEpisodesList = new ArrayList<>();
+
     public WatchHistoryPage() {
         init();
     }
@@ -60,12 +68,7 @@ public class WatchHistoryPage extends JPanel{
 
         historyPnl.add(watchHistory);
         historyPnl.add(Box.createVerticalStrut(10));
-        for(PlainEpisodeCard h: episodeList){
-            PlainEpisodeCard ep = h;
-            ep.setAlignmentX(Component.LEFT_ALIGNMENT);
-            historyPnl.add(ep);
-            historyPnl.add(Box.createVerticalStrut(10));
-        }
+        loadEpisodeCards();
 
         watchHistoryScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         watchHistoryScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -78,4 +81,33 @@ public class WatchHistoryPage extends JPanel{
         add(watchHistoryScrollPane, BorderLayout.CENTER);
     }
 
+    private void loadEpisodeCards(){
+        historyPnl.removeAll();
+        watchedEpisodesCards.clear();
+        if(watchedEpisodesList!=null){
+            for(WatchHistory e: watchedEpisodesList){
+                LocalDate wd = e.getWatchDate();
+                PlainEpisodeCard card = new PlainEpisodeCard(wd);
+                card.putClientProperty("episode_id",e.getEpisodeId());
+                card.setAlignmentX(Component.LEFT_ALIGNMENT);
+                watchedEpisodesCards.add(card);
+                historyPnl.add(card);
+                historyPnl.add(Box.createVerticalStrut(10));
+            }
+        }
+        else {
+            historyPnl.add(new JLabel("No episodes yet..."));
+        }
+        historyPnl.revalidate();
+        historyPnl.repaint();
+    }
+
+    public void setWatchedEpisodesList(List<WatchHistory> watchedEpisodesList) {
+        this.watchedEpisodesList = watchedEpisodesList;
+        loadEpisodeCards();
+    }
+
+    public List<PlainEpisodeCard> getWatchedEpisodesCards() {
+        return watchedEpisodesCards;
+    }
 }

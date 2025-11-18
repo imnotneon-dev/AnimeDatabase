@@ -62,7 +62,7 @@ public class EpisodeReviewDAO {
         List<EpisodeReview> list = new ArrayList<>();
         String sql = """
             SELECT 
-                r.review_id, r.username, r.episode_id, r.comment, r.date_reviewed,
+                r.review_id, r.user_id, r.episode_id, r.comment, r.date_reviewed,
                 e.title AS episode_title
             FROM episodeReviews r
             JOIN episodes e ON r.episode_id = e.episode_id
@@ -97,8 +97,7 @@ public class EpisodeReviewDAO {
         List<EpisodeReview> list = new ArrayList<>();
         String sql = """
             SELECT 
-                r.review_id, r.username, r.episode_id, r.comment, r.date_reviewed,
-                u.username,
+                r.review_id, r.user_id, r.episode_id, r.comment, r.date_reviewed,
                 e.title AS episode_title
             FROM episodeReviews r
             JOIN episodes e ON r.episode_id = e.episode_id

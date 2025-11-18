@@ -1,5 +1,6 @@
 package com.anime.view;
 
+import com.anime.model.Series;
 import com.anime.view.customcards.PlainEpisodeCard;
 import com.anime.view.customcards.PlainSeriesCard;
 
@@ -9,10 +10,12 @@ import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ManageSeriesPanel extends JPanel {
+    private JPanel seriesListPnl = new JPanel();
 
     private JTextField titleField = new JTextField();
     private JTextField genreField = new JTextField();
@@ -24,11 +27,13 @@ public class ManageSeriesPanel extends JPanel {
     private JButton updateBtn = new JButton("Update");
     private JButton clearBtn = new JButton("Clear");
 
+    private List<Series> seriesList = new ArrayList<>();
+    private List<PlainSeriesCard> seriesCards = new ArrayList<>();
 
-    private List<String> seriesList = List.of(
+    /*private List<String> seriesList = List.of(
             "Series 1","Series 2","Series 3","Series 4","Series 5",
             "Series 6","Series 7","Series 8","Series 9","Series 10",
-            "Series 11","Series 12");
+            "Series 11","Series 12");*/
 
     public ManageSeriesPanel(){
         setLayout(new BorderLayout());
@@ -46,12 +51,7 @@ public class ManageSeriesPanel extends JPanel {
         seriesListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         seriesListPnl.setBorder(new EmptyBorder(10,10,10,10));
         seriesListPnl.setBackground(Color.magenta);
-        for(String s: seriesList){
-            PlainSeriesCard psc = new PlainSeriesCard(s);
-            seriesListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
-            seriesListPnl.add(psc);
-            seriesListPnl.add(Box.createVerticalStrut(5));
-        }
+        loadPSCards();
 
         seriesListScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         seriesListScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -127,5 +127,21 @@ public class ManageSeriesPanel extends JPanel {
 
         add(seriesFormPnl,BorderLayout.CENTER);
 
+    }
+
+    private void loadPSCards(){
+        seriesListPnl.removeAll();
+        seriesCards.clear();
+        for(Series s: seriesList){
+            PlainSeriesCard psc = new PlainSeriesCard(s.getTitle());
+            psc.putClientProperty("series_id",s.getSeriesId());
+            seriesListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
+            seriesCards.add(psc);
+            seriesListPnl.add(psc);
+            seriesListPnl.add(Box.createVerticalStrut(5));
+        }
+
+        seriesListPnl.revalidate();
+        seriesListPnl.repaint();
     }
 }

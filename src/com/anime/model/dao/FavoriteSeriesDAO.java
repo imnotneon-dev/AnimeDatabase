@@ -183,4 +183,22 @@ public class FavoriteSeriesDAO {
 
     }
 
+    public boolean favoriteChecker(int username, int series_id){
+        String sql = "SELECT 1 FROM FavoriteSeries WHERE username = ? AND series_id = ?";
+
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+
+            ps.setInt(1, username);
+            ps.setInt(2, series_id);
+
+            try(ResultSet rs = ps.executeQuery()){
+                return rs.next();
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }    

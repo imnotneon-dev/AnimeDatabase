@@ -11,22 +11,27 @@ public class Account {
     private String country;
     private String topGenre;
     private Date dateCreated;
+    private String status;
 
-    public Account(String username, String password, Date dateOfBirth, String country, String topGenre, Date dateCreated) {
+    public Account(int userId, String username, String password, Date dateOfBirth, String country, String topGenre, Date dateCreated, String status) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.country = country;
         this.topGenre = topGenre;
         this.dateCreated = dateCreated;
+        this.status = status;
     }
 
-    public Account(String username, String password, Date dateOfBirth, String country, String topGenre) {
+    public Account(int userId, String username, String password, Date dateOfBirth, String country, String topGenre, String status) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.country = country;
         this.topGenre = topGenre;
+        this.status = status;
     }
 
     public int getUserId() {

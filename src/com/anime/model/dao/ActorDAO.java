@@ -101,7 +101,7 @@ public class ActorDAO {
             ps.setString(1, lastName);
             ps.setString(2, firstName);
             ps.setString(3, gender);
-            ps.setString(4, dateOfBirth);
+            ps.setDate(4, java.sql.Date.valueOf(dateOfBirth));
             ps.setString(5, placeOfBirth);
             ps.setString(6, agency);
             ps.executeUpdate();

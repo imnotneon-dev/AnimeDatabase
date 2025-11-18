@@ -18,7 +18,7 @@ public class WatchHistoryDAO {
         List<WatchHistory> watched = new ArrayList<>();
         String sql = " SELECT DISTINCT watch_id, user_id, episode_id, watch_date " +
                 "FROM watchHistory w " +
-                "WHERE username = ? ";
+                "WHERE user_id = ? ";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 

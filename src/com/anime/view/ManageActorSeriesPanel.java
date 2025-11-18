@@ -1,6 +1,7 @@
 package com.anime.view;
 
 import com.anime.model.Actor;
+import com.anime.model.ActorSeries;
 import com.anime.model.Series;
 import com.anime.view.customcards.PlainActorCard;
 
@@ -27,7 +28,7 @@ public class ManageActorSeriesPanel extends JPanel {
 
     private List<Actor> actorList = new ArrayList<>();
     private List<Series> allSeriesList = new ArrayList<>();
-    private List<Series> actorSeriesList = new ArrayList<>();
+    private List<ActorSeries> actorSeriesList = new ArrayList<>();
 
     public ManageActorSeriesPanel(){
         setLayout(new BorderLayout());
@@ -174,11 +175,11 @@ public class ManageActorSeriesPanel extends JPanel {
         this.allSeriesList = allSeriesList;
     }
 
-    public List<Series> getActorSeriesList() {
+    public List<ActorSeries> getActorSeriesList() {
         return actorSeriesList;
     }
 
-    public void setActorSeriesList(List<Series> actorSeriesList) {
+    public void setActorSeriesList(List<ActorSeries> actorSeriesList) {
         this.actorSeriesList = actorSeriesList;
     }
 }

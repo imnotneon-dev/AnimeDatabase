@@ -154,6 +154,12 @@ public class AppController {
             }
 
         });
+        header.getCatalogLb().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                view.switchView(view.CATALOG_VIEW);
+            }
+        });
         header.getLogoutItem().addActionListener(e-> view.switchView(view.LOGIN));
 
         header.getWatchHistoryItem().addActionListener(e->{
@@ -182,6 +188,40 @@ public class AppController {
 //                System.out.println("Could not load watch history due to a database error.");
 //            }
         });
+    }
+
+    private void init_catalog_listeners(){
+        CatalogPage catalog = view.getCatalogPage();
+        List<SeriesCard> seriesCards = catalog.getCatalogSeriesCards();
+
+        for(SeriesCard card: seriesCards){
+            card.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    int series_id = card.getSeriesID();
+                    try {
+                        // might be redundant since series alr has the info but ill keep it here still
+                        Series series = model.getSeriesDAO().getSeriesById(series_id);
+                        // get episode list of the series
+                        // List<Episode> episodeList = model.getEpisodeDAO().
+                        // List<ActorSeries> actorList = model.getActorDAO().
+                        if(series!=null) {
+                            // load series info
+                            view.getSeriesPage().setSeries(series);
+                            view.getSeriesPage().setEpisodeList();
+                            view.getSeriesPage().setActorsList();
+                            view.switchView(view.SERIES);
+                        } else {
+                            System.out.println("Series details cannot be found.");
+                        }
+                    }
+                    catch (SQLException ex) {
+                        System.err.println("DB Error during series loading: " + ex.getMessage());
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        }
     }
 
     private void init_homepage_listeners(){
@@ -730,6 +770,7 @@ public class AppController {
 
                     // updating gui/list
                     List<Episode> eList = model.getEpisodeDAO().selectAllEpisodes();
+                    // todo
                     episode.setSeriesList(eList);
                 }
             } catch (SQLException ex){

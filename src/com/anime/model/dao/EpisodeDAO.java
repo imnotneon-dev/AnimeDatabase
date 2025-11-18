@@ -66,6 +66,34 @@ public class EpisodeDAO {
         }
       return null;
     }
+    public Episode selectEpisodeBySeries(int series_id) throws SQLException {
+        String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM Episodes WHERE series_id = ? ";
+
+        try(PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, series_id);
+            try (ResultSet rs = ps.executeQuery()){
+                if (rs.next()) {
+
+                    Date sqlDate = rs.getDate("release_date");
+                    LocalDate releaseDate = null;
+                    if (sqlDate != null) {
+                        releaseDate = sqlDate.toLocalDate();
+                    }
+                    return new Episode(
+                            rs.getInt("episode_id"),
+                            rs.getString("title"),
+                            rs.getString("synopsis"),
+                            rs.getInt("runtime"),
+                            rs.getInt("views"),
+                            releaseDate,
+                            rs.getInt("series_id"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
     public List<Episode> selectAllEpisodes() throws SQLException {
         List<Episode> catalog = new ArrayList<>();
 

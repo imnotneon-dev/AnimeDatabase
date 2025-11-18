@@ -24,6 +24,7 @@ public class EpisodeDAO {
         ps.setDate(2, Date.valueOf(release));
         ps.setString(3, synopsis);
         ps.setInt(4, runtime);
+        ps.setInt(5, series_id);
         ps.executeUpdate();
     }
 
@@ -37,7 +38,7 @@ public class EpisodeDAO {
         ps.setInt(5, eid);
         ps.executeUpdate();
     }
-    public Episode selectEpisodeById(String episodeId) throws SQLException {
+    public Episode selectEpisodeById(int episodeId) throws SQLException {
         String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM Episodes WHERE episodeId = ? ";
 
         try(PreparedStatement ps = conn.prepareStatement(sql)){

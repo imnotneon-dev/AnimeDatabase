@@ -65,16 +65,14 @@ public class ManageSeriesPanel extends JPanel {
         titleField.setAlignmentX(LEFT_ALIGNMENT);
         genreField.setMaximumSize(new Dimension(350,30));
         genreField.setAlignmentX(LEFT_ALIGNMENT);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
-        releaseYearField = new JFormattedTextField(dateFormat);
-        releaseYearField.setMaximumSize(new Dimension(350,30));
-        releaseYearField.setAlignmentX(LEFT_ALIGNMENT);
 
         NumberFormat integerFormat = NumberFormat.getIntegerInstance(Locale.ROOT);
         NumberFormatter formatter = new NumberFormatter(integerFormat);
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);
+        releaseYearField = new JFormattedTextField(formatter);
+        releaseYearField.setMaximumSize(new Dimension(350,30));
+        releaseYearField.setAlignmentX(LEFT_ALIGNMENT);
 
         epCountField = new JFormattedTextField(formatter);
         epCountField.setMaximumSize(new Dimension(350,30));
@@ -143,5 +141,94 @@ public class ManageSeriesPanel extends JPanel {
 
         seriesListPnl.revalidate();
         seriesListPnl.repaint();
+    }
+
+    public JPanel getSeriesListPnl() {
+        return seriesListPnl;
+    }
+
+    public void setSeriesListPnl(JPanel seriesListPnl) {
+        this.seriesListPnl = seriesListPnl;
+    }
+
+    public JTextField getTitleField() {
+        return titleField;
+    }
+
+    public void setTitleField(JTextField titleField) {
+        this.titleField = titleField;
+    }
+
+    public JTextField getGenreField() {
+        return genreField;
+    }
+
+    public void setGenreField(JTextField genreField) {
+        this.genreField = genreField;
+    }
+
+    public JTextField getReleaseYearField() {
+        return releaseYearField;
+    }
+
+    public void setReleaseYearField(JTextField releaseYearField) {
+        this.releaseYearField = releaseYearField;
+    }
+
+    public JTextField getEpCountField() {
+        return epCountField;
+    }
+
+    public void setEpCountField(JTextField epCountField) {
+        this.epCountField = epCountField;
+    }
+
+    public JComboBox<String> getStatusCb() {
+        return statusCb;
+    }
+
+    public void setStatusCb(JComboBox<String> statusCb) {
+        this.statusCb = statusCb;
+    }
+
+    public JButton getAddBtn() {
+        return addBtn;
+    }
+
+    public void setAddBtn(JButton addBtn) {
+        this.addBtn = addBtn;
+    }
+
+    public JButton getUpdateBtn() {
+        return updateBtn;
+    }
+
+    public void setUpdateBtn(JButton updateBtn) {
+        this.updateBtn = updateBtn;
+    }
+
+    public JButton getClearBtn() {
+        return clearBtn;
+    }
+
+    public void setClearBtn(JButton clearBtn) {
+        this.clearBtn = clearBtn;
+    }
+
+    public List<Series> getSeriesList() {
+        return seriesList;
+    }
+
+    public void setSeriesList(List<Series> seriesList) {
+        this.seriesList = seriesList;
+        loadPSCards();
+    }
+
+    public List<PlainSeriesCard> getSeriesCards() {
+        return seriesCards;
+    }
+
+    public void setSeriesCards(List<PlainSeriesCard> seriesCards) {
+        this.seriesCards = seriesCards;
     }
 }

@@ -10,6 +10,8 @@ public class AdminPage extends JPanel implements ItemListener {
     private ManageSeriesPanel mngSeriesPnl = new ManageSeriesPanel();
     private ManageEpisodePanel mngEpisodePnl = new ManageEpisodePanel();
     private ManageActorPanel mngActorPnl = new ManageActorPanel();
+    private ManageActorSeriesPanel mngActorSeriesPnl = new ManageActorSeriesPanel();
+
     private JPanel panelContainer = new JPanel();
 
     private JComboBox<String> cb;
@@ -37,6 +39,7 @@ public class AdminPage extends JPanel implements ItemListener {
         final String ADD_SERIES = "Add Series";
         final String ADD_EP = "Add Episode";
         final String ADD_ACTOR = "Add Actor";
+        final String ADD_ACTOR_SERIES = "Add Actor to Series (Add Role)";
 //        JLabel adminTitleLb = new JLabel("Administrator Record Management");
 //        adminTitleLb.setAlignmentX(CENTER_ALIGNMENT);
 
@@ -74,6 +77,7 @@ public class AdminPage extends JPanel implements ItemListener {
         panelContainer.add(mngSeriesPnl,ADD_SERIES);
         panelContainer.add(mngEpisodePnl,ADD_EP);
         panelContainer.add(mngActorPnl,ADD_ACTOR);
+        panelContainer.add(mngActorPnl,ADD_ACTOR_SERIES);
 
         add(panelContainer, BorderLayout.CENTER);
     }
@@ -112,6 +116,14 @@ public class AdminPage extends JPanel implements ItemListener {
         this.mngActorPnl = mngActorPnl;
     }
 
+    public ManageActorSeriesPanel setMngActorSeriesPnl() {
+        return mngActorSeriesPnl;
+    }
+
+    public void setMngActorSeriesPnl(ManageActorPanel mngActorSeriesPnl) {
+        this.mngActorSeriesPnl = AdminPage.this.mngActorSeriesPnl;
+    }
+
     public JPanel getPanelContainer() {
         return panelContainer;
     }
@@ -135,8 +147,4 @@ public class AdminPage extends JPanel implements ItemListener {
     public void setCl(CardLayout cl) {
         this.cl = cl;
     }
-}
-
-
-
 }

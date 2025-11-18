@@ -12,7 +12,16 @@ CREATE TABLE LikedEpisode(
 INSERT INTO LikedEpisode (user_id, episode_id)
 VALUES
 
-()
+(1, 2),
+(2, 5),
+(3, 6),
+(4, 3),
+(5, 2),
+(6, 7),
+(6, 4),
+(8, 1),
+(9, 9),
+(10, 8);
 
 
 -- Delete function

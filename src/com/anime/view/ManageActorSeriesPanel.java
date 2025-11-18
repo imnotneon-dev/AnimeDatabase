@@ -59,11 +59,14 @@ public class ManageActorSeriesPanel extends JPanel {
         seriesTitleCb = new JComboBox<Object>(allSeriesList.toArray());
         seriesTitleCb.setMaximumSize(new Dimension(350,30));
         seriesTitleCb.setAlignmentX(Component.LEFT_ALIGNMENT);
+        seriesTitleCb.setEditable(false);
 
         actorSeriesCb = new JComboBox<Object>(allSeriesList.toArray());
         actorSeriesCb.setMaximumSize(new Dimension(350,30));
         actorSeriesCb.setAlignmentX(Component.LEFT_ALIGNMENT);
         actorSeriesCb.setEditable(false);
+        actorSeriesCb.setEnabled(false);
+
 
         addBtn.setPreferredSize(new Dimension(200,35));
         addBtn.setMaximumSize(new Dimension(200,35));
@@ -181,5 +184,9 @@ public class ManageActorSeriesPanel extends JPanel {
 
     public void setActorSeriesList(List<ActorSeries> actorSeriesList) {
         this.actorSeriesList = actorSeriesList;
+        actorSeriesCb.removeAll();
+        for(ActorSeries a: this.actorSeriesList){
+            actorSeriesCb.addItem(a);
+        }
     }
 }

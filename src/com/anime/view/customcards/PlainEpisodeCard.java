@@ -107,4 +107,8 @@ public class PlainEpisodeCard extends JPanel {
         catch (IOException e) { e.printStackTrace(); }
         return image;
     }
+
+    public void setSeriesTitle(String title){
+        this.seriesTitle = title;
+    }
 }

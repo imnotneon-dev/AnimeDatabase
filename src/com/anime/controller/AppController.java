@@ -387,8 +387,169 @@ public class AppController {
     }
     private void init_admin_panel(){
         AdminPage adminPage = view.getAdminPage();
+        ManageActorPanel actor = adminPage.getMngActorPnl();
+        ManageEpisodePanel episode = adminPage.getMngEpisodePnl();
+        ManageSeriesPanel series = adminPage.getMngSeriesPnl();
+        ManageActorSeriesPanel role = adminPage.getMngActorSeriesPnl();
+
+        init_admin_actorseries_panel(role);
+    }
+    private Integer selectedActorId = null;
+
+    private void init_admin_actorseries_panel(ManageActorSeriesPanel role){
+        List<PlainActorCard> actorCards = role.getActorSeriesCards();
+        int actor_id = Integer.parseInt(null);
+
+        role.getActorSeriesCb().addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                role.getDeleteBtn().setEnabled(true);
+                role.getAddBtn().setEnabled(false);
+                role.getActorRole().setEditable(false);
+//                role.getSeriesTitleCb().setEnabled(false);
+//                role.getActorSeriesCb().setEnabled(true);
+                Object selectedItem = e.getItem();
+
+                if (selectedItem instanceof ActorSeries selectedSeries) {
+
+                    int seriesId = selectedSeries.getSeriesId();
+                    String character = selectedSeries.getCharacterName();
+
+                    role.getActorRole().setText(character);
+                }
+            }
+        });
+
+        role.getSeriesTitleCb().addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                role.getDeleteBtn().setEnabled(false);
+                role.getAddBtn().setEnabled(true);
+                role.getActorRole().setEditable(true);
+//                role.getSeriesTitleCb().setEnabled(false);
+//                role.getActorSeriesCb().setEnabled(true);
+//                Object selectedItem = e.getItem();
+
+                /*if (selectedItem instanceof Series selectedSeries) {
+
+                    int seriesId = selectedSeries.getSeriesId();
+                    String character = selectedSeries.getCharacterName();
+
+                    role.getActorRole().setText(character);
+                    // ... Logic to update other fields or fetch data ...
+                }*/
+            }
+        });
+
+        for(PlainActorCard card: actorCards){
+            card.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    selectedActorId = (Integer)card.getClientProperty("actor_id");
+                    try{
+//                        role.getDeleteBtn().setEnabled(true);
+//                        role.getAddBtn().setEnabled(false);
+//                        role.getSeriesTitleCb().setEnabled(false);
+//                        role.getActorSeriesCb().setEnabled(true);
+                        role.getActorNameField().setEditable(false);
+//                        role.getActorRole().setEditable(false);
+
+                        role.getActorNameField().setText(card.getNameLabel().getText());
+
+                        List<ActorSeries> actorSeriesList = model.getActorSeriesDAO().getCharacterByActor(selectedActorId);
+                        role.setActorSeriesList(actorSeriesList);
+
+                    } catch(SQLException ex){
+                        System.err.println("DB Error during reviews loading: " + ex.getMessage());
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        }
+
+        role.getClearBtn().addActionListener(e->{
+
+            role.getAddBtn().setEnabled(true);
+            role.getDeleteBtn().setEnabled(true);
+            role.getSeriesTitleCb().setEnabled(true);
+            role.getActorSeriesCb().setEnabled(true);
+            role.getActorNameField().setEditable(false);
+            role.getActorNameField().setText("");
+            role.getActorRole().setEditable(true);
+        });
+
+        role.getDeleteBtn().addActionListener(e-> {
+
+            if (selectedActorId == null) {
+                System.out.println("Error: No actor selected.");
+                return;
+            }
+
+            Object selectedItem = role.getActorSeriesCb().getSelectedItem();
+
+            if (selectedItem instanceof ActorSeries selectedRole){
+                int actIdToDelete = selectedRole.getActId();
+
+                try {
+                    boolean success = model.getActorSeriesDAO().deleteActorSeries(actIdToDelete);
+
+                    if (success) {
+                        role.getActorRole().setText("");
+                        role.getActorNameField().setText("");
+                        role.getAddBtn().setEnabled(true);
+                        role.getDeleteBtn().setEnabled(true);
+                        role.getSeriesTitleCb().setEnabled(true);
+                        role.getActorSeriesCb().setEnabled(true);
+                        role.getActorNameField().setEditable(false);
+                        role.getActorRole().setEditable(true);
+                    } else {
+                        System.out.println("Failed to delete role from database.");
+                    }
+
+                } catch(Exception ex) {
+                    System.err.println("Error deleting ActorSeries: " + ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        role.getAddBtn().addActionListener(e-> {
+
+            if (selectedActorId == null) {
+                System.out.println("Error: No actor selected.");
+                return;
+            }
+
+            Object selectedItem = role.getSeriesTitleCb().getSelectedItem();
+
+            if (selectedItem instanceof Series selectedSeries){
+                int seriesIdToAdd = selectedSeries.getSeriesId();
+                int actorIdToAdd = selectedActorId;
+                String roleToAdd = role.getActorRole().getText();
+                ActorSeries actorSeriesToAdd = new ActorSeries(actorIdToAdd, seriesIdToAdd, roleToAdd);
+
+                try {
+                    boolean success = model.getActorSeriesDAO().insertActorSeries(actorSeriesToAdd);
+
+                    if (success) {
+                        role.getActorRole().setText("");
+                        role.getActorNameField().setText("");
+                        role.getAddBtn().setEnabled(true);
+                        role.getDeleteBtn().setEnabled(true);
+                        role.getSeriesTitleCb().setEnabled(true);
+                        role.getActorSeriesCb().setEnabled(true);
+                        role.getActorNameField().setEditable(false);
+                        role.getActorRole().setEditable(true);
 
 
+                    } else {
+                        System.out.println("Failed to add role to database.");
+                    }
+
+                } catch(Exception ex) {
+                    System.err.println("Error deleting ActorSeries: " + ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 }
 

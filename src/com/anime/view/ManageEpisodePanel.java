@@ -53,6 +53,7 @@ public class ManageEpisodePanel extends JPanel {
         setBackground(Color.yellow);
         setBorder(new EmptyBorder(10,10,10,10));
         setupEpisodePanel();
+        setupRenderers();
     }
     private void setupEpisodePanel(){
 //        JPanel episodeListPnl = new JPanel();
@@ -64,14 +65,7 @@ public class ManageEpisodePanel extends JPanel {
         episodeListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         episodeListPnl.setBorder(new EmptyBorder(10,10,10,10));
         episodeListPnl.setBackground(Color.magenta);
-        for(Episode e: episodeList){
-
-            PlainEpisodeCard pec = new PlainEpisodeCard("Seriesname", e);
-            episodeListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
-            episodeCards.add(pec);
-            episodeListPnl.add(pec);
-            episodeListPnl.add(Box.createVerticalStrut(5));
-        }
+        loadPECards();
 
         epListScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         epListScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -174,5 +168,22 @@ public class ManageEpisodePanel extends JPanel {
                 return component;
             }
         });
+    }
+
+    private void loadPECards(){
+        episodeListPnl.removeAll();
+        episodeCards.clear();
+        for(Episode e: episodeList){
+            PlainEpisodeCard pec = new PlainEpisodeCard(e.getTitle());
+            pec.putClientProperty("episode_id", e.getEpisodeId());
+            pec.putClientProperty("series_id", e.getSeriesId());
+            episodeListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
+            episodeCards.add(pec);
+            episodeListPnl.add(pec);
+            episodeListPnl.add(Box.createVerticalStrut(5));
+        }
+
+        episodeListPnl.validate();
+        episodeListPnl.repaint();
     }
 }

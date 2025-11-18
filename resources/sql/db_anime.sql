@@ -65,10 +65,10 @@ CREATE TABLE likedEpisode(
 DROP TABLE IF EXISTS watchHistory;
 CREATE TABLE watchHistory (
     watch_id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL,
+    user_id VARCHAR(50) NOT NULL,
     episode_id INT NOT NULL,
     watch_date DATE DEFAULT CURRENT_DATE,
-    FOREIGN KEY (username) REFERENCES users(username),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (episode_id) REFERENCES episodes_t(episode_id)
 );
 

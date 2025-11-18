@@ -28,7 +28,8 @@ public class ActorDAO {
                         rs.getString("gender"),
                         rs.getDate("date_of_birth").toLocalDate(),
                         rs.getString("place_of_birth"),
-                        rs.getString("agency")
+                        rs.getString("agency"),
+                        rs.getString("series_photo")
                     );
                 }
             }
@@ -81,7 +82,8 @@ public class ActorDAO {
                         rs.getString("gender"),
                         rs.getDate("date_of_birth").toLocalDate(),
                         rs.getString("place_of_birth"),
-                        rs.getString("agency")
+                        rs.getString("agency"),
+                        rs.getString("series_photo")
                     ));
                 }
                 return actors;
@@ -161,7 +163,8 @@ public class ActorDAO {
                     rs.getString("gender"),
                     rs.getDate("date_of_birth").toLocalDate(),
                     rs.getString("place_of_birth"),
-                    rs.getString("agency")
+                    rs.getString("agency"),
+                    rs.getString("series_photo")
                 ));
             }
             return list;

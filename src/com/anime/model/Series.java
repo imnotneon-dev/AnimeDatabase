@@ -8,15 +8,16 @@ public class Series {
     private int release_year;
     private int total_episodes;
     private String status;
+    private String seriesPhoto;
 
-
-    public Series(int series_id, String title, String genre, int release_year, int total_episodes, String status) {
+    public Series(int series_id, String title, String genre, int release_year, int total_episodes, String status, String seriesPhoto) {
         this.series_id = series_id;
         this.title = title;
         this.genre = genre;
         this.release_year = release_year;
         this.total_episodes = total_episodes;
         this.status = status;
+        this.seriesPhoto = seriesPhoto;
     }
 
     public int getSeriesId() {
@@ -65,6 +66,14 @@ public class Series {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSeriesPhoto() {
+        return seriesPhoto;
+    }
+
+    public void setSeriesPhoto(String seriesPhoto) {
+        this.seriesPhoto = seriesPhoto;
     }
 
 

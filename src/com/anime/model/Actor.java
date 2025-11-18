@@ -11,8 +11,9 @@ public class Actor {
     private LocalDate dob;
     private String pob;
     private String agency;
+    private String actorPhoto;
 
-    public Actor(int id, String lastName, String firstName, String gender, LocalDate dob, String pob, String agency) {
+    public Actor(int id, String lastName, String firstName, String gender, LocalDate dob, String pob, String agency, String actorPhoto) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -20,6 +21,7 @@ public class Actor {
         this.dob = dob;
         this.pob = pob;
         this.agency = agency;
+        this.actorPhoto = actorPhoto;
     }
 
     public int getId() {
@@ -76,5 +78,13 @@ public class Actor {
 
     public void setAgency(String agency) {
         this.agency = agency;
+    }
+
+    public String getActorPhoto() {
+        return actorPhoto;
+    }
+
+    public void setActorPhoto(String actorPhoto) {
+        this.actorPhoto = actorPhoto;
     }
 }

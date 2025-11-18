@@ -146,6 +146,10 @@ public class ManageActorSeriesPanel extends JPanel {
         return seriesTitleCb;
     }
 
+    public JComboBox<Object> getActorSeriesCb() {
+        return actorSeriesCb;
+    }
+
     public void setSeriesTitleCb(JComboBox<Object> seriesTitleCb) {
         this.seriesTitleCb = seriesTitleCb;
     }

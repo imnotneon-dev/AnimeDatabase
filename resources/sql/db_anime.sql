@@ -46,10 +46,10 @@ CREATE TABLE actors (
 DROP TABLE IF EXISTS likedEpisode;
 CREATE TABLE likedEpisode(
   like_id INT PRIMARY KEY AUTO_INCREMENT,
-  username VARCHAR(50),
+  user_id INT NOT NULL,
   episode_id INT,
   date_added DATE DEFAULT CURRENT_DATE,
-  FOREIGN KEY (username) REFERENCES Users(username),
+  FOREIGN KEY (user_id) REFERENCES Users(user_id),
   FOREIGN KEY (episode_id) REFERENCES Episodes(episode_id) --episode_id variable name depends on what variable name will be used in the episodes.sql file
 );
 
@@ -65,10 +65,10 @@ CREATE TABLE likedEpisode(
 DROP TABLE IF EXISTS watchHistory;
 CREATE TABLE watchHistory (
     watch_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL,
     episode_id INT NOT NULL,
     watch_date DATE DEFAULT CURRENT_DATE,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (username) REFERENCES users(username),
     FOREIGN KEY (episode_id) REFERENCES episodes_t(episode_id)
 );
 
@@ -87,10 +87,10 @@ CREATE TABLE actorSeries (
 DROP TABLE IF EXISTS episodeReviews;
 CREATE TABLE episodeReviews (
     review_id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL,
+    user_id INT NOT NULL,
     episode_id INT NOT NULL,
     comment TEXT,
 	date_reviewed DATE DEFAULT CURRENT_DATE,
-    FOREIGN KEY (username) REFERENCES users(username),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (episode_id) REFERENCES episodes(episode_id)
 );

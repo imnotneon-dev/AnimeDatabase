@@ -13,12 +13,12 @@ public class EpisodeReviewDAO {
 //        this.conn = conn;
 //    }
 
-    public void addReview(String username, int episodeId, String comment) throws SQLException {
-        String sql = "INSERT INTO episodeReviews (username, episode_id, comment) VALUES (?, ?, ?)";
+    public void addReview(int user_id, int episodeId, String comment) throws SQLException {
+        String sql = "INSERT INTO episodeReviews (user_id, episode_id, comment) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, username);
+            ps.setInt(1, user_id);
             ps.setInt(2, episodeId);
             ps.setString(3, comment);
             ps.executeUpdate();
@@ -76,9 +76,9 @@ public class EpisodeReviewDAO {
             while (rs.next()) {
                 EpisodeReview review = new EpisodeReview(
                     rs.getInt("review_id"),
-                    rs.getString("username"),
+                    rs.getInt("user_id"),
                     rs.getInt("episode_id"),
-                    rs.getString("comment")
+                    rs.getString("comment"),
                     rs.getDate("date_reviewed").toLocalDate(),
                     rs.getString("episode_title")
                 );
@@ -114,9 +114,11 @@ public class EpisodeReviewDAO {
                 while (rs.next()) {
                     EpisodeReview review = new EpisodeReview(
                         rs.getInt("review_id"),
-                        rs.getString("username"),
+                        rs.getInt("user_id"),
                         rs.getInt("episode_id"),
-                        rs.getString("user_review")
+                        rs.getString("comment"),
+                        rs.getDate("date_reviewed").toLocalDate(),
+                        rs.getString("episode_title")
                     );
                     list.add(review);
                 }

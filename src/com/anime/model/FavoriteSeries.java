@@ -5,23 +5,23 @@ import java.time.LocalDate;
 public class FavoriteSeries{
 
     private int favorite_id;
-    private String username;
+    private int user_id;
     private int series_id;
     private LocalDate added_date;
 
-    public FavoriteSeries(int favorite_id, String username, int series_id, LocalDate added_date) {
+    public FavoriteSeries(int favorite_id, int user_id, int series_id, LocalDate added_date) {
         this.favorite_id = favorite_id;
-        this.username = username;
+        this.user_id = user_id;
         this.series_id = series_id;
         this.added_date = added_date;
     }
 
-    public String getUsername() {
-        return username;
+    public int getUsername() {
+        return user_id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(int user_id) {
+        this.user_id = user_id;
     }
 
     public int getSeriesId() {

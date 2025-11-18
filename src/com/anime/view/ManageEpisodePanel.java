@@ -186,4 +186,105 @@ public class ManageEpisodePanel extends JPanel {
         episodeListPnl.validate();
         episodeListPnl.repaint();
     }
+
+    public JPanel getEpisodeListPnl() {
+        return episodeListPnl;
+    }
+
+    public void setEpisodeListPnl(JPanel episodeListPnl) {
+        this.episodeListPnl = episodeListPnl;
+    }
+
+    public JTextField getTitleField() {
+        return titleField;
+    }
+
+    public void setTitleField(JTextField titleField) {
+        this.titleField = titleField;
+    }
+
+    public JTextField getReleaseDateField() {
+        return releaseDateField;
+    }
+
+    public void setReleaseDateField(JTextField releaseDateField) {
+        this.releaseDateField = releaseDateField;
+    }
+
+    public JTextArea getSynopsisTA() {
+        return synopsisTA;
+    }
+
+    public void setSynopsisTA(JTextArea synopsisTA) {
+        this.synopsisTA = synopsisTA;
+    }
+
+    public JTextField getRuntimeField() {
+        return runtimeField;
+    }
+
+    public void setRuntimeField(JTextField runtimeField) {
+        this.runtimeField = runtimeField;
+    }
+
+    public JComboBox<Object> getSeriesTitleCb() {
+        return seriesTitleCb;
+    }
+
+    public void setSeriesTitleCb(JComboBox<Object> seriesTitleCb) {
+        this.seriesTitleCb = seriesTitleCb;
+    }
+
+    public JButton getAddBtn() {
+        return addBtn;
+    }
+
+    public void setAddBtn(JButton addBtn) {
+        this.addBtn = addBtn;
+    }
+
+    public JButton getUpdateBtn() {
+        return updateBtn;
+    }
+
+    public void setUpdateBtn(JButton updateBtn) {
+        this.updateBtn = updateBtn;
+    }
+
+    public JButton getClearBtn() {
+        return clearBtn;
+    }
+
+    public void setClearBtn(JButton clearBtn) {
+        this.clearBtn = clearBtn;
+    }
+
+    public List<Episode> getEpisodeList() {
+        return episodeList;
+    }
+
+    public void setEpisodeList(List<Episode> episodeList) {
+        this.episodeList = episodeList != null ? episodeList : new ArrayList<>();
+        loadPECards();
+    }
+
+    public List<Series> getSeriesList() {
+        return seriesList;
+    }
+
+    public void setSeriesList(List<Series> seriesList) {
+        this.seriesList = seriesList != null ? seriesList : new ArrayList<>();
+        seriesTitleCb.setModel(new DefaultComboBoxModel<>(this.seriesList.toArray()));
+    }
+
+    public List<PlainEpisodeCard> getEpisodeCards() {
+        return episodeCards;
+    }
+
+    public void setEpisodeCards(List<PlainEpisodeCard> episodeCards) {
+        this.episodeCards = episodeCards != null ? episodeCards : new ArrayList<>();
+    }
+}
+
+
 }

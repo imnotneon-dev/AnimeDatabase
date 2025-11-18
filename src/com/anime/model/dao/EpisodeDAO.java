@@ -17,25 +17,30 @@ public class EpisodeDAO {
     public EpisodeDAO(Connection conn) {
         this.conn = conn;
     }
-    public void addEpisode(String epTitle, LocalDate release, String synopsis, int runtime) throws SQLException {
-        String sql = "INSERT INTO episodes (title, release_date, synopsis, runtime) VALUES (?, ?, ?, ?)";
-        
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {   
+
+    public boolean addEpisode(String epTitle, LocalDate release, String synopsis, int runtime, int seriesId) throws SQLException {
+        String sql = "INSERT INTO episodes (title, release_date, synopsis, runtime, seriesId) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, epTitle);
             ps.setDate(2, Date.valueOf(release));
             ps.setString(3, synopsis);
             ps.setInt(4, runtime);
-            ps.executeUpdate();
+            ps.setInt(5, seriesId);
+//            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
+    }
 
-    public void updateEpisode(int eid, String epTitle, LocalDate release, String synopsis, int runtime){
+    public void updateEpisode (int eid, String epTitle, LocalDate release, String synopsis,int runtime){
         String sql = "UPDATE episodes SET title =?, release_date=?, synopsis=?, runtime=? WHERE episode_id = ?";
-        
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {  
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, epTitle);
             ps.setDate(2, Date.valueOf(release));
             ps.setString(3, synopsis);
@@ -46,42 +51,14 @@ public class EpisodeDAO {
             e.printStackTrace();
         }
     }
-    public Episode selectEpisodeById(int episodeId) throws SQLException {
+    public Episode selectEpisodeById (int episodeId) throws SQLException {
         String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM Episodes WHERE episodeId = ? ";
 
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, episodeId);
-            try (ResultSet rs = ps.executeQuery()){
-                if (rs.next()) {
-
-                    Date sqlDate = rs.getDate("release_date");
-                    LocalDate releaseDate = null;
-                    if (sqlDate != null) {
-                        releaseDate = sqlDate.toLocalDate();
-                    }
-                    return new Episode(
-                            rs.getInt("episode_id"),
-                            rs.getString("title"),
-                            rs.getString("synopsis"),
-                            rs.getInt("runtime"),
-                            rs.getInt("views"),
-                            releaseDate,
-                            rs.getInt("series_id"));
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-      return null;
-    }
-    public List<Episode> selectEpisodeBySeries(int series_id) throws SQLException {
-        String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM Episodes WHERE series_id = ? ";
-
-        try(PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setInt(1, series_id);
-            try (ResultSet rs = ps.executeQuery()){
+            ps.setInt(1, episodeId);
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
 
                     Date sqlDate = rs.getDate("release_date");
@@ -104,15 +81,44 @@ public class EpisodeDAO {
         }
         return null;
     }
-    public List<Episode> selectAllEpisodes() throws SQLException {
+    public List<Episode> selectEpisodeBySeries (int series_id) throws SQLException {
+        String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM Episodes WHERE series_id = ? ";
+        List<Episode> eplist = new ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, series_id);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+
+                    Date sqlDate = rs.getDate("release_date");
+                    LocalDate releaseDate = null;
+                    if (sqlDate != null) {
+                        releaseDate = sqlDate.toLocalDate();
+                    }
+                    eplist.add (new Episode(
+                            rs.getInt("episode_id"),
+                            rs.getString("title"),
+                            rs.getString("synopsis"),
+                            rs.getInt("runtime"),
+                            rs.getInt("views"),
+                            releaseDate,
+                            rs.getInt("series_id")));
+                }
+                return eplist;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+    public List<Episode> selectAllEpisodes () throws SQLException {
         List<Episode> catalog = new ArrayList<>();
 
         String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM episodes ";
 
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 //            ps.setString(1, episodeId);
-            try (ResultSet rs = ps.executeQuery()){
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
 
                     Date sqlDate = rs.getDate("release_date");
@@ -138,10 +144,10 @@ public class EpisodeDAO {
         return null;
     }
 
-    public void addEpToWatchHistoryByUser(String username, int episode_id, LocalDate wd){
+    public void addEpToWatchHistoryByUser (String username,int episode_id, LocalDate wd){
         String sql = "INSERT INTO watch_history (username, episode_id, watch_date) VALUES (?, ?, ?)";
-        
-        
+
+
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
@@ -153,7 +159,7 @@ public class EpisodeDAO {
         }
     }
 
-    public List<EpisodeReview> getReviewByEpisodeId(String episodeId) throws SQLException{
+    public List<EpisodeReview> getReviewByEpisodeId (String episodeId) throws SQLException {
         List<EpisodeReview> reviews = new ArrayList<>();
 
         String sql = "SELECT r.user_review, u.name, r.episode_id, r.series_id " +
@@ -161,11 +167,11 @@ public class EpisodeDAO {
                 "LEFT JOIN account u ON r.account_id = u.account_id " +
                 "WHERE r.episode_id = ?";
 
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, episodeId);
-            try (ResultSet rs = ps.executeQuery()){
-                while(rs.next()) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
                     EpisodeReview data = new EpisodeReview(
                             rs.getInt("review_id"),
                             rs.getString("username"),
@@ -175,7 +181,7 @@ public class EpisodeDAO {
                     reviews.add(data);
                 }
                 return reviews;
-            } catch(SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -184,7 +190,7 @@ public class EpisodeDAO {
 
 
     // Get ep titles for JComboBox in the EpisodeReviewPanel.java GUI
-    public List<String> getAllEpisodeTitles() throws SQLException {
+    public List<String> getAllEpisodeTitles () throws SQLException {
         List<String> titles = new ArrayList<>();
         String sql = "SELECT title FROM Episodes ORDER BY title ASC";
 
@@ -203,19 +209,19 @@ public class EpisodeDAO {
     }
 
     // Convert ep title to episode_id
-    public int getEpisodeIdByTitle(String title) throws SQLException {
+    public int getEpisodeIdByTitle (String title) throws SQLException {
         String sql = "SELECT episode_id FROM Episodes WHERE title = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, title);
-            
-            try(ResultSet rs = ps.executeQuery()) {
+
+            try (ResultSet rs = ps.executeQuery()) {
 
                 if (rs.next()) {
                     return rs.getInt("episode_id");
                 }
-            
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -225,4 +231,5 @@ public class EpisodeDAO {
     }
 
 }
+
 

@@ -731,12 +731,14 @@ public class AppController {
     }
     private void init_admin_episode_panel(ManageEpisodePanel episode){
         List<PlainEpisodeCard> episodeCards = episode.getEpisodeCards();
-        int series_id;
+//        int series_id;
 
         for(PlainEpisodeCard card: episodeCards){
-            series_id = (int)card.getClientProperty("series_id");
-            String series_title = model.getSeriesDAO().getSeriesById(series_id).getTitle();
+            int series_id = (int)card.getClientProperty("series_id");
+            final Series parentSeries = model.getSeriesDAO().getSeriesById(series_id);
+            String series_title = parentSeries.getTitle();
             card.setSeriesTitle(series_title);
+
             card.addMouseListener(new MouseAdapter(){
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -744,11 +746,12 @@ public class AppController {
                     episode.getAddBtn().setEnabled(false);
                     episode.getClearBtn().setEnabled(true);
                     episode.getUpdateBtn().setEnabled(true);
+                    episode.getSeriesTitleCb().setEditable(false);
                     try{
                         Episode episodeInfo = model.getEpisodeDAO().selectEpisodeById(selectedEpisodeId);
 
                         episode.getTitleField().setText(episodeInfo.getTitle());
-                        episode.getSeriesTitleCb().setSelectedItem(String.valueOf(series_title));
+                        episode.getSeriesTitleCb().setSelectedItem(parentSeries);
                         episode.getSynopsisTA().setText(episodeInfo.getSypnosis());
                         episode.getReleaseDateField().setText(String.valueOf((episodeInfo.getReleaseDate())));
                         episode.getRuntimeField().setText(String.valueOf(episodeInfo.getRuntime()));
@@ -774,6 +777,14 @@ public class AppController {
         });
 
         episode.getAddBtn().addActionListener(e->{
+
+            Object selectedSeries = episode.getSeriesTitleCb().getSelectedItem();
+
+            if(!(selectedSeries instanceof Series selectedS)){
+                System.out.println("Please select a series title");
+                return;
+            }
+            int series_id = selectedS.getSeriesId();
             String t = episode.getTitleField().getText().trim();
             String st = episode.getSeriesTitleCb().getSelectedItem().toString().trim();
             String syn = episode.getSynopsisTA().getText().trim();

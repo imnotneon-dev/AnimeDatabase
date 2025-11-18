@@ -19,7 +19,7 @@ public class AnimeWrappedPanel extends JPanel {
     private JLabel topGenreLabel = new JLabel("N/A");
     
     private JPanel top5SeriesPanel = new JPanel();
-    private JPanel actorsPanel = new JPanel(); // Changed from actorInfoPanel
+    private JPanel actorsPanel = new JPanel(); 
     
     private JScrollPane scrollPane;
     private JPanel contentPanel = new JPanel();
@@ -266,12 +266,10 @@ public class AnimeWrappedPanel extends JPanel {
         
         int rank = 1;
         for (ActorStats actor : actors) {
-            // Filter roles for this specific actor
             List<ActorRole> actorRoles = allRoles.stream()
                 .filter(role -> role.getActorId() == actor.getActorId())
                 .collect(Collectors.toList());
             
-            // Create card for this actor
             JPanel actorCard = createActorCard(rank, actor, actorRoles);
             actorsPanel.add(actorCard);
             actorsPanel.add(Box.createVerticalStrut(20));
@@ -282,9 +280,7 @@ public class AnimeWrappedPanel extends JPanel {
         actorsPanel.repaint();
     }
     
-    /**
-     * Create a card for one voice actor with their top roles
-     */
+
     private JPanel createActorCard(int rank, ActorStats actor, List<ActorRole> roles) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -296,7 +292,6 @@ public class AnimeWrappedPanel extends JPanel {
         card.setAlignmentX(Component.LEFT_ALIGNMENT);
         card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
         
-        // Actor header with rank
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setOpaque(false);
@@ -339,14 +334,12 @@ public class AnimeWrappedPanel extends JPanel {
         card.add(headerPanel);
         card.add(Box.createVerticalStrut(15));
         
-        // Divider line
         JSeparator separator = new JSeparator();
         separator.setForeground(Color.decode("#404040"));
         separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
         card.add(separator);
         card.add(Box.createVerticalStrut(15));
         
-        // Top roles section
         if (roles != null && !roles.isEmpty()) {
             JLabel rolesTitle = new JLabel("Top Roles:");
             rolesTitle.setFont(new Font("Arial", Font.BOLD, 16));

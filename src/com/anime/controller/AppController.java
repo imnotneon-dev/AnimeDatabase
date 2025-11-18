@@ -73,7 +73,7 @@ public class AppController {
                         favoriteListConverted.add(series);
                     }
 
-                    // Loop through the favoriteSeries list, getting the series_id to get the
+                    // Loop through the watch list, getting the series_id to get the
                     // Series details to store into a Series object
                     for(WatchHistory w: watchedSeries){
                         int episode_id = w.getEpisodeId();
@@ -139,8 +139,39 @@ public class AppController {
                     if(account!=null){
                         this.currentSession = account;
                         System.out.println("Signup Success. Logging in...");
-//                        view.getHomePage().setWatchingList();
-//                        view.getHomePage().setFavoriteList();
+                        String accountUsername = account.getUsername();
+
+                        // get the list of Favorites (user id, series id, date added)
+                        List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(accountUsername);
+
+                        // get the list of WatchHistory (user id, episode id, date added)
+                        List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(accountUsername);
+
+                        // declare an empty list: FaveSeries -> Series
+                        List<Series> favoriteListConverted = new ArrayList<>();
+
+                        // declare an empty list: WatchHistory -> Series
+                        List<Series> watchHistoryConverted = new ArrayList<>();
+
+                        // Loop through the favoriteSeries list, getting the series_id to get the
+                        // Series details to store into a Series object
+                        for(FavoriteSeries f: favoriteSeries){
+                            int series_id = f.getSeriesId();
+                            Series series = model.getSeriesDAO().getSeriesById(series_id);
+                            favoriteListConverted.add(series);
+                        }
+
+                        // Loop through the watch list, getting the series_id to get the
+                        // Series details to store into a Series object
+                        for(WatchHistory w: watchedSeries){
+                            int episode_id = w.getEpisodeId();
+                            int series_id = model.getEpisodeDAO().selectEpisodeById(episode_id).getSeriesId();
+                            Series series = model.getSeriesDAO().getSeriesById(series_id);
+                            watchHistoryConverted.add(series);
+                        }
+
+                        view.getHomePage().setFavoriteList(favoriteListConverted);
+                        view.getHomePage().setWatchingList(watchHistoryConverted);
                         view.switchView(view.HOME);
                     }
                     else{
@@ -169,22 +200,22 @@ public class AppController {
         header.getCatalogLb().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                view.switchView(view.CATALOG_VIEW);
+                view.switchView(view.CATALOG);
             }
         });
         header.getLogoutItem().addActionListener(e-> view.switchView(view.LOGIN));
 
         header.getWatchHistoryItem().addActionListener(e->{
 
-//            try {
-//                List< WatchHistoryPage> history = model.getWatchHistoryDao()
-//                view.getWatchHistoryPage().loadHistory(history );
+            try {
+                List<WatchHistory> accountWatchHist = model.getWatchHistoryDAO().getWatchedListByUser(currentSession.getUserId());
+                view.getWatchHistoryPage().setWatchedEpisodesList(accountWatchHist);
                 view.switchView(view.WATCH_HISTORY);
-//            }
-//            catch (SQLException ex){
-//                System.err.println("DB Error loading watch history: " + ex.getMessage());
-//                System.out.println("Could not load watch history due to a database error.");
-//            }
+            }
+            catch (SQLException ex){
+                System.err.println("DB Error loading watch history: " + ex.getMessage());
+                System.out.println("Could not load watch history due to a database error.");
+            }
         });
 
         header.getLikesItem().addActionListener(e->{
@@ -215,13 +246,9 @@ public class AppController {
                         // might be redundant since series alr has the info but ill keep it here still
                         Series series = model.getSeriesDAO().getSeriesById(series_id);
                         // get episode list of the series
-                        // List<Episode> episodeList = model.getEpisodeDAO().
-                        // List<ActorSeries> actorList = model.getActorDAO().
                         if(series!=null) {
                             // load series info
                             view.getSeriesPage().setSeries(series);
-                            view.getSeriesPage().setEpisodeList();
-                            view.getSeriesPage().setActorsList();
                             view.switchView(view.SERIES);
                         } else {
                             System.out.println("Series details cannot be found.");
@@ -251,13 +278,14 @@ public class AppController {
                         // might be redundant since series alr has the info but ill keep it here still
                         Series series = model.getSeriesDAO().getSeriesById(series_id);
                         // get episode list of the series
-                        // List<Episode> episodeList = model.getEpisodeDAO().
-                        // List<ActorSeries> actorList = model.getActorDAO().
+                         List<Episode> episodeList = model.getEpisodeDAO().selectEpisodeBySeries(series.getSeriesId());
+                        // get actor list of the series
+                         List<Actor> actorList = model.getActorDAO().getActorsBySeries(series.getSeriesId());
                         if(series!=null) {
                             // load series info
                             view.getSeriesPage().setSeries(series);
-                            view.getSeriesPage().setEpisodeList();
-                            view.getSeriesPage().setActorsList();
+                            view.getSeriesPage().setEpisodeList(episodeList);
+                            view.getSeriesPage().setActorsList(actorList);
                             view.switchView(view.SERIES);
                         } else {
                             System.out.println("Series details cannot be found.");
@@ -285,7 +313,6 @@ public class AppController {
                     int ep_id = card.getEpisodeId();
                     try {
                         // might be redundant since series alr has the info but ill keep it here still
-                        // ! ensure selectEpiside param is int, not string
                         Episode episode = model.getEpisodeDAO().selectEpisodeById(ep_id);
                         String seriesTitle = seriesInfo.getTitle();
                         if(episode!=null) {
@@ -321,8 +348,10 @@ public class AppController {
 
                         if(actor!=null) {
                             view.getActorPage().setActorInfo(actor);
-                            view.getActorPage().set
+
                             // load roles info
+                            List<ActorSeries> actorRoles = model.getActorSeriesDAO().getCharacterByActor(actor.getId());
+                            view.getActorPage().setRolesList(actorRoles);
                             view.switchView(view.ACTOR);
                         } else {
                             System.out.println("Episode details cannot be found.");
@@ -337,14 +366,15 @@ public class AppController {
             });
         }
         seriesPage.getFaveBtn().addActionListener(e->{
+            // TODO: use appropriate Favorite Checker function
             FavoriteSeries checker = model.getFavoriteSeriesDAO().getFavoriteSeriesByUser(currentSession.getUsername(), seriesInfo.getSeriesId());
             if(checker) {
                 // if true, meaning it has been favorited before, delete the favorited series
-                model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUsername(), seriesInfo.getSeriesId());
+                model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUserId(), seriesInfo.getSeriesId());
             }
             else {
                 // if false meaning it has NOT been favorited before, add the favorited series
-                model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUsername(), seriesInfo.getSeriesId());
+                model.getFavoriteSeriesDAO().addFavoriteSeries(currentSession.getUserId(), seriesInfo.getSeriesId());
             }
         });
     }
@@ -361,13 +391,14 @@ public class AppController {
                     // might be redundant since series alr has the info but ill keep it here still
                     Series series = model.getSeriesDAO().getSeriesById(series_id);
                     // get episode list of the series
-                    // List<Episode> episodeList = model.getEpisodeDAO().
-                    // List<ActorSeries> actorList = model.getActorDAO().
+                    List<Episode> episodeList = model.getEpisodeDAO().selectEpisodeBySeries(series.getSeriesId());
+                    // get actor list of the series
+                    List<Actor> actorList = model.getActorDAO().getActorsBySeries(series.getSeriesId());
                     if(series!=null) {
                         // load series info
                         view.getSeriesPage().setSeries(series);
-                        view.getSeriesPage().setEpisodeList();
-                        view.getSeriesPage().setActorsList();
+                        view.getSeriesPage().setEpisodeList(episodeList);
+                        view.getSeriesPage().setActorsList(actorList);
                         view.switchView(view.SERIES);
                     } else {
                         System.out.println("Series details cannot be found.");
@@ -382,15 +413,15 @@ public class AppController {
         });
         episodePage.getLikeEpisodeBtn().addActionListener(e->{
             // same logic
-            /*LikeEpisode checker = model.getFavoriteSeriesDAO().getFavoriteSeriesByUser(currentSession.getUsername(), seriesInfo.getSeriesId());
+            LikedEpisode checker = model.getLikedEpisodeDAO().isLiked(currentSession.getUserId(),episodeInfo.getId());
             if(checker) {
                 // if true, meaning it has been favorited before, delete the favorited series
-                model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUsername(), seriesInfo.getSeriesId());
+                status = model.getLikedEpisodeDAO().removeLike(currentSession.getUserId(),episodeInfo.getId());
             }
             else {
                 // if false meaning it has NOT been favorited before, add the favorited series
-                model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUsername(), seriesInfo.getSeriesId());
-            }*/
+                status = model.getLikedEpisodeDAO().addLike(currentSession.getUserId(),episodeInfo.getId());
+            }
         });
         episodePage.getSubmitCommentBtn().addActionListener(e-> {
             try {
@@ -398,10 +429,9 @@ public class AppController {
                 String username = currentSession.getUsername();
                 int ep_id = episodeInfo.getEpisodeId();
                 String reviewText = episodePage.getReviewTextArea().getText();
-                // ! make sure username is String, not int
-                model.getEpisodeReviewDAO().addReview(username, ep_id, reviewText);
+                model.getEpisodeReviewDAO().addReview(currentSession.getId(), ep_id, reviewText);
                 List<EpisodeReview> reviewList = model.getEpisodeReviewDAO().getReviewsByEpisodeId(ep_id);
-                // load series info
+                // reload series info after adding the new reviews
                 view.getEpisodePage().setReviewsList(reviewList);
                 view.switchView(view.EPISODE);
             } catch (SQLException ex) {
@@ -421,15 +451,19 @@ public class AppController {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     int series_id = card.getRole_s_SeriesId();
+
+                    // might be redundant since series alr has the info but ill keep it here still
                     Series series = model.getSeriesDAO().getSeriesById(series_id);
                     // get episode list of the series
-                    // List<Episode> episodeList = model.getEpisodeDAO().
-                    // List<ActorSeries> actorList = model.getActorDAO().
+                    List<Episode> episodeList = model.getEpisodeDAO().selectEpisodeBySeries(series.getSeriesId());
+                    // get actor list of the series
+                    List<Actor> actorList = model.getActorDAO().getActorsBySeries(series.getSeriesId());
+
                     if(series!=null) {
                         // load series info
                         view.getSeriesPage().setSeries(series);
-                        view.getSeriesPage().setEpisodeList();
-                        view.getSeriesPage().setActorsList();
+                        view.getSeriesPage().setEpisodeList(episodeList);
+                        view.getSeriesPage().setActorsList(actorList);
                         view.switchView(view.SERIES);
                     } else {
                         System.out.println("Series details cannot be found.");
@@ -448,7 +482,7 @@ public class AppController {
 
         init_admin_actor_panel(actor);
         init_admin_series_panel(series);
-//        init_admine_episode_panel(episode);
+        init_admin_episode_panel(episode);
         init_admin_actorseries_panel(role);
     }
 

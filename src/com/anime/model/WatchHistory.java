@@ -3,24 +3,24 @@ package com.anime.model;
 import java.time.LocalDate;
 
 public class WatchHistory {
-    private int userId;
+    private String username;
     private int seriesId;
     private int episodeId;
     private LocalDate watchDate;
 
-    public WatchHistory(int uid, int sid, int eid, LocalDate wd){
-        userId = uid;
+    public WatchHistory(String un, int sid, int eid, LocalDate wd){
+        username = un;
         seriesId = sid;
         episodeId = eid;
         watchDate = wd;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(String username) {
+        this.username = username;
     }
 
     public int getSeriesId() {

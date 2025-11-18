@@ -243,6 +243,10 @@ public class ManageActorSeriesPanel extends JPanel {
         return actorSeriesList;
     }
 
+    /**
+     * Sets the list of Series the Actor has acted in
+     * @param actorSeriesList list of series the Actor has acted in
+     */
     public void setActorSeriesList(List<ActorSeries> actorSeriesList) {
         this.actorSeriesList = actorSeriesList;
         actorSeriesCb.removeAll();

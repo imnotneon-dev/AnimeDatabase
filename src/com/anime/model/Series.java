@@ -20,6 +20,14 @@ public class Series {
         this.seriesPhoto = seriesPhoto;
     }
 
+    public Series(String title, String genre, int release_year, int total_episodes, String status) {
+        this.title = title;
+        this.genre = genre;
+        this.release_year = release_year;
+        this.total_episodes = total_episodes;
+        this.status = status;
+    }
+
     public int getSeriesId() {
         return series_id;
     }

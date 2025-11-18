@@ -1,5 +1,6 @@
 package com.anime.model.dao;
 
+import com.anime.model.Actor;
 import com.anime.model.ActorSeries;
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,11 +8,11 @@ import java.util.List;
 
 public class ActorSeriesDAO {
 
-    private final Connection conn;
-
-    public ActorSeriesDAO(Connection conn) {
-        this.conn = conn;
-    }
+//    private final Connection conn;
+//
+//    public ActorSeriesDAO(Connection conn) {
+//        this.conn = conn;
+//    }
 
     public List<ActorSeries> getAllActorSeries() throws SQLException {
         List<ActorSeries> actorSeriesList = new ArrayList<>();
@@ -46,15 +47,43 @@ public class ActorSeriesDAO {
             ps.setInt(1, actId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new ActorSeries(
+                    ActorSeries a = new ActorSeries(
                             rs.getInt("act_id"),
                             rs.getInt("actors_id"),
                             rs.getInt("series_id"),
                             rs.getString("character_name")
                     );
+
+                    return a;
                 }
             }
-            return null;
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching ActorSeries by ID: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public List<ActorSeries> getCharacterByActor(int actors_id) throws SQLException {
+        String sql = "SELECT * FROM actorSeries WHERE actors_id = ?";
+        List<ActorSeries> list = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, actors_id);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ActorSeries a = new ActorSeries(
+                            rs.getInt("act_id"),
+                            rs.getInt("actors_id"),
+                            rs.getInt("series_id"),
+                            rs.getString("character_name")
+                    );
+                    list.add(a);
+                }
+                return list;
+            }
+//            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;

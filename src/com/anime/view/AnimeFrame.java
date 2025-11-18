@@ -13,8 +13,8 @@ public class AnimeFrame extends JFrame {
     private SeriesPage series;
     private EpisodePage episode;
     private ActorPage actor;
-    private WatchHistory watch;
-    private LikeHistory likes;
+    private WatchHistoryPage watch;
+    private LikeHistoryPage likes;
     private HeaderPanel head;
     private AdminPage adminpg;
     private EpisodeReviewPanel epReviewPanel; // Added this for ep review
@@ -69,8 +69,8 @@ public class AnimeFrame extends JFrame {
         series = new SeriesPage();
         episode = new EpisodePage();
         actor = new ActorPage();
-        watch = new WatchHistory();
-        likes = new LikeHistory();
+        watch = new WatchHistoryPage();
+        likes = new LikeHistoryPage();
         adminpg = new AdminPage();
 
         // Added ep review panel here,,
@@ -132,11 +132,11 @@ public class AnimeFrame extends JFrame {
         return actor;
     }
 
-    public WatchHistory getWatchHistoryPage() {
+    public WatchHistoryPage getWatchHistoryPage() {
         return watch;
     }
 
-    public LikeHistory getLikeHistoryPage() {
+    public LikeHistoryPage getLikeHistoryPage() {
         return likes;
     }
 

@@ -1,5 +1,6 @@
 package com.anime.view;
 
+import com.anime.model.Series;
 import com.anime.view.customcards.PlainEpisodeCard;
 import com.anime.view.customcards.PlainSeriesCard;
 
@@ -9,10 +10,12 @@ import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ManageSeriesPanel extends JPanel {
+    private JPanel seriesListPnl = new JPanel();
 
     private JTextField titleField = new JTextField();
     private JTextField genreField = new JTextField();
@@ -22,11 +25,15 @@ public class ManageSeriesPanel extends JPanel {
 
     private JButton addBtn = new JButton("Add");
     private JButton updateBtn = new JButton("Update");
+    private JButton clearBtn = new JButton("Clear");
 
-    private List<String> seriesList = List.of(
+    private List<Series> seriesList = new ArrayList<>();
+    private List<PlainSeriesCard> seriesCards = new ArrayList<>();
+
+    /*private List<String> seriesList = List.of(
             "Series 1","Series 2","Series 3","Series 4","Series 5",
             "Series 6","Series 7","Series 8","Series 9","Series 10",
-            "Series 11","Series 12");
+            "Series 11","Series 12");*/
 
     public ManageSeriesPanel(){
         setLayout(new BorderLayout());
@@ -44,12 +51,7 @@ public class ManageSeriesPanel extends JPanel {
         seriesListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         seriesListPnl.setBorder(new EmptyBorder(10,10,10,10));
         seriesListPnl.setBackground(Color.magenta);
-        for(String s: seriesList){
-            PlainSeriesCard psc = new PlainSeriesCard(s);
-            seriesListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
-            seriesListPnl.add(psc);
-            seriesListPnl.add(Box.createVerticalStrut(5));
-        }
+        loadPSCards();
 
         seriesListScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         seriesListScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -63,16 +65,14 @@ public class ManageSeriesPanel extends JPanel {
         titleField.setAlignmentX(LEFT_ALIGNMENT);
         genreField.setMaximumSize(new Dimension(350,30));
         genreField.setAlignmentX(LEFT_ALIGNMENT);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
-        releaseYearField = new JFormattedTextField(dateFormat);
-        releaseYearField.setMaximumSize(new Dimension(350,30));
-        releaseYearField.setAlignmentX(LEFT_ALIGNMENT);
 
         NumberFormat integerFormat = NumberFormat.getIntegerInstance(Locale.ROOT);
         NumberFormatter formatter = new NumberFormatter(integerFormat);
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);
+        releaseYearField = new JFormattedTextField(formatter);
+        releaseYearField.setMaximumSize(new Dimension(350,30));
+        releaseYearField.setAlignmentX(LEFT_ALIGNMENT);
 
         epCountField = new JFormattedTextField(formatter);
         epCountField.setMaximumSize(new Dimension(350,30));
@@ -114,6 +114,8 @@ public class ManageSeriesPanel extends JPanel {
         seriesFormPnl.add(Box.createVerticalStrut(10));
 //        seriesFormPnl.add(Box.createVerticalGlue());
         seriesFormPnl.add(updateBtn);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+        seriesFormPnl.add(clearBtn);
         seriesFormPnl.add(Box.createVerticalGlue());
         seriesFormPnl.setLayout(new BoxLayout(seriesFormPnl,BoxLayout.Y_AXIS));
         seriesFormPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
@@ -123,5 +125,110 @@ public class ManageSeriesPanel extends JPanel {
 
         add(seriesFormPnl,BorderLayout.CENTER);
 
+    }
+
+    private void loadPSCards(){
+        seriesListPnl.removeAll();
+        seriesCards.clear();
+        for(Series s: seriesList){
+            PlainSeriesCard psc = new PlainSeriesCard(s.getTitle());
+            psc.putClientProperty("series_id",s.getSeriesId());
+            seriesListPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
+            seriesCards.add(psc);
+            seriesListPnl.add(psc);
+            seriesListPnl.add(Box.createVerticalStrut(5));
+        }
+
+        seriesListPnl.revalidate();
+        seriesListPnl.repaint();
+    }
+
+    public JPanel getSeriesListPnl() {
+        return seriesListPnl;
+    }
+
+    public void setSeriesListPnl(JPanel seriesListPnl) {
+        this.seriesListPnl = seriesListPnl;
+    }
+
+    public JTextField getTitleField() {
+        return titleField;
+    }
+
+    public void setTitleField(JTextField titleField) {
+        this.titleField = titleField;
+    }
+
+    public JTextField getGenreField() {
+        return genreField;
+    }
+
+    public void setGenreField(JTextField genreField) {
+        this.genreField = genreField;
+    }
+
+    public JTextField getReleaseYearField() {
+        return releaseYearField;
+    }
+
+    public void setReleaseYearField(JTextField releaseYearField) {
+        this.releaseYearField = releaseYearField;
+    }
+
+    public JTextField getEpCountField() {
+        return epCountField;
+    }
+
+    public void setEpCountField(JTextField epCountField) {
+        this.epCountField = epCountField;
+    }
+
+    public JComboBox<String> getStatusCb() {
+        return statusCb;
+    }
+
+    public void setStatusCb(JComboBox<String> statusCb) {
+        this.statusCb = statusCb;
+    }
+
+    public JButton getAddBtn() {
+        return addBtn;
+    }
+
+    public void setAddBtn(JButton addBtn) {
+        this.addBtn = addBtn;
+    }
+
+    public JButton getUpdateBtn() {
+        return updateBtn;
+    }
+
+    public void setUpdateBtn(JButton updateBtn) {
+        this.updateBtn = updateBtn;
+    }
+
+    public JButton getClearBtn() {
+        return clearBtn;
+    }
+
+    public void setClearBtn(JButton clearBtn) {
+        this.clearBtn = clearBtn;
+    }
+
+    public List<Series> getSeriesList() {
+        return seriesList;
+    }
+
+    public void setSeriesList(List<Series> seriesList) {
+        this.seriesList = seriesList;
+        loadPSCards();
+    }
+
+    public List<PlainSeriesCard> getSeriesCards() {
+        return seriesCards;
+    }
+
+    public void setSeriesCards(List<PlainSeriesCard> seriesCards) {
+        this.seriesCards = seriesCards;
     }
 }

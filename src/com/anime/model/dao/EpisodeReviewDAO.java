@@ -7,11 +7,11 @@ import java.util.List;
 
 public class EpisodeReviewDAO {
 
-    private final Connection conn;
-
-    public EpisodeReviewDAO(Connection conn) {
-        this.conn = conn;
-    }
+//    private final Connection conn;
+//
+//    public EpisodeReviewDAO(Connection conn) {
+//        this.conn = conn;
+//    }
 
     public void addReview(int userId, int episodeId, String userReview) throws SQLException {
         String sql = "INSERT INTO EpisodeReview (user_id, episode_id, user_review) VALUES (?, ?, ?)";

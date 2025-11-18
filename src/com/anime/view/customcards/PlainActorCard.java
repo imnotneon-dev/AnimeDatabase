@@ -10,9 +10,10 @@ import java.awt.event.MouseEvent;
 public class PlainActorCard extends JPanel {
     //    private Review review;
     private JPanel container = new JPanel();
+    private JLabel name = new JLabel();
 
-    public PlainActorCard(String seriesTitle){
-        JLabel series = new JLabel(seriesTitle);
+    public PlainActorCard(String actorName){
+        JLabel name = new JLabel(actorName);
 
         setOpaque(true);
         setVisible(true);
@@ -48,6 +49,10 @@ public class PlainActorCard extends JPanel {
             }
         });
 
+    }
+
+    public JLabel getNameLabel(){
+        return name;
     }
 
 }

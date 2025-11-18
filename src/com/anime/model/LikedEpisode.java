@@ -4,20 +4,18 @@ import java.time.LocalDate;
 
 public class LikedEpisode {
 
-    private int like_id;
-    private String username;
+    private int userId;
     private int episodeId;
     private LocalDate dateAdded;
 
-    public LikedEpisode(int like_id, String username, int episodeId, LocalDate dateAdded) {
-        this.like_id = like_id;
-        this.username = username;
+    public LikedEpisode(int userId, int episodeId, LocalDate dateAdded) {
+        this.userId = userId;
         this.episodeId = episodeId;
         this.dateAdded = dateAdded;
     }
 
-    public String getUsername() {
-        return username;
+    public int getUserId() {
+        return userId;
     }
 
     public int getEpisodeId() {
@@ -30,13 +28,5 @@ public class LikedEpisode {
 
     public void setDateAdded(LocalDate dateAdded) {
         this.dateAdded = dateAdded;
-    }
-
-    public int getLike_id() {
-        return like_id;
-    }
-
-    public void setLike_id(int like_id) {
-        this.like_id = like_id;
     }
 }

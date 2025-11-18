@@ -35,6 +35,7 @@ public class ManageActorSeriesPanel extends JPanel {
         setBackground(Color.yellow);
         setBorder(new EmptyBorder(10,10,10,10));
         setupEpisodePanel();
+        setupRenderers();
     }
     private void setupEpisodePanel(){
         JPanel actorListPnl = new JPanel();
@@ -124,6 +125,54 @@ public class ManageActorSeriesPanel extends JPanel {
 
         actorListPnl.revalidate();
         actorListPnl.repaint();
+    }
+
+    private void setupRenderers() {
+        // Apply the custom renderer using a lambda expression
+        seriesTitleCb.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected,
+                                                          boolean cellHasFocus) {
+
+                // Call super method for standard coloring/selection logic
+                Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                if (value instanceof Series series) {
+                    // Display ONLY the title on the component (which is a JLabel)
+                    ((JLabel) component).setText(series.getTitle());
+                } else if (value != null) {
+                    // For non-Series objects (like the initial placeholder text)
+                    ((JLabel) component).setText(value.toString());
+                } else {
+                    ((JLabel) component).setText("Select a Series");
+                }
+                return component;
+            }
+        });
+
+        // Apply the same renderer logic to the second combo box if needed
+        actorSeriesCb.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected,
+                                                          boolean cellHasFocus) {
+
+                // Call super method for standard coloring/selection logic
+                Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                if (value instanceof ActorSeries series) {
+                    // Display ONLY the title on the component (which is a JLabel)
+                    ((JLabel) component).setText(series.getTitle());
+                } else if (value != null) {
+                    // For non-Series objects (like the initial placeholder text)
+                    ((JLabel) component).setText(value.toString());
+                } else {
+                    ((JLabel) component).setText("Select a Series");
+                }
+                return component;
+            }
+        });
     }
 
     public JTextField getActorNameField() {

@@ -31,6 +31,7 @@ public class AppController {
         init_seriespage_listeners();
         init_episodepage_listeners();
         init_actorpage_listeners();
+        init_admin_panel_listeners();
 
     }
 
@@ -385,17 +386,22 @@ public class AppController {
             });
         }
     }
-    private void init_admin_panel(){
+    private void init_admin_panel_listeners(){
         AdminPage adminPage = view.getAdminPage();
         ManageActorPanel actor = adminPage.getMngActorPnl();
-        ManageEpisodePanel episode = adminPage.getMngEpisodePnl();
         ManageSeriesPanel series = adminPage.getMngSeriesPnl();
+        ManageEpisodePanel episode = adminPage.getMngEpisodePnl();
         ManageActorSeriesPanel role = adminPage.getMngActorSeriesPnl();
 
         init_admin_actor_panel(actor);
+        init_admin_series_panel(series);
+//        init_admine_episode_panel(episode);
         init_admin_actorseries_panel(role);
     }
+
     private Integer selectedActorId = null;
+    private Integer selectedSeriesId = null;
+    private Integer selectedEpisodeId = null;
 
     private void init_admin_actor_panel(ManageActorPanel actor){
         List<PlainActorCard> actorCards = actor.getActorCards();
@@ -508,6 +514,134 @@ public class AppController {
         });
     }
 
+    private void init_admin_series_panel(ManageSeriesPanel series){
+        List<PlainSeriesCard> seriesCards = series.getSeriesCards();
+
+        for(PlainSeriesCard card: seriesCards){
+            card.addMouseListener(new MouseAdapter(){
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                   selectedEpisodeId = (Integer)card.getClientProperty("series_id");
+                   series.getAddBtn().setEnabled(false);
+                   series.getClearBtn().setEnabled(true);
+                   series.getUpdateBtn().setEnabled(true);
+                   try{
+                       Series seriesInfo = model.getSeriesDAO().getSeriesById(selectedEpisodeId);
+
+                       series.getTitleField().setText(seriesInfo.getTitle());
+                       series.getGenreField().setText(seriesInfo.getGenre());
+                       series.getReleaseYearField().setText(String.valueOf(seriesInfo.getReleaseYear()));
+                       series.getEpCountField().setText(String.valueOf(seriesInfo.getTotalEpisodes()));
+                       series.getStatusCb().setSelectedItem(String.valueOf(seriesInfo.getStatus()));
+                   } catch(SQLException ex){
+                       System.err.println("DB Error during episode loading: " + ex.getMessage());
+                       throw new RuntimeException(ex);
+                   }
+               }
+            });
+        }
+
+        series.getClearBtn().addActionListener(e->{
+            series.getAddBtn().setEnabled(true);
+            series.getClearBtn().setEnabled(true);
+            series.getUpdateBtn().setEnabled(false);
+
+            series.getTitleField().setText("");
+            series.getGenreField().setText("");
+            series.getReleaseYearField().setText("");
+            series.getEpCountField().setText("");
+            series.getStatusCb().setSelectedItem("On-Going");
+
+        });
+
+        series.getAddBtn().addActionListener(e->{
+            String t = series.getTitleField().getText().trim();
+            String g = series.getGenreField().getText().trim();
+            String ry = series.getReleaseYearField().getText().trim();
+            String c = series.getEpCountField().getText().trim();
+            String s = series.getStatusCb().getSelectedItem().toString().trim();
+
+            int intRy;
+            int intC;
+
+            try {
+                intRy = Integer.parseInt(ry);
+                intC = Integer.parseInt(c);
+
+            } catch (NumberFormatException ex) {
+                System.err.println("Input Error: Release Year or Episode Count is not a valid number.");
+                return;
+            }
+
+            if(t.isEmpty() || g.isEmpty() || ry.isEmpty() || c.isEmpty() ||
+                    s.isEmpty()){
+                System.out.println("No field can be empty");
+            }
+
+            try{
+                Series seriesToBeAdded = new Series(t,g,intRy,intC,s);
+                boolean check = model.getSeriesDAO().addSeries(seriesToBeAdded);
+                if(check){
+                    series.getTitleField().setText("");
+                    series.getGenreField().setText("");
+                    series.getReleaseYearField().setText("");
+                    series.getEpCountField().setText("");
+                    series.getStatusCb().setSelectedItem("On-Going");
+
+                    // updating gui/list
+                    List<Series> sList = model.getSeriesDAO().getAllSeries();
+                    series.setSeriesList(sList);
+                }
+            } catch (SQLException ex){
+                System.err.println("DB Error during episode loading: " + ex.getMessage());
+                throw new RuntimeException(ex);
+            }
+        });
+
+        series.getUpdateBtn().addActionListener(e->{
+            String t = series.getTitleField().getText().trim();
+            String g = series.getGenreField().getText().trim();
+            String ry = series.getReleaseYearField().getText().trim();
+            String c = series.getEpCountField().getText().trim();
+            String s = series.getStatusCb().getSelectedItem().toString().trim();
+
+            int intRy;
+            int intC;
+
+            try {
+                intRy = Integer.parseInt(ry);
+                intC = Integer.parseInt(c);
+
+            } catch (NumberFormatException ex) {
+                System.err.println("Input Error: Release Year or Episode Count is not a valid number.");
+                return;
+            }
+
+            if(t.isEmpty() || g.isEmpty() || ry.isEmpty() || c.isEmpty() ||
+                    s.isEmpty()){
+                System.out.println("No field can be empty");
+            }
+
+            try{
+                Series seriesToBeAdded = new Series(selectedSeriesId,t,g,intRy,intC,s);
+                boolean check = model.getSeriesDAO().updateSeries(seriesToBeAdded);
+                if(check){
+                    series.getTitleField().setText("");
+                    series.getGenreField().setText("");
+                    series.getReleaseYearField().setText("");
+                    series.getEpCountField().setText("");
+                    series.getStatusCb().setSelectedItem("On-Going");
+
+                    // updating gui/list
+                    List<Series> sList = model.getSeriesDAO().getAllSeries();
+                    series.setSeriesList(sList);
+                }
+            } catch (SQLException ex){
+                System.err.println("DB Error during episode loading: " + ex.getMessage());
+                throw new RuntimeException(ex);
+            }
+        });
+    }
     private void init_admin_actorseries_panel(ManageActorSeriesPanel role){
         List<PlainActorCard> actorCards = role.getActorSeriesCards();
 
@@ -565,6 +699,7 @@ public class AppController {
 
                         role.getActorNameField().setText(card.getNameLabel().getText());
 
+                        //update list for gui
                         List<ActorSeries> actorSeriesList = model.getActorSeriesDAO().getCharacterByActor(selectedActorId);
                         role.setActorSeriesList(actorSeriesList);
 
@@ -611,6 +746,8 @@ public class AppController {
                         role.getActorSeriesCb().setEnabled(true);
                         role.getActorNameField().setEditable(false);
                         role.getActorRole().setEditable(true);
+
+                        // update gui list by setting all
                     } else {
                         System.out.println("Failed to delete role from database.");
                     }
@@ -650,6 +787,7 @@ public class AppController {
                         role.getActorNameField().setEditable(false);
                         role.getActorRole().setEditable(true);
 
+                        // update gui list
 
                     } else {
                         System.out.println("Failed to add role to database.");

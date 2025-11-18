@@ -229,4 +229,6 @@ public class ManageActorPanel extends JPanel {
     public void setActorListPnl(JPanel actorListPnl) {
         this.actorListPnl = actorListPnl;
     }
+
+
 }

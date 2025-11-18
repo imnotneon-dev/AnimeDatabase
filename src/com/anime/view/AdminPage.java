@@ -116,7 +116,7 @@ public class AdminPage extends JPanel implements ItemListener {
         this.mngActorPnl = mngActorPnl;
     }
 
-    public ManageActorSeriesPanel setMngActorSeriesPnl() {
+    public ManageActorSeriesPanel getMngActorSeriesPnl() {
         return mngActorSeriesPnl;
     }
 

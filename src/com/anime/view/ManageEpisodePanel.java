@@ -27,6 +27,8 @@ public class ManageEpisodePanel extends JPanel {
 
     private JButton addBtn = new JButton("Add");
     private JButton updateBtn = new JButton("Update");
+    private JButton clearBtn = new JButton("Clear");
+
 
 
     private List<String> episodeList = List.of(
@@ -130,6 +132,8 @@ public class ManageEpisodePanel extends JPanel {
         episodeFormPnl.add(Box.createVerticalStrut(10));
 //        episodeFormPnl.add(Box.createVerticalGlue());
         episodeFormPnl.add(updateBtn);
+        episodeFormPnl.add(Box.createVerticalStrut(10));
+        episodeFormPnl.add(clearBtn);
         episodeFormPnl.add(Box.createVerticalGlue());
         episodeFormPnl.setLayout(new BoxLayout(episodeFormPnl,BoxLayout.Y_AXIS));
         episodeFormPnl.setPreferredSize(new Dimension((int)(1280/2), 720));

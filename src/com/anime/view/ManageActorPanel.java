@@ -19,6 +19,8 @@ public class ManageActorPanel extends JPanel {
     private JButton addBtn = new JButton("Add");
     private JButton updateBtn = new JButton("Update");
     private JButton deleteBtn = new JButton("Delete");
+    private JButton clearBtn = new JButton("Clear");
+
 
     private List<String> actorList = List.of(
             "Series 1","Series 2","Series 3","Series 4","Series 5",
@@ -112,6 +114,8 @@ public class ManageActorPanel extends JPanel {
         actorFormPnl.add(updateBtn);
         actorFormPnl.add(Box.createVerticalStrut(10));
         actorFormPnl.add(deleteBtn);
+        actorFormPnl.add(Box.createVerticalStrut(10));
+        actorFormPnl.add(clearBtn);
         actorFormPnl.add(Box.createVerticalGlue());
         actorFormPnl.setLayout(new BoxLayout(actorFormPnl,BoxLayout.Y_AXIS));
         actorFormPnl.setPreferredSize(new Dimension((int)(1280/2), 720));

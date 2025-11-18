@@ -24,6 +24,7 @@ public class ManageActorSeriesPanel extends JPanel {
 
     private JButton addBtn = new JButton("Add");
     private JButton deleteBtn = new JButton("Delete");
+    private JButton clearBtn = new JButton("Clear");
 
 
     private List<String> actorList = List.of(

@@ -22,6 +22,8 @@ public class ManageSeriesPanel extends JPanel {
 
     private JButton addBtn = new JButton("Add");
     private JButton updateBtn = new JButton("Update");
+    private JButton clearBtn = new JButton("Clear");
+
 
     private List<String> seriesList = List.of(
             "Series 1","Series 2","Series 3","Series 4","Series 5",
@@ -114,6 +116,8 @@ public class ManageSeriesPanel extends JPanel {
         seriesFormPnl.add(Box.createVerticalStrut(10));
 //        seriesFormPnl.add(Box.createVerticalGlue());
         seriesFormPnl.add(updateBtn);
+        seriesFormPnl.add(Box.createVerticalStrut(10));
+        seriesFormPnl.add(clearBtn);
         seriesFormPnl.add(Box.createVerticalGlue());
         seriesFormPnl.setLayout(new BoxLayout(seriesFormPnl,BoxLayout.Y_AXIS));
         seriesFormPnl.setPreferredSize(new Dimension((int)(1280/2), 720));

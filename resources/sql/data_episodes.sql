@@ -34,4 +34,13 @@ CREATE TABLE watch_history_t (
     FOREIGN KEY (episode_id) REFERENCES episodes_t(episode_id)
 );
 
+-- INSERTS
+INSERT INTO episodes_t (title, release_date, synopsis, no_of_views, runtime)
+VALUES
+
+('Starting Today, You Are a Host!', '2006-04-04', 'Haruhi Fujioka stumbles across the Host Club and accidentally breaks a vase which she is unable to pay for, so she must work as a new Host despite being a girl.', 3000, '00:23:22'),
+
+
+
+
 

@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import com.anime.model.dao.SQLScriptRunner;
 import com.anime.*;
 import com.anime.controller.*;
 import com.anime.model.dao.AppModel;
@@ -17,6 +19,22 @@ public class Takoroll {
     private AppModel model = new AppModel();
 
     public static void main(String[] args) {
+        try {
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/02_add_constraints.sql");
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_FavoriteSeries.sql");
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_accounts.sql");
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_actors.sql");
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_episodes.sql");
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_likedepisodes.sql");
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_series.sql");
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/db_anime.sql");
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/getFavoriteSeriesByUser.sql");
+            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/report_reviewlog.sql");
+            System.out.println("Database Initialized");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         AppController controller = new AppController(mainFrame, model);
     }
 

@@ -8,6 +8,8 @@ public class AppModel {
     private EpisodeReviewDAO episodeReviewDAO = new EpisodeReviewDAO();
     private FavoriteSeriesDAO favoriteSeriesDAO = new FavoriteSeriesDAO();
     private SeriesDAO seriesDAO = new SeriesDAO();
+    private WatchHistoryDAO watchHistoryDAO = new WatchHistoryDAO();
+    private LikedEpisodeDAO likedEpisodeDAO = new LikedEpisodeDAO();
 
     public AccountDAO getAccountDAO() {
         return accountDAO;
@@ -35,5 +37,13 @@ public class AppModel {
 
     public SeriesDAO getSeriesDAO() {
         return seriesDAO;
+    }
+
+    public WatchHistoryDAO getWatchHistoryDAO() {
+        return watchHistoryDAO;
+    }
+
+    public LikedEpisodeDAO getLikedEpisodeDAO() {
+        return likedEpisodeDAO;
     }
 }

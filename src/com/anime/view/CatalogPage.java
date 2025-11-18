@@ -1,14 +1,16 @@
 package com.anime.view;
 
+import com.anime.model.Series;
 import com.anime.view.customcards.SeriesCard;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CatalogPage extends JPanel{
-    private List<SeriesCard> catalog = List.of(
+    /*private List<SeriesCard> catalog = List.of(
             new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
             new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
             new SeriesCard("Inazuma Eleven"), new SeriesCard("Kuroko no Basket"),
@@ -38,9 +40,13 @@ public class CatalogPage extends JPanel{
             new SeriesCard("Inazuma Eleven"),
             new SeriesCard("Haikyuu"), new SeriesCard("Blue Lock"), new SeriesCard("Battery Oblivion"),
             new SeriesCard("Slam Dunk"), new SeriesCard("Ace of the Diamond"),
-            new SeriesCard("Inazuma Eleven"));
+            new SeriesCard("Inazuma Eleven"));*/
 
+    private List<Series> seriesList = new ArrayList<>();
+    private List<SeriesCard> seriesCards = new ArrayList<>();
     private GridBagLayout gb = new GridBagLayout();
+    private JPanel seriesContentPnl = new JPanel();
+
     private JPanel container = new JPanel();
     //    private JPanel catalogWrapperPanel = new JPanel();
 //    private JScrollPane homePageScrollPane = new JScrollPane(container);
@@ -65,17 +71,17 @@ public class CatalogPage extends JPanel{
 //        gb.setConstraints(container, new GridBagConstraints());
         container.setLayout(new BoxLayout(container,BoxLayout.Y_AXIS));
         container.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-        JPanel catalogShelf = createCatalog("Catalog", catalog);
+        JPanel catalogShelf = createCatalog("Catalog", seriesList);
         catalogShelf.setBackground(Color.BLACK);
         container.add(catalogShelf);
 //        add(container);
         add(container, BorderLayout.CENTER);
     }
 
-    private JPanel createCatalog(String title, List<SeriesCard> seriesList){
+    private JPanel createCatalog(String title, List<Series> seriesList){
         JLabel seriesTitle = new JLabel(title);
         JPanel shelfPnl = new JPanel();
-        JPanel seriesContentPnl = new JPanel();
+//        JPanel seriesContentPnl = new JPanel();
         // JPanel catalogWrapperPanel = new JPanel();
         JScrollPane seriesContentScroller = new JScrollPane(seriesContentPnl);
 
@@ -104,14 +110,29 @@ public class CatalogPage extends JPanel{
 
         shelfPnl.setBorder(new EmptyBorder(20,20,20,20));
 
-        for (SeriesCard s: seriesList){
-            SeriesCard series = s;
-//            series.setText(s);
-            series.setAlignmentX(Component.LEFT_ALIGNMENT);
-            seriesContentPnl.add(series);
-        }
+        loadCatalogSeriesCards();
         shelfPnl.add(seriesTitle);
         shelfPnl.add(seriesContentScroller);
         return shelfPnl;
+    }
+    private void loadCatalogSeriesCards(){
+        seriesContentPnl.removeAll();
+        seriesCards.clear();
+        for (Series s: seriesList){
+            SeriesCard series = new SeriesCard(s.getSeriesId(), s.getTitle());
+            series.setAlignmentX(Component.LEFT_ALIGNMENT);
+            seriesCards.add(series);
+            seriesContentPnl.add(series);
+        }
+        seriesContentPnl.revalidate();
+        seriesContentPnl.repaint();
+    }
+    public void setCatalogSeriesList(List<Series> seriesList){
+        this.seriesList = seriesList;
+        loadCatalogSeriesCards();
+    }
+
+    public List<SeriesCard> getCatalogSeriesCards(){
+        return seriesCards;
     }
 }

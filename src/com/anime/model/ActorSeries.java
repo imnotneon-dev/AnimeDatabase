@@ -14,6 +14,12 @@ public class ActorSeries {
         this.characterName = characterName;
     }
 
+    public ActorSeries(int aId, int sId, String characterName){
+        this.actorId = aId;
+        this.seriesId = sId;
+        this.characterName = characterName;
+    }
+
     public int getActId() {
         return actId;
     }

@@ -17,6 +17,7 @@ public class HeaderPanel extends JPanel {
     private JMenuItem accStatsItem = new JMenuItem();
     private JLabel homeIcon = new JLabel();
     private JLabel accountName = new JLabel();
+    private JLabel catalogLb = new JLabel();
 
     public HeaderPanel(){
         setLayout(new BorderLayout());
@@ -30,14 +31,22 @@ public class HeaderPanel extends JPanel {
 
     private void init(){
         JPanel filler = new JPanel();
+        JPanel leftPnl = new JPanel();
         String TAKOROLL_LOGO = "/imgs/tako_hori.png";
         BufferedImage biHomeIcon = loadImage(TAKOROLL_LOGO);
         Image scaled = biHomeIcon.getScaledInstance(160,50,Image.SCALE_SMOOTH);
         ImageIcon homeIconIcon = new ImageIcon(scaled);
+
         homeIcon.setIcon(homeIconIcon);
         homeIcon.setMaximumSize(new Dimension(160,50));
         homeIcon.setBackground(Color.WHITE);
         homeIcon.setOpaque(true);
+
+        catalogLb.setText("CATALOG");
+        catalogLb.setFont(new Font("SansSerif", Font.BOLD, 14)); // Make it visible and clear
+
+        leftPnl.add(homeIcon);
+        leftPnl.add(catalogLb);
 
         JPopupMenu menu = new JPopupMenu();
         logoutItem = new JMenuItem("Log Out");
@@ -49,7 +58,7 @@ public class HeaderPanel extends JPanel {
         menu.add(likesItem);
         menu.add(accStatsItem);
 
-        add(homeIcon, BorderLayout.WEST);
+        add(leftPnl, BorderLayout.WEST);
         add(filler, BorderLayout.CENTER);
         add(accountName,BorderLayout.EAST);
 
@@ -77,5 +86,6 @@ public class HeaderPanel extends JPanel {
     public JMenuItem getAccStatsItem() { return accStatsItem; }
     public JLabel getHomeIcon() { return homeIcon; }
     public JLabel getAccountName() { return accountName; }
+    public JLabel getCatalogLb() { return catalogLb; }
     public void setAccountName(String name) { accountName.setText(name); }
 }

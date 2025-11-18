@@ -8,7 +8,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class LikeHistory extends JPanel{
+public class LikeHistoryPage extends JPanel{
 //    private JPanel actorInfoPnl = new JPanel();
     private JPanel likePnl = new JPanel();
 //    private JLabel actorPhoto = new JLabel();
@@ -30,7 +30,7 @@ public class LikeHistory extends JPanel{
     *   rolesList = roles;
     * }
     * */
-    public LikeHistory() {
+    public LikeHistoryPage() {
         init();
     }
     private void init() {

@@ -16,8 +16,12 @@ import java.time.LocalDate;
 public class PlainEpisodeCard extends JPanel {
     //    private Review review;
     private JPanel container = new JPanel();
+    private String seriesTitle;
+    private String episodeTitle;
+    private LocalDate watchDate;
 
-    public PlainEpisodeCard(String seriesTitle, String episodeTitle, LocalDate watchDate){
+    public PlainEpisodeCard(LocalDate watchDate){
+        this.watchDate = watchDate;
         String episodeInfo = seriesTitle + ": \"" +  episodeTitle + "\"";
         JLabel epTitle = new JLabel(episodeInfo);
         JLabel date = new JLabel(String.valueOf(watchDate));
@@ -59,7 +63,8 @@ public class PlainEpisodeCard extends JPanel {
 
     }
 
-    public PlainEpisodeCard(String seriesTitle, String episodeTitle){
+    public PlainEpisodeCard(String episodeTitle){
+        this.episodeTitle = episodeTitle;
         String episodeInfo = seriesTitle + ": \"" +  episodeTitle + "\"";
         JLabel epTitle = new JLabel(episodeInfo);
 
@@ -99,11 +104,11 @@ public class PlainEpisodeCard extends JPanel {
 
     }
 
-    public static BufferedImage loadImage(String iresPath)
-    {
-        BufferedImage image = null;
-        try { image = ImageIO.read(RoleCard.class.getResource(iresPath)); }
-        catch (IOException e) { e.printStackTrace(); }
-        return image;
+    public void setSeriesTitle(String title){
+        this.seriesTitle = title;
+    }
+
+    public void setEpisodeTitle(String episodeTitle){
+        this.episodeTitle = episodeTitle;
     }
 }

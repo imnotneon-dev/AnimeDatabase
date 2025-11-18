@@ -1,5 +1,6 @@
 package com.anime.view;
 
+import com.anime.model.dao.*;
 import com.anime.model.Actor;
 import com.anime.model.ActorSeries;
 import com.anime.model.Series;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ManageActorSeriesPanel extends JPanel {
+    private AppModel model = new AppModel();
+
     private JPanel actorListPnl = new JPanel();
 
     private JTextField actorNameField = new JTextField();
@@ -161,8 +164,9 @@ public class ManageActorSeriesPanel extends JPanel {
                 // Call super method for standard coloring/selection logic
                 Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-                if (value instanceof ActorSeries series) {
+                if (value instanceof ActorSeries aseries) {
                     // Display ONLY the title on the component (which is a JLabel)
+                    Series series = model.getSeriesDAO().getSeriesById(aseries.getSeriesId());
                     ((JLabel) component).setText(series.getTitle());
                 } else if (value != null) {
                     // For non-Series objects (like the initial placeholder text)
@@ -212,6 +216,10 @@ public class ManageActorSeriesPanel extends JPanel {
 
     public JButton getDeleteBtn() {
         return deleteBtn;
+    }
+
+    public JButton getClearBtn() {
+        return clearBtn;
     }
 
     public List<Actor> getActorList() {

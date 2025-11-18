@@ -1,5 +1,7 @@
 package com.anime.model;
 
+import java.time.LocalDate;
+
 public class EpisodeReview {
 
     private int review_id;
@@ -9,7 +11,7 @@ public class EpisodeReview {
     private LocalDate date_reviewed; 
     private String episode_title;
 
-    public EpisodeReview(int review_id, int user_id, int episode_id, String comment) {
+    public EpisodeReview(int review_id, int user_id, int episode_id, String comment, LocalDate date_reviewed, String episode_title) {
         this.review_id = review_id;
         this.user_id = user_id;
         this.episode_id = episode_id;

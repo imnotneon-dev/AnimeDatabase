@@ -15,12 +15,12 @@ public class WatchHistory {
         watchDate = wd;
     }
 
-    public String getUsername() {
-        return username;
+    public int getUserId() {
+        return userId;
     }
 
     public void setUserId(String username) {
-        this.username = username;
+        this.userId = userId;
     }
 
     public int getWatchId() {

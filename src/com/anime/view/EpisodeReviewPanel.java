@@ -20,9 +20,7 @@ public class EpisodeReviewPanel extends JPanel {
     private JTable reviewTable;
     private DefaultTableModel tableModel;
 
-    public EpisodeReviewPanel(EpisodeReviewDAO reviewDAO, EpisodeDAO episodeDAO) {
-        this.reviewDAO = reviewDAO;
-        this.episodeDAO = episodeDAO;
+    public EpisodeReviewPanel() {
 
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);

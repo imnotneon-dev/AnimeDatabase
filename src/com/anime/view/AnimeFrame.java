@@ -1,5 +1,8 @@
 package com.anime.view;
 
+import com.anime.model.dao.EpisodeDAO;
+import com.anime.model.dao.EpisodeReviewDAO;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -17,7 +20,8 @@ public class AnimeFrame extends JFrame {
     private LikeHistoryPage likes;
     private HeaderPanel head;
     private AdminPage adminpg;
-    private EpisodeReviewPanel epReviewPanel; // Added this for ep review
+    private ReportPage reportpg;
+    private AnimeWrappedPanel wrapped;
     private JPanel container = new JPanel();
     private CardLayout cardLayout = new CardLayout();
     public final String LOGIN = "LOGIN_VIEW";
@@ -29,7 +33,8 @@ public class AnimeFrame extends JFrame {
     public final String WATCH_HISTORY = "WATCH_HISTORY_VIEW";
     public final String LIKE_HISTORY = "LIKE_HISTORY_VIEW";
     public final String ADMIN = "ADMIN_VIEW";
-    public final String EPISODE_REVIEW = "EPISODE_REVIEW_VIEW"; // Added this for ep review
+    public final String REPORT = "REPORT_VIEW";
+    public final String WRAPPED = "ANIME_WRAPPED";
 
 
     /**
@@ -72,13 +77,9 @@ public class AnimeFrame extends JFrame {
         watch = new WatchHistoryPage();
         likes = new LikeHistoryPage();
         adminpg = new AdminPage();
+        reportpg = new ReportPage();
+        wrapped = new AnimeWrappedPanel();
 
-        // Added ep review panel here,,
-        epReviewPanel = new EpisodeReviewPanel(
-            new EpisodeReviewDAO(DBConnection.getConnection()),
-            new EpisodeDAO(DBConnection.getConnection())
-        );
-        
         head = new HeaderPanel();
 
 
@@ -91,7 +92,8 @@ public class AnimeFrame extends JFrame {
         container.add(watch, WATCH_HISTORY);
         container.add(likes, LIKE_HISTORY);
         container.add(adminpg, ADMIN);
-        container.add(epReviewPanel, EPISODE_REVIEW); // Added this as well for ep review 
+        container.add(reportpg, REPORT);
+        container.add(wrapped, WRAPPED);
         add(head, BorderLayout.NORTH);
         add(container);
     }
@@ -146,5 +148,13 @@ public class AnimeFrame extends JFrame {
 
     public AdminPage getAdminPage() {
         return adminpg;
+    }
+
+    public ReportPage getReportPage(){
+        return reportpg;
+    }
+
+    public AnimeWrappedPage getWrappedPage(){
+        return wrapped;
     }
 }

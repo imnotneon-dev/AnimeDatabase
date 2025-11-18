@@ -12,7 +12,8 @@ import java.util.List;
 
 public class ManageActorPanel extends JPanel {
 
-    private JTextField nameField = new JTextField();
+    private JTextField firstNameField = new JTextField();
+    private JTextField lastNameField = new JTextField();
     private JComboBox<String> sexCb = new JComboBox<>();
     private JTextField dobField = new JTextField();
     private JTextField pobField = new JTextField();
@@ -58,8 +59,10 @@ public class ManageActorPanel extends JPanel {
         actorListScrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
         add(actorListScrollPanel, BorderLayout.WEST);
 
-        nameField.setMaximumSize(new Dimension(350,30));
-        nameField.setAlignmentX(LEFT_ALIGNMENT);
+        firstNameField.setMaximumSize(new Dimension(350,30));
+        firstNameField.setAlignmentX(LEFT_ALIGNMENT);
+        lastNameField.setMaximumSize(new Dimension(350,30));
+        lastNameField.setAlignmentX(LEFT_ALIGNMENT);
 
         sexCb = new JComboBox<>(new String[] {"Male", "Female", "Other"});
         sexCb.setMaximumSize(new Dimension(350,30));
@@ -87,8 +90,11 @@ public class ManageActorPanel extends JPanel {
         updateBtn.setEnabled(false);
 
         actorFormPnl.add(Box.createVerticalStrut(10));
-        actorFormPnl.add(new JLabel("Enter Series Title"));
-        actorFormPnl.add(nameField);
+        actorFormPnl.add(new JLabel("Enter First Name"));
+        actorFormPnl.add(firstNameField);
+        actorFormPnl.add(Box.createVerticalStrut(10));
+        actorFormPnl.add(new JLabel("Enter Last Name"));
+        actorFormPnl.add(lastNameField);
         actorFormPnl.add(Box.createVerticalStrut(10));
         actorFormPnl.add(new JLabel("Select Sex"));
         actorFormPnl.add(sexCb);
@@ -135,12 +141,12 @@ public class ManageActorPanel extends JPanel {
         actorListPnl.repaint();
     }
 
-    public JTextField getNameField() {
-        return nameField;
+    public JTextField getFirstNameField() {
+        return firstNameField;
     }
 
-    public void setNameField(JTextField nameField) {
-        this.nameField = nameField;
+    public JTextField getLastNameField(){
+        return lastNameField;
     }
 
     public JComboBox<String> getSexCb() {

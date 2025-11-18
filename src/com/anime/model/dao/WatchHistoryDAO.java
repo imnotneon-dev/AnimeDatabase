@@ -8,18 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WatchHistoryDAO {
-    private Connection conn;
+//    private Connection conn;
+//
+//    public WatchHistoryDAO(Connection conn) {
+//        this.conn = conn;
+//    }
 
-    public WatchHistoryDAO(Connection conn) {
-        this.conn = conn;
-    }
-
-    public List<WatchHistory> getWatchedListByUser(int user_id) {
+    public List<WatchHistory> getWatchedListByUser(int user_id) throws SQLException{
         List<WatchHistory> watched = new ArrayList<>();
         String sql = " SELECT DISTINCT watch_id, user_id, episode_id, watch_date " +
                 "FROM watchHistory w " +
                 "WHERE username = ? ";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, user_id);
             ResultSet rs = ps.executeQuery();
@@ -39,8 +40,7 @@ public class WatchHistoryDAO {
         return watched;
     }
 
-    public boolean addWatchHistoryByUser(int user_id, int episode_id, LocalDate watch_date){
-        /* boolean so that we know if na insert na true or false*/
+    public boolean addWatchHistoryByUser(int user_id, int episode_id, LocalDate watch_date) throws SQLException{
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO series");
         sql.append("(user_id, episode_id, watch_date)");

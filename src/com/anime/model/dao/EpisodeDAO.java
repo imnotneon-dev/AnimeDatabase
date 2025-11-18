@@ -12,11 +12,11 @@ import java.util.List;
 
 public class EpisodeDAO {
 
-    private final Connection conn;
-
-    public EpisodeDAO(Connection conn) {
-        this.conn = conn;
-    }
+//    private final Connection conn;
+//
+//    public EpisodeDAO(Connection conn) {
+//        this.conn = conn;
+//    }
 
     public boolean addEpisode(String epTitle, LocalDate release, String synopsis, int runtime, int seriesId) throws SQLException {
         String sql = "INSERT INTO episodes (title, release_date, synopsis, runtime, seriesId) VALUES (?, ?, ?, ?, ?)";
@@ -84,7 +84,8 @@ public class EpisodeDAO {
     public List<Episode> selectEpisodeBySeries (int series_id) throws SQLException {
         String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM Episodes WHERE series_id = ? ";
         List<Episode> eplist = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, series_id);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

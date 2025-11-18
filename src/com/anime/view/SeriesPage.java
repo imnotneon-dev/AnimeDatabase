@@ -21,13 +21,14 @@ public class SeriesPage extends JPanel{
     private JPanel contentPnl = new JPanel();
     private JPanel actorsContainer = new JPanel();
     private JScrollPane scrollPane = new JScrollPane(contentPnl);
+    private String SERIES_POSTER = "/imgs/takoroll_logo.png";
 
-    private JButton faveBtn = new JButton("❤️", new ImageIcon());
-    private JLabel titleLb = new JLabel("My Hero Acaedmia Boku No Hero Academia some gibberish to cehck");
-    private JLabel genreLb = new JLabel("Action");
-    private JLabel releaseYearLb = new JLabel("2025");
-    private JLabel epCountLb = new JLabel("Episodes: 5");
-    private JLabel statusLb = new JLabel("Ongoing");
+    private JButton faveBtn = new JButton("❤", new ImageIcon());
+    private JLabel titleLb = new JLabel("Series Title");
+    private JLabel genreLb = new JLabel("Genre");
+    private JLabel releaseYearLb = new JLabel("ReleaseYear");
+    private JLabel epCountLb = new JLabel("Episodes: Count");
+    private JLabel statusLb = new JLabel("On-Going");
 
     private List<Episode> episodeList = new ArrayList<>();
     private List<Actor> actorsList = new ArrayList<>();
@@ -66,8 +67,8 @@ public class SeriesPage extends JPanel{
     }
 
     private void initComponents(){
-        String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
-        BufferedImage biTakorollIcon = loadImage(TAKOROLL_LOGO);
+
+        BufferedImage biTakorollIcon = loadImage(SERIES_POSTER);
 
         JPanel epInfoHSpacer = new JPanel();
         epInfoHSpacer.setOpaque(false);
@@ -260,6 +261,10 @@ public class SeriesPage extends JPanel{
         loadActorLabelCards();
 //        reloadSeriesPage();
 
+    }
+
+    public String setSERIES_POSTERLink(String iresPath){
+        this.SERIES_POSTER = iresPath;
     }
 
 }

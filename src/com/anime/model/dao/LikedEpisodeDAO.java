@@ -24,34 +24,49 @@ public class LikedEpisodeDAO {
 
         String sql = "INSERT INTO LikedEpisode (user_id, episode_id) VALUES (?, ?)";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, userId);
-        ps.setInt(2, episodeId);
+        try(Connection conn = DBConnection.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, episodeId);
 
-        return ps.executeUpdate() > 0;
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     // Unlike an ep
     public boolean removeLike(int userId, int episodeId) throws SQLException {
         String sql = "DELETE FROM LikedEpisode WHERE user_id = ? AND episode_id = ?";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, userId);
-        ps.setInt(2, episodeId);
+        try(Connection conn = DBConnection.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, episodeId);
 
-        return ps.executeUpdate() > 0;
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     // Check if user already liked that ep
     public boolean isLiked(int userId, int episodeId) throws SQLException {
         String sql = "SELECT * FROM LikedEpisode WHERE user_id = ? AND episode_id = ?";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, userId);
-        ps.setInt(2, episodeId);
-        ResultSet rs = ps.executeQuery();
+        try(Connection conn = DBConnection.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, episodeId);
+            ResultSet rs = ps.executeQuery();
 
-        return rs.next();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     // Get all user's likes
@@ -60,20 +75,26 @@ public class LikedEpisodeDAO {
 
         String sql = "SELECT * FROM LikedEpisode WHERE user_id = ? ORDER BY date_added DESC";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, userId);
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
 
-        ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            list.add(new LikedEpisode(
-                    rs.getInt("user_id"),
-                    rs.getInt("episode_id"),
-                    rs.getDate("date_added").toLocalDate()
-            ));
+            while (rs.next()) {
+                list.add(new LikedEpisode(
+                        rs.getInt("user_id"),
+                        rs.getInt("episode_id"),
+                        rs.getDate("date_added").toLocalDate()
+                ));
+            }
+
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
 
-        return list;
     }
 
     // Get all likes per ep
@@ -82,19 +103,23 @@ public class LikedEpisodeDAO {
 
         String sql = "SELECT * FROM LikedEpisode WHERE episode_id = ? ORDER BY date_added DESC";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, episodeId);
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, episodeId);
 
-        ResultSet rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
 
-        while (rs.next()) {
-            list.add(new LikedEpisode(
-                    rs.getInt("user_id"),
-                    rs.getInt("episode_id"),
-                    rs.getDate("date_added").toLocalDate()
-            ));
+                while (rs.next()) {
+                    list.add(new LikedEpisode(
+                            rs.getInt("user_id"),
+                            rs.getInt("episode_id"),
+                            rs.getDate("date_added").toLocalDate()
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
         return list;
     }
 
@@ -102,10 +127,16 @@ public class LikedEpisodeDAO {
     public boolean updateLikeDate(int userId, int episodeId) throws SQLException {
         String sql = "UPDATE LikedEpisode SET date_added = CURRENT_DATE WHERE user_id = ? AND episode_id = ?";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, userId);
-        ps.setInt(2, episodeId);
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, episodeId);
 
-        return ps.executeUpdate() > 0;
+            return ps.executeUpdate() > 0;
+        
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

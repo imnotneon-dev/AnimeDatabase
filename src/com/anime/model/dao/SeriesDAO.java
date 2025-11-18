@@ -31,7 +31,8 @@ public class SeriesDAO{
                     resSet.getString("genre"),
                     resSet.getInt("release_year"),
                     resSet.getInt("total_episodes"),
-                    resSet.getString("status")
+                    resSet.getString("status"),
+                    resSet.getString("series_photo")
                 );
             }
 
@@ -60,7 +61,8 @@ public class SeriesDAO{
                         resSet.getString("genre"),
                         resSet.getInt("release_year"),
                         resSet.getInt("total_episodes"),
-                        resSet.getString("status")
+                        resSet.getString("status"),
+                        resSet.getString("series_photo")
                     );
                 }
                         
@@ -90,7 +92,8 @@ public class SeriesDAO{
                         resSet.getString("genre"),
                         resSet.getInt("release_year"),
                         resSet.getInt("total_episodes"),
-                        resSet.getString("status")
+                        resSet.getString("status"),
+                        resSet.getString("series_photo")
                 );
 
                 list.add(s);

@@ -13,74 +13,53 @@ public class EpisodeReviewDAO {
         this.conn = conn;
     }
 
-    public boolean addReview(int user_id, int episode_id, String user_review) {
+    public void addReview(int userId, int episodeId, String userReview) throws SQLException {
         String sql = "INSERT INTO EpisodeReview (user_id, episode_id, user_review) VALUES (?, ?, ?)";
-
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            if (conn == null) {
-                System.err.println("Connection failed: addReview()");
-                return false;
-            }
-
-            ps.setInt(1, user_id);
-            ps.setInt(2, episode_id);
-            ps.setString(3, user_review);
+            ps.setInt(1, userId);
+            ps.setInt(2, episodeId);
+            ps.setString(3, userReview);
             ps.executeUpdate();
-            return true;
 
         } catch (SQLException e) {
-            System.err.println("Error adding review: " + e.getMessage());
-            return false;
+            e.printStackTrace();
+            throw e;
         }
     }
-    public boolean deleteReview(int review_id) {
+
+    public void deleteReview(int reviewId) throws SQLException {
         String sql = "DELETE FROM EpisodeReview WHERE review_id = ?";
-
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            if (conn == null) {
-                System.err.println("Connection failed: deleteReview()");
-                return false;
-            }
-
-            ps.setInt(1, review_id);
+            ps.setInt(1, reviewId);
             ps.executeUpdate();
-            return true;
 
         } catch (SQLException e) {
-            System.err.println("Error deleting review: " + e.getMessage());
-            return false;
+            e.printStackTrace();
+            throw e;
         }
     }
 
-    public boolean updateReview(int review_id, String new_review) {
+    public void updateReview(int reviewId, String newReview) throws SQLException {
         String sql = "UPDATE EpisodeReview SET user_review = ? WHERE review_id = ?";
-
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            if (conn == null) {
-                System.err.println("Connection failed: updateReview()");
-                return false;
-            }
-
-            ps.setString(1, new_review);
-            ps.setInt(2, review_id);
+            ps.setString(1, newReview);
+            ps.setInt(2, reviewId);
             ps.executeUpdate();
-            return true;
 
         } catch (SQLException e) {
-            System.err.println("Error updating review: " + e.getMessage());
-            return false;
+            e.printStackTrace();
+            throw e;
         }
     }
 
-    public List<EpisodeReview> getAllReviews() {
+    public List<EpisodeReview> getAllReviews() throws SQLException {
         List<EpisodeReview> list = new ArrayList<>();
-
         String sql = """
             SELECT 
                 r.review_id, r.user_id, r.episode_id, r.user_review, r.date_reviewed,
@@ -96,31 +75,26 @@ public class EpisodeReviewDAO {
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
-            if (conn == null) {
-                System.err.println("Connection failed: getAllReviews()");
-                return list;
-            }
-
             while (rs.next()) {
                 EpisodeReview review = new EpisodeReview(
                     rs.getInt("review_id"),
                     rs.getString("username"),
-                    rs.getInt("series_id"),
-                    rs.getString("comment")
+                    rs.getInt("episode_id"),
+                    rs.getString("user_review")
                 );
                 list.add(review);
             }
 
-        } catch (SQLException e) {
-            System.err.println("Error fetching reviews: " + e.getMessage());
-        }
+            return list;
 
-        return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
-    public List<EpisodeReview> getReviewsByEpisodeId(int episode_id) {
+    public List<EpisodeReview> getReviewsByEpisodeId(int episodeId) throws SQLException {
         List<EpisodeReview> list = new ArrayList<>();
-
         String sql = """
             SELECT 
                 r.review_id, r.user_id, r.episode_id, r.user_review, r.date_reviewed,
@@ -136,28 +110,24 @@ public class EpisodeReviewDAO {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            if (conn == null) {
-                System.err.println("Connection failed: getReviewsByEpisodeId()");
-                return list;
+            ps.setInt(1, episodeId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    EpisodeReview review = new EpisodeReview(
+                        rs.getInt("review_id"),
+                        rs.getString("username"),
+                        rs.getInt("episode_id"),
+                        rs.getString("user_review")
+                    );
+                    list.add(review);
+                }
             }
 
-            ps.setInt(1, episode_id);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                EpisodeReview review = new EpisodeReview(
-                    rs.getInt("review_id"),
-                    rs.getString("username"),
-                    rs.getInt("series_id"),
-                    rs.getString("comment")
-                );
-                list.add(review);
-            }
+            return list;
 
         } catch (SQLException e) {
-            System.err.println("Error fetching reviews by episode: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
-
-        return list;
     }
 }

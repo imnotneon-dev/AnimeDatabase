@@ -15,7 +15,8 @@ public class FavoriteSeriesDAO {
 
     public int countFavorites(int username) {
         String sql = "SELECT COUNT(*) AS total FROM FavoriteSeries WHERE username = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setInt(1, username);
             ResultSet resSet = ps.executeQuery();
@@ -40,7 +41,8 @@ public class FavoriteSeriesDAO {
         }
 
         String sql = "INSERT INTO FavoriteSeries (username, series_id, added_date) VALUES (?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setInt(1, username);
             ps.setInt(2, series_id);
@@ -59,7 +61,8 @@ public class FavoriteSeriesDAO {
 
     public boolean removeFavoriteSeries(int username, int series_id) {
         String sql = "DELETE FROM FavoriteSeries WHERE username = ? AND series_id = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setInt(1, username);
             ps.setInt(2, series_id);
@@ -79,31 +82,36 @@ public class FavoriteSeriesDAO {
     public List<FavoriteSeries> getFavorites(int username) {
         List<FavoriteSeries> favorites = new ArrayList<>();
         String sql = "SELECT * FROM FavoriteSeries WHERE username = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, username);
-            ResultSet rs = ps.executeQuery();
-            
-            while (rs.next()) {
-                favorites.add(new FavoriteSeries(
-                    rs.getInt("username"),
-                    rs.getInt("series_id"),
-                    rs.getDate("added_date").toLocalDate()
-                ));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    favorites.add(new FavoriteSeries(
+                            rs.getInt("favorite_id"),
+                            rs.getString("username"),
+                            rs.getInt("series_id"),
+                            rs.getDate("added_date").toLocalDate()
+                    ));
+                }
             }
-        
+
         } catch (SQLException e) {
             e.printStackTrace();
-    }
+        }
+
         return favorites;
     }
+
 
     public List<String> getAllSeriesTitles(){
         List<String> titles = new ArrayList<>();
         String sql = "SELECT title FROM Series";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            
-            ResultSet resSet = ps.executeQuery();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet resSet = ps.executeQuery()) {
             
             while (resSet.next()) {
                 titles.add(resSet.getString("title"));
@@ -126,21 +134,22 @@ public class FavoriteSeriesDAO {
         sql.append("WHERE fs.username = ? ");
         sql.append("GROUP BY s.genre ");
         
-        try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-            
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
             ps.setInt(1, username);
-            ResultSet resSet = ps.executeQuery();
-            
-            while (resSet.next()) {
-                genres.add(resSet.getString("genre"));
-                counts.add(resSet.getInt("genre_count"));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    genres.add(rs.getString("genre"));
+                    counts.add(rs.getInt("genre_count"));
+                }
             }
-        
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+
 
     public void updateTopGenre(int username){
         List<String> genres = new ArrayList<>();
@@ -159,7 +168,8 @@ public class FavoriteSeriesDAO {
         
         if (topGenre != null) {
             String sql = "UPDATE Users SET top_genre = ? WHERE id = ?";
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {   
                 
                 ps.setString(1, topGenre);
                 ps.setInt(2, username);

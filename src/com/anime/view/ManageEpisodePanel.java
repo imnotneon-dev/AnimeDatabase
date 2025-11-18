@@ -279,8 +279,11 @@ public class ManageEpisodePanel extends JPanel {
     }
 
     public void setSeriesList(List<Series> seriesList) {
-        this.seriesList = seriesList != null ? seriesList : new ArrayList<>();
-        seriesTitleCb.setModel(new DefaultComboBoxModel<>(this.seriesList.toArray()));
+        this.seriesList = seriesList;
+        seriesTitleCb.removeAll();
+        for(Series s: this.seriesList){
+            seriesTitleCb.addItem(s);
+        }
     }
 
     public List<PlainEpisodeCard> getEpisodeCards() {

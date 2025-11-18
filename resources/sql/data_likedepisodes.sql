@@ -8,6 +8,12 @@ CREATE TABLE LikedEpisode(
 );
 
 
+-- INSERTS
+INSERT INTO LikedEpisode (user_id, episode_id)
+VALUES
+
+()
+
 
 -- Delete function
 DELETE FROM LikedEpisode

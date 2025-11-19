@@ -20,16 +20,21 @@ public class AccountDAO {
             return false;
         }
     }*/
+
+    
     // Create a user
-    public void addUser(String username, String password, String dob, String country, String topGenre) throws SQLException {
-        String sql = "INSERT INTO Users (username, password, date_of_birth, country, top_genre) VALUES (?, ?, ?, ?, ?)";
+    public void addUser(String username, String password, String dob, String country) throws SQLException {
+        String sql = """
+            INSERT INTO Users (username, password, date_of_birth, country)
+            VALUES (?, ?, ?, ?)
+        """;
+        
         try(Connection conn = DBConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, username);
             ps.setString(2, password);
             ps.setDate(3, Date.valueOf(dob));
             ps.setString(4, country);
-            ps.setString(5, topGenre);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,34 +42,28 @@ public class AccountDAO {
     }
 
     // Login
-    public Account selectAccountByUsername(String username) throws SQLException {
-        String sql = "SELECT user_id, username, password, date_of_birth, country, top_genre, date_user_created, status " +
-                "FROM Users " +
-                "WHERE username = ? AND status = 'Active' " +
-                "ORDER BY date_user_created DESC " +
-                "LIMIT 1";
-        try (Connection conn = DBConnection.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(sql);
+    public boolean login(String username, String password) throws SQLException {
+        String sql = """
+            SELECT user_id
+            FROM Users
+            WHERE username = ? AND password = ? AND status = 'Active'
+        """;
+
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
+            ps.setString(2, password);
+                
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return new Account(
-                            rs.getInt("user_id"),
-                            rs.getString("username"),
-                            rs.getString("password"),
-                            rs.getDate("date_of_birth"),
-                            rs.getString("country"),
-                            rs.getString("top_genre"),
-                            rs.getDate("date_user_created"),
-                            rs.getString("status")
-                    );
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+                return rs.next();
             }
-            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
+
+    
     // Read a user record and favorites
     /*public void viewUserWithFavorites(String username) throws SQLException {
         String sql = """
@@ -82,57 +81,16 @@ public class AccountDAO {
         while (rs.next()) {
             System.out.println("- " + rs.getString("title"));
         }
-    }*/    
-}
+    }*/  
 
-
-// Transferred this from manageaccountdao
-
-public class ManageAccountDAO {
-    private Connection conn;
-
-    public ManageAccountDAO(Connection conn) {
-        this.conn = conn;
-    }
-
-    // Create a user
-    public void addUser(String username, String password, String dob, String country, String topGenre) throws SQLException {
-        String sql = "INSERT INTO Users (username, password, date_of_birth, country, top_genre) VALUES (?, ?, ?, ?, ?)";
-        
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.setDate(3, Date.valueOf(dob));
-            ps.setString(4, country);
-            ps.setString(5, topGenre);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Login
-    public boolean login(String username, String password) throws SQLException {
-        String sql = "SELECT user_id FROM Users WHERE username = ? AND password = ?";
-
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, username);
-            ps.setString(2, password);
-                
-            try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     // View user deets
     public void viewUser(String username) throws SQLException {
-        String sql = "SELECT username, date_of_birth, country, top_genre, date_user_created " + "FROM Users WHERE username = ?";
+        String sql = """
+            SELECT username, date_of_birth, country, top_genre, date_user_created
+            FROM Users
+            WHERE username = ?
+        """;
 
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -193,7 +151,11 @@ public class ManageAccountDAO {
 
     // Archive account
     public boolean archiveUser(int userId) {
-        String sql = "UPDATE Users SET status = 'Archived' WHERE user_id = ?";
+        String sql = """
+            UPDATE Users
+            SET status = 'Archived'
+            WHERE user_id = ?
+        """;
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

@@ -1,11 +1,14 @@
 package com.anime.view;
 
+import com.anime.model.LikedEpisode;
+import com.anime.model.WatchHistory;
 import com.anime.view.customcards.PlainEpisodeCard;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LikeHistoryPage extends JPanel{
@@ -18,18 +21,11 @@ public class LikeHistoryPage extends JPanel{
 //    private JLabel agencyNameLb = new JLabel("Agency");
     private JScrollPane likeHistoryScrollPane = new JScrollPane(likePnl);
 //    private List<ActorRole> rolesList;
-    private List<PlainEpisodeCard> episodeList = List.of(
-            new PlainEpisodeCard("Kaiju No. 8: Season 2", "Second Wave", LocalDate.now()));
-    /*
-    * public ActorPage(Actor actor, List<ActorRole> roles){
-    *   actorPhoto.
-    *   nameLb.setText(actor.name);
-    *   ageLb.setText();
-    *   placeOfBirthLb.setText();
-    *   agencyNameLb.setText();
-    *   rolesList = roles;
-    * }
-    * */
+    /*private List<PlainEpisodeCard> episodeList = List.of(
+            new PlainEpisodeCard("Kaiju No. 8: Season 2", "Second Wave", LocalDate.now()));*/
+    private List<PlainEpisodeCard> likedEpisodesCards = new ArrayList<>();
+    private List<LikedEpisode> likedEpisodesList = new ArrayList<>();
+
     public LikeHistoryPage() {
         init();
     }
@@ -60,11 +56,8 @@ public class LikeHistoryPage extends JPanel{
 
         likePnl.add(likesHistory);
         likePnl.add(Box.createVerticalStrut(10));
-        for(PlainEpisodeCard h: episodeList){
-            h.setAlignmentX(Component.LEFT_ALIGNMENT);
-            likePnl.add(h);
-            likePnl.add(Box.createVerticalStrut(10));
-        }
+
+        loadEpisodeCards();
 
         likeHistoryScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         likeHistoryScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -77,4 +70,33 @@ public class LikeHistoryPage extends JPanel{
         add(likeHistoryScrollPane, BorderLayout.CENTER);
     }
 
+    private void loadEpisodeCards(){
+        likePnl.removeAll();
+        likedEpisodesCards.clear();
+        if(likedEpisodesList!=null){
+            for(LikedEpisode e: likedEpisodesList){
+                LocalDate wd = e.getDateAdded();
+                PlainEpisodeCard card = new PlainEpisodeCard(wd);
+                card.putClientProperty("episode_id",e.getEpisodeId());
+                card.setAlignmentX(Component.LEFT_ALIGNMENT);
+                likedEpisodesCards.add(card);
+                likePnl.add(card);
+                likePnl.add(Box.createVerticalStrut(10));
+            }
+        }
+        else {
+            likePnl.add(new JLabel("No episodes yet..."));
+        }
+        likePnl.revalidate();
+        likePnl.repaint();
+    }
+    public void setLikedEpisodesList(List<LikedEpisode> likedEpisodesList) {
+        this.likedEpisodesList = likedEpisodesList;
+        loadEpisodeCards();
+    }
+
+    public List<PlainEpisodeCard> getLikedEpisodesCards() {
+        return likedEpisodesCards;
+    }
 }
+

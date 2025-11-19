@@ -68,7 +68,7 @@ public class ActorPage extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.BLUE);
+        setBackground(Color.decode("#282828"));
 //        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setLayout(new BorderLayout());
         initComponents();
@@ -82,10 +82,11 @@ public class ActorPage extends JPanel{
         actorInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         actorInfo.setAlignmentY(Component.TOP_ALIGNMENT);
         filmography.setAlignmentX(Component.LEFT_ALIGNMENT);
-        filmography.setForeground(Color.white);
+        filmography.setForeground(Color.WHITE);;
 
         actorInfoPnl.setLayout(new BoxLayout(actorInfoPnl,BoxLayout.Y_AXIS));
-        actorInfoPnl.setBackground(Color.gray);
+        actorInfoPnl.setBackground(Color.decode("#282828"));
+        actorInfo.setForeground(Color.WHITE);
         actorInfoPnl.setPreferredSize(new Dimension((int)(1280/2.5), 720));
         actorInfoPnl.setMaximumSize(new Dimension((int)(1280/2.5), 720));
 //        actorInfoPnl.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -124,7 +125,7 @@ public class ActorPage extends JPanel{
         actorInfoPnl.add(Box.createVerticalGlue());
 
         rolesPnl.setLayout(new BoxLayout(rolesPnl, BoxLayout.Y_AXIS));
-        rolesPnl.setBackground(Color.black);
+        rolesPnl.setBackground(Color.decode("#282828"));
 //        rolesPnl.setPreferredSize(new Dimension(1280, 720));
 //        rolesPnl.setMaximumSize(new Dimension(1280, 720));
         rolesPnl.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -136,6 +137,8 @@ public class ActorPage extends JPanel{
         rolesPnl.add(Box.createVerticalStrut(10));
         loadRolesCards();
 
+        rolesScrollPane.getViewport().setBackground(Color.decode("#282828"));
+        rolesScrollPane.setBackground(Color.decode("#282828"));
         rolesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         rolesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         rolesScrollPane.setWheelScrollingEnabled(true);
@@ -173,10 +176,15 @@ public class ActorPage extends JPanel{
         nameLb.setText(this.actorInfo.getLastName() +
                 ", " +
                 this.actorInfo.getFirstName());
+        nameLb.setForeground(Color.WHITE);
         genderLb.setText(this.actorInfo.getGender());
+        genderLb.setForeground(Color.WHITE);
         dateOfBirthLb.setText(String.valueOf(this.actorInfo.getDob()));
+        dateOfBirthLb.setForeground(Color.WHITE);
         placeOfBirthLb.setText(this.actorInfo.getPob());
+        placeOfBirthLb.setForeground(Color.WHITE);
         agencyNameLb.setText(this.actorInfo.getAgency());
+        agencyNameLb.setForeground(Color.WHITE);
         ACTOR_PHOTO = this.actorInfo.getActorPhoto();
 
         actorInfoPnl.revalidate();

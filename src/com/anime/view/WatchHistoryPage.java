@@ -24,16 +24,6 @@ public class WatchHistoryPage extends JPanel{
 //    private List<ActorRole> rolesList;
 //    private List<PlainEpisodeCard> episodeList = List.of(
 //            new PlainEpisodeCard("Kaiju No. 8: Season 2", "Second Wave", LocalDate.now()));
-    /*
-    * public ActorPage(Actor actor, List<ActorRole> roles){
-    *   actorPhoto.
-    *   nameLb.setText(actor.name);
-    *   ageLb.setText();
-    *   placeOfBirthLb.setText();
-    *   agencyNameLb.setText();
-    *   rolesList = roles;
-    * }
-    * */
 
     private List<PlainEpisodeCard> watchedEpisodesCards = new ArrayList<>();
     private List<WatchHistory> watchedEpisodesList = new ArrayList<>();
@@ -68,6 +58,7 @@ public class WatchHistoryPage extends JPanel{
 
         historyPnl.add(watchHistory);
         historyPnl.add(Box.createVerticalStrut(10));
+
         loadEpisodeCards();
 
         watchHistoryScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

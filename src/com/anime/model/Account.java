@@ -24,16 +24,6 @@ public class Account {
         this.status = status;
     }
 
-    public Account(int userId, String username, String password, Date dateOfBirth, String country, String topGenre, String status) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.country = country;
-        this.topGenre = topGenre;
-        this.status = status;
-    }
-
     public int getUserId() {
         return userId;
     }

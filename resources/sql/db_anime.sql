@@ -107,7 +107,7 @@ CREATE TABLE episodeReviews (
     review_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     episode_id INT NOT NULL,
-    comment TEXT,
+    user_review TEXT,
 	date_reviewed DATE DEFAULT CURRENT_DATE,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (episode_id) REFERENCES episodes(episode_id)

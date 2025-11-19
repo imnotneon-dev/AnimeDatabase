@@ -146,7 +146,7 @@ VALUES
 (8, 'I Cant Hear the Fireworks, Part 2 / Kaguya Doesnt Want to Avoid Him', '2019-03-30', 'Kaguya is confined to her room, devastated that she missed the fireworks. Her attendant, Hayasaka, comes up with a daring plan to sneak her out. Kaguya races to the festival, hoping its not too late.', 10320, 24),
 
 -- ELFEN LIED (Series 11)
-(11, 'A Chance Encounter (Encounter)', '2004-07-25', 'Kouta is reunited with his cousin Yuka and moves in with her to start college. On a stroll, they meet a mysterious girl, Nyu, who is naked and speaks only 'Nyu'.', 15300, 24),
+(11, 'A Chance Encounter (Encounter)', '2004-07-25', 'Kouta is reunited with his cousin Yuka and moves in with her to start college. On a stroll, they meet a mysterious girl, Nyu, who is naked and speaks only Nyu.', 15300, 24),
 (11, 'The Sifting (Fraying)', '2004-07-31', 'The Military Police begin tracking Lucy, and her first encounter with a special forces team reveals her deadly, violent alternate personality, Lucy, who possesses invisible, razor-sharp vectors.', 16100, 24),
 (11, 'Deep Feelings (Depths)', '2004-08-07', 'Kouta struggles to reconcile the sweet Nyu with the lethal Lucy. Flashbacks reveal Kouta and Lucys shared tragic childhood and the origins of their deep, complicated connection.', 15950, 24),
 (11, 'Confrontation (Clash)', '2004-08-14', 'The Diclonius research facility sends its most dangerous agent, Bando, to retrieve Lucy. A brutal confrontation takes place on the beach, forcing Kouta and Yuka to flee.', 17200, 24),

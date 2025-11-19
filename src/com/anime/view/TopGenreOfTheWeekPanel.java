@@ -36,7 +36,7 @@ public class TopGenreOfTheWeekPanel extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.BLUE);
+        setBackground(Color.ORANGE);
 //        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setLayout(new BorderLayout());
         initComponents();

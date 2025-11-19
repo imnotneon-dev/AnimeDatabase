@@ -1,13 +1,15 @@
 package com.anime.view;
 
 import com.anime.model.AnimeWrapped;
-import com.anime.model.AnimeWrapped.*;
-import java.time.Year;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import com.anime.model.AnimeWrapped.ActorRole;
+import com.anime.model.AnimeWrapped.ActorStats;
+import com.anime.model.AnimeWrapped.SeriesStats;
 import java.awt.*;
+import java.time.Year;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class AnimeWrappedPanel extends JPanel {
     
@@ -77,7 +79,7 @@ public class AnimeWrappedPanel extends JPanel {
         title.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         yearLabel.setFont(new Font("Arial", Font.BOLD, 36));
-        yearLabel.setForeground(Color.decode("#1DB954")); 
+        yearLabel.setForeground(Color.decode("#FFA500")); 
         yearLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         usernameLabel.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -99,8 +101,8 @@ public class AnimeWrappedPanel extends JPanel {
         panel.setOpaque(false);
         panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 150));
         
-        JPanel episodesCard = createStatCard("Episodes Watched", totalEpisodesLabel, Color.decode("#E91E63"));
-        JPanel genreCard = createStatCard("Top Genre", topGenreLabel, Color.decode("#9C27B0"));
+        JPanel episodesCard = createStatCard("Episodes Watched", totalEpisodesLabel, Color.decode("#fdd07d"));
+        JPanel genreCard = createStatCard("Top Genre", topGenreLabel, Color.decode("#fce9c5"));
         
         panel.add(episodesCard);
         panel.add(genreCard);
@@ -224,7 +226,7 @@ public class AnimeWrappedPanel extends JPanel {
         
         JLabel rankLabel = new JLabel("#" + rank);
         rankLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        rankLabel.setForeground(Color.decode("#1DB954"));
+        rankLabel.setForeground(Color.decode("#FFA500"));
         rankLabel.setPreferredSize(new Dimension(50, 50));
         
         JPanel infoPanel = new JPanel();
@@ -283,7 +285,7 @@ public class AnimeWrappedPanel extends JPanel {
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(Color.decode("#282828"));
         card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.decode("#1DB954"), 2),
+            BorderFactory.createLineBorder(Color.decode("#FFA500"), 2),
             new EmptyBorder(20, 20, 20, 20)
         ));
         card.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -296,7 +298,7 @@ public class AnimeWrappedPanel extends JPanel {
         
         JLabel rankLabel = new JLabel("#" + rank);
         rankLabel.setFont(new Font("Arial", Font.BOLD, 32));
-        rankLabel.setForeground(Color.decode("#1DB954"));
+        rankLabel.setForeground(Color.decode("#FFA500"));
         
         JPanel actorInfoPanel = new JPanel();
         actorInfoPanel.setLayout(new BoxLayout(actorInfoPanel, BoxLayout.Y_AXIS));
@@ -315,7 +317,7 @@ public class AnimeWrappedPanel extends JPanel {
         JLabel episodesCount = new JLabel("Appeared in " + actor.getEpisodesAppearedIn() + 
                                          " episodes you watched");
         episodesCount.setFont(new Font("Arial", Font.BOLD, 12));
-        episodesCount.setForeground(Color.decode("#1DB954"));
+        episodesCount.setForeground(Color.decode("#FFA500"));
         episodesCount.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         actorInfoPanel.add(actorName);

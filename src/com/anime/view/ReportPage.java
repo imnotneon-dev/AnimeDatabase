@@ -38,7 +38,7 @@ public class ReportPage extends JPanel{
         panelContainer.setLayout(new BoxLayout(panelContainer,BoxLayout.Y_AXIS));
         panelContainer.setAlignmentY(Component.CENTER_ALIGNMENT);
         panelContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelContainer.setBackground(Color.red);
+        panelContainer.setBackground(Color.ORANGE);
 
         JScrollPane scrollPane = new JScrollPane(panelContainer);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

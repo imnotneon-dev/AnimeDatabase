@@ -76,6 +76,7 @@ public class SeriesPage extends JPanel{
         epInfoVSpacer.setOpaque(false);
 
         JLabel actorsListLb = new JLabel("Notable Actors:     ");
+        actorsListLb.setForeground(Color.WHITE); 
         actorsContainer.add(actorsListLb);
         actorsContainer.setLayout(new BoxLayout(actorsContainer, BoxLayout.Y_AXIS));
         actorsContainer.setOpaque(true);
@@ -182,12 +183,19 @@ public class SeriesPage extends JPanel{
             return;
         }
 
+        
         titleLb.setText(this.series.getTitle());
+        titleLb.setForeground(Color.WHITE);
         genreLb.setText(this.series.getGenre());
+        genreLb.setForeground(Color.WHITE);
         releaseYearLb.setText("Release Year: " + this.series.getReleaseYear());
+        releaseYearLb.setForeground(Color.WHITE);
         epCountLb.setText("Total Number of Episodes: " + this.series.getTotalEpisodes());
+        epCountLb.setForeground(Color.WHITE);
         statusLb.setText("Status: " + this.series.getStatus());
+        statusLb.setForeground(Color.WHITE);
         SERIES_POSTER = this.series.getSeriesPhoto();
+        
 
         loadEpisodeCards();
         loadActorLabelCards();
@@ -212,6 +220,7 @@ public class SeriesPage extends JPanel{
         }
         else {
             episodesPnl.add(new JLabel("No episodes yet..."));
+            noEpisodesLabel.setForeground(Color.WHITE);
         }
         episodesPnl.revalidate();
         episodesPnl.repaint();
@@ -226,6 +235,7 @@ public class SeriesPage extends JPanel{
             for(Actor a: actorsList){
                 JLabel actor = new JLabel(a.getLastName() + ", " + a.getFirstName());
                 actor.putClientProperty("actor_id",a.getId());
+                actor.setForeground(Color.WHITE);
                 actorLabelCards.add(actor);
                 actorsContainer.add(actor);
                 actorsContainer.add(Box.createVerticalStrut(5));

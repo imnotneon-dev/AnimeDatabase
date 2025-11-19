@@ -18,7 +18,7 @@ public class WatchHistoryDAO {
         List<WatchHistory> watched = new ArrayList<>();
         String sql = " SELECT DISTINCT watch_id, user_id, episode_id, watch_date " +
                 "FROM watchHistory w " +
-                "WHERE user_id = ? ";
+                "WHERE user_id = ?; ";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -42,9 +42,9 @@ public class WatchHistoryDAO {
 
     public boolean addWatchHistoryByUser(int user_id, int episode_id, LocalDate watch_date) throws SQLException{
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO series");
-        sql.append("(user_id, episode_id, watch_date)");
-        sql.append("VALUES (?, ?, ?)");
+        sql.append("INSERT INTO watchHistory ");
+        sql.append("(user_id, episode_id, watch_date) ");
+        sql.append("VALUES (?, ?, ?); ");
 
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql.toString());){

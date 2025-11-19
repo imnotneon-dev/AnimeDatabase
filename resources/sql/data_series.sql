@@ -16,6 +16,7 @@ INSERT INTO series (title, genre, release_year, total_episode_count, status_of_s
 VALUES
 
 ('One Punch Man', 'Comedy', '2015', '12', 'Complete'),
+('Ouran High School Host Club', 'Comedy, Romance', '2006', '26', 'Complete'),
 ('Demon Slayer: Kimetsu no Yaiba Hashira Training Arc', 'Action', '2024', '8', 'Complete'),
 ('My Hero Academia Season 8', 'Action', '2025', '6', 'On-Going'),
 ('Spy x Family Season 3', 'Comedy', '2025', '13', 'On-Going'),
@@ -39,3 +40,4 @@ WHERE wh.watch_date >= CURDATE() - INTERVAL 7 DAY
 GROUP BY s.series_id, s.title
 ORDER BY weekly_viewers DESC
 LIMIT 5;
+

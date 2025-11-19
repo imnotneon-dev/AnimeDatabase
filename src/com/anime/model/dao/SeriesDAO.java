@@ -210,8 +210,8 @@ public class SeriesDAO{
     public String getTopGenreOfUser(int user_id) throws SQLException {
         String topGenre =null;
         String q = """
-                SELECT s.genre, COUNT(h.episode_id) AS totalViews
-                FROM watchHistory h 
+                SELECT s.genre, COUNT(h.episode_id) AS totalViews 
+                FROM watchHistory h
                 LEFT JOIN episodes e ON h.episode_id = e.episode_id 
                 LEFT JOIN series s ON e.series_id = s.series_id 
                 WHERE user_id = ? 

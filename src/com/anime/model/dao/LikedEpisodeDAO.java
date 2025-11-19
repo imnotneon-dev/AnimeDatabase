@@ -65,8 +65,8 @@ public class LikedEpisodeDAO {
             return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 
     // Get all user's likes
@@ -92,8 +92,8 @@ public class LikedEpisodeDAO {
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
 
     }
 

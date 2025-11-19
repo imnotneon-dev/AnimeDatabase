@@ -78,7 +78,7 @@ public class AccountPanel extends JPanel{
 
         // set layout of component signupContainer so components are centered
         signupContainer.setVisible(false);
-        signupContainer.setBackground(Color.WHITE);
+        // signupContainer.setBackground(Color.WHITE);
         signupContainer.setLayout(new BoxLayout(signupContainer,BoxLayout.Y_AXIS));
         signupContainer.setPreferredSize(new Dimension(400,600));
         signupContainer.setMaximumSize(new Dimension(400,600));
@@ -224,7 +224,7 @@ public class AccountPanel extends JPanel{
         loginContainer.add(RIGHT_GLUE);
         loginContainer.add(BOT_GLUE);
 
-        loginContainer.setBackground(Color.WHITE);
+        // loginContainer.setBackground(Color.WHITE);
 
         // Add to main panel
         add(loginContainer);

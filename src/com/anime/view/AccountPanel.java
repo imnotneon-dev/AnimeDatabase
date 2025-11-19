@@ -1,5 +1,9 @@
 package com.anime.view;
 
+import com.anime.model.Account;
+import com.anime.model.ActorSeries;
+import com.anime.model.Series;
+
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -8,6 +12,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,7 +35,7 @@ public class AccountPanel extends JPanel{
     private JButton submitSignUpBtn = new JButton();
     private JButton alreadyHasAccountBtn = new JButton();
     private JFormattedTextField signDobField;
-    private JComboBox countrySelector;
+    private JComboBox<Object> countrySelector = new JComboBox<Object>();
     private JPanel signupContainer = new JPanel();
     private GridBagLayout logLayout = new GridBagLayout();
     private GridBagLayout signLayout = new GridBagLayout();
@@ -50,7 +55,7 @@ public class AccountPanel extends JPanel{
 
         setupSignupPanel();
         setupLoginPanel();
-
+        setupRenderers();
         revalidate();
         repaint();
     }
@@ -242,6 +247,27 @@ public class AccountPanel extends JPanel{
                     textField.setText(placeholder);
                     textField.setForeground(Color.GRAY);
                 }
+            }
+        });
+    }
+
+    private void setupRenderers() {
+        // Apply the custom renderer using a lambda expression
+        countrySelector.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected,
+                                                          boolean cellHasFocus) {
+                Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                if (value instanceof Account account) {
+                    ((JLabel) component).setText(account.getCountry());
+                } else if (value != null) {
+                    ((JLabel) component).setText(value.toString());
+                } else {
+                    ((JLabel) component).setText("Select a Country");
+                }
+                return component;
             }
         });
     }

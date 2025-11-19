@@ -195,29 +195,29 @@ CREATE TABLE `actors` (
 LOCK TABLES `actors` WRITE;
 INSERT INTO actors (last_name, first_name, gender, date_of_birth, place_of_birth, agency)
 VALUES
-('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy''s Factory'), -- ONE PUNCH MAN -- !! also in KAGUYA SAMA
+('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy\'s Factory'), -- ONE PUNCH MAN -- !! also in KAGUYA SAMA
 ('Ishikawa', 'Kaito', 'Male', '1993-10-13', 'Bunkyo, Tokyo, Japan', 'Stay Luck'),
 ('Kaji', 'Yūki', 'Male', '1985-09-03', 'Tokyo, Japan', 'VIMS'),
-('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'), -- also in MY HERO ACADEMIA and SPY X FAMILY
+('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I\'m Enterprise'), -- also in MY HERO ACADEMIA and SPY X FAMILY
 ('Sakamoto', 'Maaya', 'Female', '1980-03-31', 'Tokyo, Japan', 'Flying Dog'), -- OURAN HIGH SCHOOL HOST CLUB
 ('Miyano', 'Mamoru', 'Male', '1983-06-08', 'Saitama Prefecture, Japan', 'Ken-On'),
 ('Matsukaze', 'Masaya', 'Male', '1976-09-09', 'Fukushima Prefecture, Japan', 'Aoni Production'),
 ('Suzumura', 'Kenichi', 'Male', '1974-09-12', 'Niigata Prefecture, Japan', 'INTENTION'), -- also in DEMON SLAYER
 ('Hanae', 'Natsuki', 'Male', '1991-06-26', 'Kanagawa Prefecture, Japan', 'Across Entertainment'), -- DEMON SLAYER -- !! hanae natsuki is also tougen anki
 ('Kito', 'Akari', 'Female', '1994-10-16', 'Nagoya, Aichi Prefecture, Japan', 'Raccoon Dog'),
-('Shimono', 'Hiro', 'Male', '1980-04-21', 'Tokyo, Japan', 'I''m Enterprise'),
-('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'), -- also in GACHIAKUTA and GIVEN -- ('Suzumura', 'Kenichi', 'Male', '1974-09-12', 'Niigata Prefecture, Japan', 'INTENTION'),
+('Shimono', 'Hiro', 'Male', '1980-04-21', 'Tokyo, Japan', 'I\'m Enterprise'),
+('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I\'m Enterprise'), -- also in GACHIAKUTA and GIVEN -- ('Suzumura', 'Kenichi', 'Male', '1974-09-12', 'Niigata Prefecture, Japan', 'INTENTION'),
 ('Yamashita', 'Daiki', 'Male', '1989-09-07', 'Hamamatsu, Shizuoka Prefecture, Japan', 'Arts Vision'), -- MY HERO ACADEMIA
 ('Okamoto', 'Nobuhiko', 'Male', '1986-10-24', 'Tokyo, Japan', 'Raccoon Dog'),
-('Sakura', 'Ayane', 'Female', '1994-01-29', 'Shibuya, Tokyo, Japan', 'Aoni Production'), -- ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'),
+('Sakura', 'Ayane', 'Female', '1994-01-29', 'Shibuya, Tokyo, Japan', 'Aoni Production'), -- ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I\'m Enterprise'),
 ('Eguchi', 'Takuya', 'Male', '1987-05-22', 'Setagaya, Tokyo, Japan', '81 Produce'), -- SPY X FAMILY
-('Tanezaki', 'Atsumi', 'Female', '1990-09-27', 'Oita Prefecture, Japan', 'Tokyo Actor''s Consumer''s Cooperative Society / Haikyo'), -- 3
+('Tanezaki', 'Atsumi', 'Female', '1990-09-27', 'Oita Prefecture, Japan', 'Tokyo Actor\'s Consumer\s Cooperative Society / Haikyo'), -- 3
 ('Matsuda', 'Kenichiro', 'Male', '1978-09-22', 'Saitama Prefecture, Japan', 'Arts Vision'),
-('Ono', 'Kensho', 'Male', '1989-10-05', 'Fukuoka, Fukuoka Prefecture, Japan', 'Animo Produce'), -- ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'),
+('Ono', 'Kensho', 'Male', '1989-10-05', 'Fukuoka, Fukuoka Prefecture, Japan', 'Animo Produce'), -- ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I\'m Enterprise'),
 ('Ichikawa', 'Aoi', 'Male', '1991-10-02', 'Fukuoka, Japan', 'Office Osawa'), -- GACHIAKUTA
 ('Konishi', 'Katsuyuki', 'Male', '1973-04-21', 'Kanagawa Prefecture, Japan', 'Ken Production'),
 ('Hanamori', 'Yumiri', 'Female', '1997-08-29', 'Saitama Prefecture, Japan', 'Aster Nine'),
-('Morikawa', 'Toshiyuki', 'Male', '1967-05-26', 'Toyama Prefecture, Japan', 'Axlone'), -- ('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'),
+('Morikawa', 'Toshiyuki', 'Male', '1967-05-26', 'Toyama Prefecture, Japan', 'Axlone'), -- ('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I\'m Enterprise'),
 ('Ura', 'Kazuki', 'Male', '1995-10-18', 'Hyogo Prefecture, Japan', 'VIMS'), -- TOUGEN ANKI
 ('Kamiya', 'Hiroshi', 'Male', '1975-01-28', 'Yokohama, Kanagawa Prefecture, Japan', 'Aoni Production'),
 ('Nishiyama', 'Kotaro', 'Male', '1989-06-07', 'Niigata Prefecture, Japan', 'Aoni Production'),
@@ -225,7 +225,7 @@ VALUES
 ('Koga', 'Aoi', 'Female', '1998-08-24', 'Saga Prefecture, Japan', '81 Produce'), -- KAGUYA SAMA
 ('Kohara', 'Konomi', 'Female', '1992-06-28', 'Chiba Prefecture, Japan', 'Office Osawa'),
 ('Suzuki', 'Ryota', 'Male', '1998-03-29', 'Aichi Prefecture, Japan', 'INTENTION'),
-('Tomita', 'Miyu', 'Female', '1999-11-15', 'Saitama Prefecture, Japan', 'Amuse'), -- ('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy''s Factory'),
+('Tomita', 'Miyu', 'Female', '1999-11-15', 'Saitama Prefecture, Japan', 'Amuse'), -- ('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy\'s Factory'),
 ('Katou', 'Keiko', 'Female', '1969-02-06', 'Tokyo, Japan', 'Production Baobab'), -- PARADISE KISS
 ('Kawanishi', 'Kenn', 'Male', '1965-02-14', 'Tokyo, Japan', 'Aoni Production'),
 ('Fukuyama', 'Jun', 'Male', '1978-11-26', 'Hiroshima Prefecture, Japan', 'Axlone'),
@@ -233,7 +233,7 @@ VALUES
 ('Horie', 'Yui', 'Female', '1987-09-05', 'Tokyo, Japan', 'Arts Vision'), -- also in GIVEN
 ('Ichimichi', 'Mikako', 'Female', '1996-10-26', 'Tokyo, Japan', 'Haikyo'), -- GIVEN
 ('Fukuhara', 'Kaori', 'Female', '1981-07-29', 'Tokyo, Japan', '81 Produce'),
-('Sugita', 'Tomokazu', 'Male', '1980-10-11', 'Tokyo, Japan', 'Haikyo'),  -- ('Horie', 'Yui', 'Female', '1987-09-05', 'Tokyo, Japan', 'Arts Vision'), -- ('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'),
+('Sugita', 'Tomokazu', 'Male', '1980-10-11', 'Tokyo, Japan', 'Haikyo'),  -- ('Horie', 'Yui', 'Female', '1987-09-05', 'Tokyo, Japan', 'Arts Vision'), -- ('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I\'m Enterprise'),
 ('Kobayashi', 'Sanae', 'Female', '1980-01-26', 'Hamakita, Shizuoka, Japan', 'Sigma Seven'), -- ELFEN LIED
 ('Suzuki', 'Chihiro', 'Male', '1977-02-17', 'Yamagata Prefecture, Japan', 'Haikyou'),
 ('Noto', 'Mamiko', 'Female', '1980-02-06', 'Kanazawa, Ishikawa, Japan', 'Office Osawa'),
@@ -365,12 +365,12 @@ VALUES
 (1, 1, 'OMG THE EPISODE WAS SO GOOD WAADOASKDASKDASD I LOVE THE MAIN ACTOR AND THE WAY THEY ACTED WAS SO GOOD, THE ANIMATION WAS CRAZILY OASNDASM AMAZING?!?!??!? WOW LIKE WHAT HOW DID THEY DO ARIGATOGUZAIMASU FOR THIS AMAZING ANIME I HOPE FOR MORE IN THE FUTURE, WILL REWATCH EPISODE 1 2 3 45678901201238239120312993121 1 1 MILLION EPISODES ALL DAY NONSTOP','2025-11-22'),
 (1, 2, 'Not my favorite, but the plot twist was unexpected.','2025-11-22'),
 (1, 3, 'WOWOWOWOW LOVE THE EPISODE!','2025-11-22'),
-(1, 4, 'Can''t wait for the next episode!','2025-11-23'),
+(1, 4, 'Can\'t wait for the next episode!','2025-11-23'),
 (2, 1, 'Meh, it was okay.','2025-11-24'),
 (2, 3, 'THE ANIMATION WAS GOOD!','2025-11-25'),
 (3, 2, 'The character development is slow, but I am invested.','2025-11-23'),
 (4, 1, 'Funny episode! Had me laughing the whole time.','2025-11-25'),
-(5, 2, 'The ending shocked me! Can''t believe that happened.','2025-11-25'),
+(5, 2, 'The ending shocked me! Can\'t believe that happened.','2025-11-25'),
 (6, 1, 'Good episode!','2025-11-25');
 UNLOCK TABLES;
 

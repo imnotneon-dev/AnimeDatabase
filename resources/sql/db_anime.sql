@@ -116,50 +116,51 @@ CREATE TABLE episodeReviews (
 
 INSERT INTO actors (last_name, first_name, gender, date_of_birth, place_of_birth, agency, actor_photo)
 VALUES 
-('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy''s Factory', '/imgs/actor.png'), -- ONE PUNCH MAN -- !! also in KAGUYA SAMA
-('Ishikawa', 'Kaito', 'Male', '1993-10-13', 'Bunkyo, Tokyo, Japan', 'Stay Luck', '/imgs/actor.png'),
-('Kaji', 'Yuki', 'Male', '1985-09-03', 'Tokyo, Japan', 'VIMS', '/imgs/actor.png'),
-('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise', '/imgs/actor.png'), -- also in MY HERO ACADEMIA and SPY X FAMILY
-('Sakamoto', 'Maaya', 'Female', '1980-03-31', 'Tokyo, Japan', 'Flying Dog', '/imgs/actor.png'), -- OURAN HIGH SCHOOL HOST CLUB
-('Miyano', 'Mamoru', 'Male', '1983-06-08', 'Saitama Prefecture, Japan', 'Ken-On', '/imgs/actor.png'),
-('Matsukaze', 'Masaya', 'Male', '1976-09-09', 'Fukushima Prefecture, Japan', 'Aoni Production', '/imgs/actor.png'),
-('Suzumura', 'Kenichi', 'Male', '1974-09-12', 'Niigata Prefecture, Japan', 'INTENTION', '/imgs/actor.png'), -- also in DEMON SLAYER
-('Hanae', 'Natsuki', 'Male', '1991-06-26', 'Kanagawa Prefecture, Japan', 'Across Entertainment', '/imgs/actor.png'), -- DEMON SLAYER -- !! hanae natsuki is also tougen anki
-('Kito', 'Akari', 'Female', '1994-10-16', 'Nagoya, Aichi Prefecture, Japan', 'Raccoon Dog', '/imgs/actor.png'), 
-('Shimono', 'Hiro', 'Male', '1980-04-21', 'Tokyo, Japan', 'I''m Enterprise', '/imgs/actor.png'),
-('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise', '/imgs/actor.png'), -- also in GACHIAKUTA and GIVEN -- ('Suzumura', 'Kenichi', 'Male', '1974-09-12', 'Niigata Prefecture, Japan', 'INTENTION', '/imgs/actor.png'),
-('Yamashita', 'Daiki', 'Male', '1989-09-07', 'Hamamatsu, Shizuoka Prefecture, Japan', 'Arts Vision', '/imgs/actor.png'), -- MY HERO ACADEMIA
-('Okamoto', 'Nobuhiko', 'Male', '1986-10-24', 'Tokyo, Japan', 'Raccoon Dog', '/imgs/actor.png'),
-('Sakura', 'Ayane', 'Female', '1994-01-29', 'Shibuya, Tokyo, Japan', 'Aoni Production', '/imgs/actor.png'), -- ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise', '/imgs/actor.png'),
-('Eguchi', 'Takuya', 'Male', '1987-05-22', 'Setagaya, Tokyo, Japan', '81 Produce', '/imgs/actor.png'), -- SPY X FAMILY 
-('Tanezaki', 'Atsumi', 'Female', '1990-09-27', 'Oita Prefecture, Japan', 'Tokyo Actor''s Consumer''s Cooperative Society / Haikyo', '/imgs/actor.png'), -- 3
-('Matsuda', 'Kenichiro', 'Male', '1978-09-22', 'Saitama Prefecture, Japan', 'Arts Vision', '/imgs/actor.png'), 
-('Ono', 'Kensho', 'Male', '1989-10-05', 'Fukuoka, Fukuoka Prefecture, Japan', 'Animo Produce', '/imgs/actor.png'), -- ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'), 
-('Ichikawa', 'Aoi', 'Male', '1991-10-02', 'Fukuoka, Japan', 'Office Osawa', '/imgs/actor.png'), -- GACHIAKUTA
-('Konishi', 'Katsuyuki', 'Male', '1973-04-21', 'Kanagawa Prefecture, Japan', 'Ken Production', '/imgs/actor.png'), 
-('Hanamori', 'Yumiri', 'Female', '1997-08-29', 'Saitama Prefecture, Japan', 'Aster Nine', '/imgs/actor.png'),
-('Morikawa', 'Toshiyuki', 'Male', '1967-05-26', 'Toyama Prefecture, Japan', 'Axlone', '/imgs/actor.png'), -- ('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'),
-('Ura', 'Kazuki', 'Male', '1995-10-18', 'Hyogo Prefecture, Japan', 'VIMS', '/imgs/actor.png'), -- TOUGEN ANKI
-('Kamiya', 'Hiroshi', 'Male', '1975-01-28', 'Yokohama, Kanagawa Prefecture, Japan', 'Aoni Production', '/imgs/actor.png'), 
-('Nishiyama', 'Kotaro', 'Male', '1989-06-07', 'Niigata Prefecture, Japan', 'Aoni Production', '/imgs/actor.png'),
-('Iwami', 'Manaka', 'Female', '1998-11-30', 'Hiroshima Prefecture, Japan', 'Raccoon Dog', '/imgs/actor.png'), -- ('Hanae', 'Natsuki', 'Male', '1991-06-26', 'Kanagawa Prefecture, Japan', 'Across Entertainment'),
-('Koga', 'Aoi', 'Female', '1998-08-24', 'Saga Prefecture, Japan', '81 Produce', '/imgs/actor.png'), -- KAGUYA SAMA
-('Kohara', 'Konomi', 'Female', '1992-06-28', 'Chiba Prefecture, Japan', 'Office Osawa', '/imgs/actor.png'), 
-('Suzuki', 'Ryota', 'Male', '1998-03-29', 'Aichi Prefecture, Japan', 'INTENTION', '/imgs/actor.png'),
-('Tomita', 'Miyu', 'Female', '1999-11-15', 'Saitama Prefecture, Japan', 'Amuse', '/imgs/actor.png'), -- ('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy''s Factory', '/imgs/actor.png'),
-('Katou', 'Keiko', 'Female', '1969-02-06', 'Tokyo, Japan', 'Production Baobab', '/imgs/actor.png'), -- PARADISE KISS
-('Kawanishi', 'Kenn', 'Male', '1965-02-14', 'Tokyo, Japan', 'Aoni Production', '/imgs/actor.png'), 
-('Fukuyama', 'Jun', 'Male', '1978-11-26', 'Hiroshima Prefecture, Japan', 'Axlone', '/imgs/actor.png'), 
-('Taneda', 'Risa', 'Female', '1988-07-12', 'Tokyo, Japan', 'Office Osawa', '/imgs/actor.png'), 
-('Horie', 'Yui', 'Female', '1987-09-05', 'Tokyo, Japan', 'Arts Vision', '/imgs/actor.png'), -- also in GIVEN
-('Ichimichi', 'Mikako', 'Female', '1996-10-26', 'Tokyo, Japan', 'Haikyo', '/imgs/actor.png'), -- GIVEN
-('Fukuhara', 'Kaori', 'Female', '1981-07-29', 'Tokyo, Japan', '81 Produce', '/imgs/actor.png'),
-('Sugita', 'Tomokazu', 'Male', '1980-10-11', 'Tokyo, Japan', 'Haikyo'), '/imgs/actor.png',  -- ('Horie', 'Yui', 'Female', '1987-09-05', 'Tokyo, Japan', 'Arts Vision', '/imgs/actor.png'), -- ('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'), 
-('Kobayashi', 'Sanae', 'Female', '1980-01-26', 'Hamakita, Shizuoka, Japan', 'Sigma Seven', '/imgs/actor.png'), -- ELFEN LIED
-('Suzuki', 'Chihiro', 'Male', '1977-02-17', 'Yamagata Prefecture, Japan', 'Haikyou', '/imgs/actor.png'),
-('Noto', 'Mamiko', 'Female', '1980-02-06', 'Kanazawa, Ishikawa, Japan', 'Office Osawa', '/imgs/actor.png'), 
-('Okamura', 'Akemi', 'Female', '1969-03-12', 'Tokyo, Japan', 'Mausu Promotion', '/imgs/actor.png'), 
-('Gibu', 'Yuko', 'Female', '1981-01-28', 'Kobe, Hyogo, Japan', 'Freelance', '/imgs/actor.png'); 
+('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy''s Factory', '/images/furukawa_makoto.png'), -- ONE PUNCH MAN -- !! also in KAGUYA SAMA
+('Ishikawa', 'Kaito', 'Male', '1993-10-13', 'Bunkyo, Tokyo, Japan', 'Stay Luck', '/images/ishikawa_kaito.png'),
+('Kaji', 'Yuki', 'Male', '1985-09-03', 'Tokyo, Japan', 'VIMS', '/images/kaji_yuki.png'),
+('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise', '/images/hayami_saori.png'), -- also in MY HERO ACADEMIA and SPY X FAMILY
+('Sakamoto', 'Maaya', 'Female', '1980-03-31', 'Tokyo, Japan', 'Flying Dog', '/images/sakamoto_maaya.png'), -- OURAN HIGH SCHOOL HOST CLUB
+('Miyano', 'Mamoru', 'Male', '1983-06-08', 'Saitama Prefecture, Japan', 'Ken-On', '/images/miyano_mamoru.png'),
+('Matsukaze', 'Masaya', 'Male', '1976-09-09', 'Fukushima Prefecture, Japan', 'Aoni Production', '/images/matsukaze_masaya.png'),
+('Suzumura', 'Kenichi', 'Male', '1974-09-12', 'Niigata Prefecture, Japan', 'INTENTION', '/images/suzumura_kenichi.png'), -- also in DEMON SLAYER
+('Hanae', 'Natsuki', 'Male', '1991-06-26', 'Kanagawa Prefecture, Japan', 'Across Entertainment', '/images/hanae_natsuki.png'), -- DEMON SLAYER -- !! hanae natsuki is also tougen anki
+('Kito', 'Akari', 'Female', '1994-10-16', 'Nagoya, Aichi Prefecture, Japan', 'Raccoon Dog', '/images/kito_akari.png'), 
+('Shimono', 'Hiro', 'Male', '1980-04-21', 'Tokyo, Japan', 'I''m Enterprise', '/images/shimono_hiro.png'),
+('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise', '/images/matsuoka_yoshitsugu.png'), -- also in GACHIAKUTA and GIVEN -- ('Suzumura', 'Kenichi', 'Male', '1974-09-12', 'Niigata Prefecture, Japan', 'INTENTION', '/images/suzumura_kenichi.png'),
+('Yamashita', 'Daiki', 'Male', '1989-09-07', 'Hamamatsu, Shizuoka Prefecture, Japan', 'Arts Vision', '/images/yamashita_daiki.png'), -- MY HERO ACADEMIA
+('Okamoto', 'Nobuhiko', 'Male', '1986-10-24', 'Tokyo, Japan', 'Raccoon Dog', '/images/okamoto_nobuhiko.png'),
+('Sakura', 'Ayane', 'Female', '1994-01-29', 'Shibuya, Tokyo, Japan', 'Aoni Production', '/images/sakura_ayane.png'), -- ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise', '/images/hayami_saori.png'),
+('Eguchi', 'Takuya', 'Male', '1987-05-22', 'Setagaya, Tokyo, Japan', '81 Produce', '/images/eguchi_takuya.png'), -- SPY X FAMILY 
+('Tanezaki', 'Atsumi', 'Female', '1990-09-27', 'Oita Prefecture, Japan', 'Tokyo Actor''s Consumer''s Cooperative Society / Haikyo', '/images/tanezaki_atsumi.png'), -- 3
+('Matsuda', 'Kenichiro', 'Male', '1978-09-22', 'Saitama Prefecture, Japan', 'Arts Vision', '/images/matsuda_kenichiro.png'), 
+('Ono', 'Kensho', 'Male', '1989-10-05', 'Fukuoka, Fukuoka Prefecture, Japan', 'Animo Produce', '/images/ono_kensho.png'), -- ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'), 
+('Ichikawa', 'Aoi', 'Male', '1991-10-02', 'Fukuoka, Japan', 'Office Osawa', '/images/ichikawa_aoi.png'), -- GACHIAKUTA
+('Konishi', 'Katsuyuki', 'Male', '1973-04-21', 'Kanagawa Prefecture, Japan', 'Ken Production', '/images/konishi_katsuyuki.png'), 
+('Hanamori', 'Yumiri', 'Female', '1997-08-29', 'Saitama Prefecture, Japan', 'Aster Nine', '/images/hanamori_yumiri.png'),
+('Morikawa', 'Toshiyuki', 'Male', '1967-05-26', 'Toyama Prefecture, Japan', 'Axlone', '/images/morikawa_toshiyuki.png'), -- ('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'),
+('Ura', 'Kazuki', 'Male', '1995-10-18', 'Hyogo Prefecture, Japan', 'VIMS', '/images/ura_kazuki.png'), -- TOUGEN ANKI
+('Kamiya', 'Hiroshi', 'Male', '1975-01-28', 'Yokohama, Kanagawa Prefecture, Japan', 'Aoni Production', '/images/kamiya_hiroshi.png'), 
+('Nishiyama', 'Kotaro', 'Male', '1989-06-07', 'Niigata Prefecture, Japan', 'Aoni Production', '/images/nishiyama_kotaro.png'),
+('Iwami', 'Manaka', 'Female', '1998-11-30', 'Hiroshima Prefecture, Japan', 'Raccoon Dog', '/images/iwami_manaka.png'), -- ('Hanae', 'Natsuki', 'Male', '1991-06-26', 'Kanagawa Prefecture, Japan', 'Across Entertainment'),
+('Koga', 'Aoi', 'Female', '1998-08-24', 'Saga Prefecture, Japan', '81 Produce', '/images/koga_aoi.png'), -- KAGUYA SAMA
+('Kohara', 'Konomi', 'Female', '1992-06-28', 'Chiba Prefecture, Japan', 'Office Osawa', '/images/kohara_konomi.png'), 
+('Suzuki', 'Ryota', 'Male', '1998-03-29', 'Aichi Prefecture, Japan', 'INTENTION', '/images/suzuki_ryota.png'),
+('Tomita', 'Miyu', 'Female', '1999-11-15', 'Saitama Prefecture, Japan', 'Amuse', '/images/tomita_miyu.png'), -- ('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy''s Factory', '/images/furukawa_makoto.png'),
+('Katou', 'Keiko', 'Female', '1969-02-06', 'Tokyo, Japan', 'Production Baobab', '/images/katou_keiko.png'), -- PARADISE KISS
+('Kawanishi', 'Kenn', 'Male', '1965-02-14', 'Tokyo, Japan', 'Aoni Production', '/images/kawanishi_kenn.png'), 
+('Fukuyama', 'Jun', 'Male', '1978-11-26', 'Hiroshima Prefecture, Japan', 'Axlone', '/images/fukuyama_jun.png'), 
+('Taneda', 'Risa', 'Female', '1988-07-12', 'Tokyo, Japan', 'Office Osawa', '/images/taneda_risa.png'), 
+('Horie', 'Yui', 'Female', '1987-09-05', 'Tokyo, Japan', 'Arts Vision', '/images/horie_yui.png'), -- also in GIVEN
+('Ichimichi', 'Mikako', 'Female', '1996-10-26', 'Tokyo, Japan', 'Haikyo', '/images/ichimichi_mikako.png'), -- GIVEN
+('Fukuhara', 'Kaori', 'Female', '1981-07-29', 'Tokyo, Japan', '81 Produce', '/images/fukuhara_kaori.png'),
+('Sugita', 'Tomokazu', 'Male', '1980-10-11', 'Tokyo, Japan', 'Haikyo', '/images/sugita_tomokazu.png'),  -- ('Horie', 'Yui', 'Female', '1987-09-05', 'Tokyo, Japan', 'Arts Vision', '/images/horie_yui.png'), -- ('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'), 
+('Kobayashi', 'Sanae', 'Female', '1980-01-26', 'Hamakita, Shizuoka, Japan', 'Sigma Seven', '/images/kobayashi_sanae.png'), -- ELFEN LIED
+('Suzuki', 'Chihiro', 'Male', '1977-02-17', 'Yamagata Prefecture, Japan', 'Haikyou', '/images/suzuki_chihiro.png'),
+('Noto', 'Mamiko', 'Female', '1980-02-06', 'Kanazawa, Ishikawa, Japan', 'Office Osawa', '/images/noto_mamiko.png'), 
+('Okamura', 'Akemi', 'Female', '1969-03-12', 'Tokyo, Japan', 'Mausu Promotion', '/images/okamura_akemi.png'), 
+('Gibu', 'Yuko', 'Female', '1981-01-28', 'Kobe, Hyogo, Japan', 'Freelance', '/images/gibu_yuko.png');
+
 
 INSERT INTO actorSeries(actors_id, series_id, character_name)
 VALUES

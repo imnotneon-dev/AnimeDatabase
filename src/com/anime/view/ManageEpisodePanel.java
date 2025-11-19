@@ -50,7 +50,7 @@ public class ManageEpisodePanel extends JPanel {
 
     public ManageEpisodePanel(){
         setLayout(new BorderLayout());
-        setBackground(Color.yellow);
+        setBackground(Color.gray);
         setBorder(new EmptyBorder(10,10,10,10));
         setupEpisodePanel();
         setupRenderers();
@@ -64,7 +64,7 @@ public class ManageEpisodePanel extends JPanel {
         episodeListPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
         episodeListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         episodeListPnl.setBorder(new EmptyBorder(10,10,10,10));
-        episodeListPnl.setBackground(Color.magenta);
+        episodeListPnl.setBackground(Color.white);
         loadPECards();
 
         epListScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

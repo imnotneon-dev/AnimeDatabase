@@ -51,7 +51,7 @@ public class EpisodePage extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.BLUE);
+        setBackground(Color.ORANGE);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         initComponents();
     }

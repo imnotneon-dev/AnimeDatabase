@@ -119,11 +119,14 @@ VALUES
 ('Ishikawa', 'Kaito', 'Male', '1993-10-13', 'Bunkyo, Tokyo, Japan', 'Stay Luck'),
 ('Kaji', 'Yūki', 'Male', '1985-09-03', 'Tokyo, Japan', 'VIMS'),
 ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'), -- also in MY HERO ACADEMIA and SPY X FAMILY
+('Sakamoto', 'Maaya', 'Female', '1980-03-31', 'Tokyo, Japan', 'Flying Dog'), -- OURAN HIGH SCHOOL HOST CLUB
+('Miyano', 'Mamoru', 'Male', '1983-06-08', 'Saitama Prefecture, Japan', 'Ken-On'),
+('Matsukaze', 'Masaya', 'Male', '1976-09-09', 'Fukushima Prefecture, Japan', 'Aoni Production'),
+('Suzumura', 'Kenichi', 'Male', '1974-09-12', 'Niigata Prefecture, Japan', 'INTENTION'), -- also in DEMON SLAYER
 ('Hanae', 'Natsuki', 'Male', '1991-06-26', 'Kanagawa Prefecture, Japan', 'Across Entertainment'), -- DEMON SLAYER -- !! hanae natsuki is also tougen anki
 ('Kito', 'Akari', 'Female', '1994-10-16', 'Nagoya, Aichi Prefecture, Japan', 'Raccoon Dog'), 
 ('Shimono', 'Hiro', 'Male', '1980-04-21', 'Tokyo, Japan', 'I''m Enterprise'),
-('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'), -- also in GACHIAKUTA and GIVEN
-('Suzumura', 'Kenichi', 'Male', '1975-03-12', 'Nagano Prefecture, Japan', 'Aoni Production'), 
+('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'), -- also in GACHIAKUTA and GIVEN -- ('Suzumura', 'Kenichi', 'Male', '1974-09-12', 'Niigata Prefecture, Japan', 'INTENTION'),
 ('Yamashita', 'Daiki', 'Male', '1989-09-07', 'Hamamatsu, Shizuoka Prefecture, Japan', 'Arts Vision'), -- MY HERO ACADEMIA
 ('Okamoto', 'Nobuhiko', 'Male', '1986-10-24', 'Tokyo, Japan', 'Raccoon Dog'),
 ('Sakura', 'Ayane', 'Female', '1994-01-29', 'Shibuya, Tokyo, Japan', 'Aoni Production'), -- ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'),
@@ -157,3 +160,16 @@ VALUES
 ('Okamura', 'Akemi', 'Female', '1969-03-12', 'Tokyo, Japan', 'Mausu Promotion'), 
 ('Gibu', 'Yūko', 'Female', '1981-01-28', 'Kobe, Hyogo, Japan', 'Freelance'); 
 
+INSERT INTO actorSeries(actors_id, series_id, character_name)
+VALUES
+(1, 1, 'Saitama'), -- ONE PUNCH MAN
+(5, 2, 'Fujioka Haruhi'), -- OURAN
+(9, 3, 'Tanjiro Kamado'), -- DEMON SLAYER
+(13, 4, 'Izuku Midoriya'), -- MY HERO ACADEMIA
+(16, 5, 'Loid Forger'), -- SPY X FAMILY
+(20, 6, 'Rudo'), -- GACHI AKUTA
+(24, 7, 'Shiki Ichinose') -- TOUGEN ANKI
+(28, 8, 'Kaguya Shinomiya'), -- KAGUYA SAMA
+(32, 9, 'Yukari Hayasaka/Caroline'), -- PARADISE KISS
+(37, 10, 'Mafuyu Satou'), -- GIVEN
+(40, 11, 'Kaede/Lucy/Nyu'); -- ELFEN LIED

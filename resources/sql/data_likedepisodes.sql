@@ -9,19 +9,19 @@ CREATE TABLE LikedEpisode(
 
 
 -- INSERTS
-INSERT INTO LikedEpisode (user_id, episode_id)
-VALUES
+--INSERT INTO LikedEpisode (user_id, episode_id)
+--VALUES
 
-(1, 2),
-(2, 5),
-(2, 6),
-(4, 3),
-(5, 2),
-(6, 7),
-(6, 4),
-(8, 1),
-(9, 9),
-(10, 8);
+--(1, 2),
+--(2, 5),
+--(2, 6),
+--(4, 3),
+--(5, 2),
+--(6, 7),
+--(6, 4),
+--(8, 1),
+--(9, 9),
+--(10, 8);
 
 
 -- Delete function

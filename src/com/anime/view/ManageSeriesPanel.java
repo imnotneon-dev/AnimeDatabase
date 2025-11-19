@@ -35,7 +35,7 @@ public class ManageSeriesPanel extends JPanel {
 
     public ManageSeriesPanel(){
         setLayout(new BorderLayout());
-        setBackground(Color.decode("#282828"));
+        setBackground(Color.gray);
         setBorder(new EmptyBorder(10,10,10,10));
         setupSeriesPanel();
     }
@@ -48,11 +48,9 @@ public class ManageSeriesPanel extends JPanel {
         seriesListPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
         seriesListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         seriesListPnl.setBorder(new EmptyBorder(10,10,10,10));
-        seriesListPnl.setBackground(Color.decode("#282828"));
+        seriesListPnl.setBackground(Color.white);
         loadPSCards();
 
-        seriesListScrollPanel.getViewport().setBackground(Color.decode("#282828"));
-        seriesListScrollPanel.setBackground(Color.decode("#282828"));
         seriesListScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         seriesListScrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         seriesListScrollPanel.setWheelScrollingEnabled(true);
@@ -63,10 +61,8 @@ public class ManageSeriesPanel extends JPanel {
 
         titleField.setMaximumSize(new Dimension(350,30));
         titleField.setAlignmentX(LEFT_ALIGNMENT);
-        titleField.setForeground(Color.WHITE);
         genreField.setMaximumSize(new Dimension(350,30));
         genreField.setAlignmentX(LEFT_ALIGNMENT);
-        genreField.setForeground(Color.WHITE);
 
         NumberFormat integerFormat = NumberFormat.getIntegerInstance(Locale.ROOT);
         NumberFormatter formatter = new NumberFormatter(integerFormat);
@@ -75,21 +71,17 @@ public class ManageSeriesPanel extends JPanel {
         releaseYearField = new JFormattedTextField(formatter);
         releaseYearField.setMaximumSize(new Dimension(350,30));
         releaseYearField.setAlignmentX(LEFT_ALIGNMENT);
-        releaseYearField.setForeground(Color.WHITE);
 
         epCountField = new JFormattedTextField(formatter);
         epCountField.setMaximumSize(new Dimension(350,30));
         epCountField.setAlignmentX(LEFT_ALIGNMENT);
-        epCountField.setForeground(Color.WHITE);
 
         filepathToPosterField.setMaximumSize(new Dimension(350,30));
         filepathToPosterField.setAlignmentX(LEFT_ALIGNMENT);
-        filepathToPosterField.setForeground(Color.WHITE);
 
         statusCb = new JComboBox<>(new String[]{ "On-Going", "Complete", "Archived" });
         statusCb.setMaximumSize(new Dimension(350,30));
         statusCb.setAlignmentX(Component.LEFT_ALIGNMENT);
-        statusCb.setForeground(Color.WHITE);
 
         addBtn.setPreferredSize(new Dimension(200,35));
         addBtn.setMaximumSize(new Dimension(200,35));
@@ -133,7 +125,7 @@ public class ManageSeriesPanel extends JPanel {
         seriesFormPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
         seriesFormPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         seriesFormPnl.setBorder(new EmptyBorder(10,10,10,10));
-        seriesFormPnl.setBackground(Color.decode("#282828"));
+        seriesFormPnl.setBackground(Color.orange);
 
         add(seriesFormPnl,BorderLayout.CENTER);
 

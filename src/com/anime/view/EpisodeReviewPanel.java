@@ -108,11 +108,11 @@ public class EpisodeReviewPanel extends JPanel {
 
         for (EpisodeReview r : reviews) {
             tableModel.addRow(new Object[]{
-                    r.getReviewId(),
-                    r.getUsername(),
-                    r.getEpisodeTitle(),
-                    r.getUserReview(),
-                    r.getDateReviewed().toString()
+                    r.getReview_id(),
+                    r.getUser_id(),
+                    r.getEpisode_id(),
+                    r.getReview(),
+                    r.getDate_reviewed().toString()
             });
         }
     }

@@ -117,33 +117,35 @@ public class ActorSeriesDAO {
 
     public boolean insertActorSeries(ActorSeries as) throws SQLException {
         String sql = "INSERT INTO actorSeries (actors_id, series_id, character_name) VALUES (?, ?, ?)";
-
+        int rows = 0;
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, as.getActorId());
             ps.setInt(2, as.getSeriesId());
             ps.setString(3, as.getCharacterName());
-            ps.executeUpdate();
+            rows = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         }
-        return false;
+        return rows>0;
     }
 
-    public void deleteActorSeries(int actId) throws SQLException {
+    public boolean deleteActorSeries(int actId) throws SQLException {
         String sql = "DELETE FROM actorSeries WHERE act_id = ?";
-
+        int rows = 0;
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, actId);
-            ps.executeUpdate();
+            rows = ps.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         }
+        return rows > 0;
     }
 
     public void updateActorSeries(ActorSeries as) throws SQLException {

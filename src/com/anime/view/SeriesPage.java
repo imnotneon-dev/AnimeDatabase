@@ -83,7 +83,7 @@ public class SeriesPage extends JPanel{
         seriesInfoPnl = new GradientPanel(biTakorollIcon);
         seriesInfoPnl.setLayout(gb);
         seriesInfoPnl.setBorder(new EmptyBorder(0,70,100,70));
-        seriesInfoPnl.setBackground(Color.WHITE);
+        seriesInfoPnl.setBackground(Color.decode("#282828"));
         seriesInfoPnl.setPreferredSize(new Dimension(1280,700));
         seriesInfoPnl.setMaximumSize(new Dimension(1280,700));
 //        seriesInfoPnl.setPreferredSize(new Dimension(420,720));
@@ -138,7 +138,7 @@ public class SeriesPage extends JPanel{
 
         episodesPnl.setLayout(new GridLayout(0,4,5,5));
         episodesPnl.setBorder(new EmptyBorder(0,25,35,40));
-        episodesPnl.setBackground(Color.black);
+        episodesPnl.setBackground(Color.decode("#282828");
 //        episodesPnl.setPreferredSize(new Dimension(1280,600));
         episodesPnl.setMaximumSize(new Dimension(1280,Integer.MAX_VALUE));
         episodesPnl.setAlignmentX(Component.LEFT_ALIGNMENT);

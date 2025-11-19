@@ -123,6 +123,7 @@ public class AccountPanel extends JPanel{
         countrySelector.setAlignmentX(Component.CENTER_ALIGNMENT);
         countrySelector.setAlignmentY(Component.TOP_ALIGNMENT);
         submitSignUpBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        alreadyHasAccountBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         logoIconLb.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Setup visual appearance of signupContainer panel

@@ -1,4 +1,4 @@
-package com.anime.model.dao;
+package com.anime.model;
 
 public class TopSeriesOfTheWeek {
     private String title;

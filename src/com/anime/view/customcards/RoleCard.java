@@ -18,6 +18,7 @@ public class RoleCard extends JPanel {
     //    private Review review;
     private JPanel container = new JPanel();
     private ImageIcon seriesPosterIcon   = new ImageIcon("/resources/imgs/takoroll_logo.png");
+    String SERIES_POSTER = "/imgs/takoroll_logo.png";
     private int series_id;
     private String seriesTitle;
 
@@ -27,8 +28,8 @@ public class RoleCard extends JPanel {
         JLabel role = new JLabel(roleName);
         JLabel title = new JLabel(seriesTitle);
         JLabel seriesPosterLb = new JLabel();
-        String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
-        BufferedImage biSeriesPoster = loadImage(TAKOROLL_LOGO);
+
+        BufferedImage biSeriesPoster = loadImage(SERIES_POSTER);
         Image scaled = biSeriesPoster.getScaledInstance(80,80,Image.SCALE_SMOOTH);
         seriesPosterIcon = new ImageIcon(scaled);
         seriesPosterLb.setIcon(seriesPosterIcon);
@@ -108,6 +109,10 @@ public class RoleCard extends JPanel {
 
     public void setSeriesTitle(String seriesTitle) {
         this.seriesTitle = seriesTitle;
+    }
+
+    public void setSERIES_POSTER(String iresPath){
+        SERIES_POSTER=iresPath;
     }
 
 }

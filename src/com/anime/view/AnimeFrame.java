@@ -59,10 +59,13 @@ public class AnimeFrame extends JFrame {
         setSize(new Dimension(1280,720));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBackground(Color.decode("#212121"));
         setResizable(false);
         setVisible(true);
 
         setLayout(new BorderLayout());
+        revalidate();
+        repaint();
     }
 
     private void addPanels() {
@@ -98,7 +101,10 @@ public class AnimeFrame extends JFrame {
         add(container);
 
         // display account first
+//        getHeaderPanel().setVisible(false);
         switchView(LOGIN);
+        revalidate();
+        repaint();
     }
 
     public CardLayout getCardLayout(){

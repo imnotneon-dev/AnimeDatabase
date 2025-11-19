@@ -45,16 +45,16 @@ public class SeriesCard extends JPanel {
         add(seriesTitle);
 
         addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                setBackground(Color.decode("#F8481C"));
-            }
+//            @Override
+//            public vo`id mousePressed(MouseEvent e) {
+//                setBackground(Color.decode("#F8481C"));
+//            }
 
-            @Override
-            public void mouseReleased(MouseEvent e){
-                setBackground(Color.WHITE);
-                seriesTitle.setForeground(Color.black);
-            }
+//            @Override
+//            public void mouseReleased(MouseEvent e){
+//                setBackground(Color.WHITE);
+//                seriesTitle.setForeground(Color.black);
+//            }
 
             @Override
             public void mouseEntered(MouseEvent e) {

@@ -50,7 +50,7 @@ public class AccountPanel extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.decode("#212121"));
+        setBackground(Color.decode("#282828"));
         setLayout(new GridBagLayout());
 
         setupSignupPanel();
@@ -64,6 +64,7 @@ public class AccountPanel extends JPanel{
     private void setupSignupPanel(){
         JLabel logoIconLb = new JLabel();
         JLabel register = new JLabel("Register Account");
+        register.setForeground(Color.WHITE);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         signDobField = new JFormattedTextField(dateFormat);
@@ -71,31 +72,38 @@ public class AccountPanel extends JPanel{
         countrySelector = new JComboBox<>(countryChoices);
 
         register.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
         // GridBagLayout centers the signupContainer panel
         signLayout.setConstraints(signupContainer, new GridBagConstraints());
 
         // set layout of component signupContainer so components are centered
         signupContainer.setVisible(false);
+        signupContainer.setBackground(Color.WHITE);
         signupContainer.setLayout(new BoxLayout(signupContainer,BoxLayout.Y_AXIS));
         signupContainer.setPreferredSize(new Dimension(400,600));
         signupContainer.setMaximumSize(new Dimension(400,600));
+        
         // Set text and component attributes
 //        signNameField.setText();
         setupGhostText(signNameField,"Name");
         signNameField.setPreferredSize(new Dimension(350,30));
         signNameField.setMaximumSize(new Dimension(350,30));
         signNameField.setBorder(new MatteBorder(0,0,1,0,Color.black));
+        signNameField.setForeground(Color.WHITE);
         setupGhostText(signPasswordField,"Enter Password");
         signPasswordField.setPreferredSize(new Dimension(350,30));
         signPasswordField.setMaximumSize(new Dimension(350,30));
         signPasswordField.setBorder(new MatteBorder(0,0,1,0,Color.black));
+        signPasswordField.setForeground(Color.WHITE);
         setupGhostText(signConfirmField,"Confirm Password");
         signConfirmField.setPreferredSize(new Dimension(350,30));
         signConfirmField.setMaximumSize(new Dimension(350,30));
         signConfirmField.setBorder(new MatteBorder(0,0,1,0,Color.black));
+        signConfirmField.setForeground(Color.WHITE);
         signDobField.setPreferredSize(new Dimension(350,30));
         signDobField.setMaximumSize(new Dimension(350,30));
         signDobField.setBorder(new MatteBorder(0,0,1,0,Color.black));
+        signDobField.setForeground(Color.WHITE);
         countrySelector.setPreferredSize(new Dimension(350,30));
         countrySelector.setMaximumSize(new Dimension(350,30));
         countrySelector.setBorder(new MatteBorder(0,0,1,0,Color.black));
@@ -122,7 +130,9 @@ public class AccountPanel extends JPanel{
         signDobField.setAlignmentY(Component.TOP_ALIGNMENT);
         countrySelector.setAlignmentX(Component.CENTER_ALIGNMENT);
         countrySelector.setAlignmentY(Component.TOP_ALIGNMENT);
+        countrySelector.setForeground(Color.WHITE); 
         submitSignUpBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        alreadyHasAccountBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         logoIconLb.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Setup visual appearance of signupContainer panel
@@ -146,7 +156,7 @@ public class AccountPanel extends JPanel{
         signupContainer.add(Box.createVerticalStrut(5));
         signupContainer.add(alreadyHasAccountBtn);
         signupContainer.add(Box.createVerticalStrut(5));
-
+//        signupContainer.setBackground(Color.decode("#282828"));
 
 //        signupContainer.add(RIGHT_GLUE);
         signupContainer.add(BOT_GLUE);
@@ -173,10 +183,12 @@ public class AccountPanel extends JPanel{
         loginNameField.setPreferredSize(new Dimension(350,30));
         loginNameField.setMaximumSize(new Dimension(350,30));
         loginNameField.setBorder(new MatteBorder(0,0,1,0,Color.black));
+        loginNameField.setForeground(Color.WHITE);
         setupGhostText(loginPasswordField,"Password");
         loginPasswordField.setPreferredSize(new Dimension(350,30));
         loginPasswordField.setMaximumSize(new Dimension(350,30));
         loginPasswordField.setBorder(new MatteBorder(0,0,1,0,Color.black));
+        loginPasswordField.setForeground(Color.WHITE);
         loginBtn.setText("Login");
         loginBtn.setFocusable(true);
         signupBtn.setText("Signup");
@@ -212,6 +224,8 @@ public class AccountPanel extends JPanel{
         loginContainer.add(RIGHT_GLUE);
         loginContainer.add(BOT_GLUE);
 
+        loginContainer.setBackground(Color.WHITE);
+
         // Add to main panel
         add(loginContainer);
         revalidate();
@@ -236,7 +250,7 @@ public class AccountPanel extends JPanel{
             public void focusGained(FocusEvent e) {
                 if (textField.getText().equals(placeholder)) {
                     textField.setText("");
-                    textField.setForeground(Color.BLACK);
+                    textField.setForeground(Color.WHITE);
                 }
             }
 

@@ -22,7 +22,7 @@ public class TopGenreOfTheWeekDAO {
                                     "WHERE watch_date >= ? AND watch_date <= ?";
 
         String topGenreQuery = """
-                SELECT s.genre, SUM(e.no_views) as totalViews
+                SELECT s.genre, SUM(e.no_of_views) as totalViews
                 FROM watchHistory h
                 LEFT JOIN episodes e ON h.episode_id = e.episode_id
                 LEFT JOIN series s ON e.series_id = s.series_id

@@ -27,11 +27,14 @@ public class HeaderPanel extends JPanel {
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 
         init();
+//        revalidate();
+//        repaint();
     }
 
     private void init(){
         JPanel filler = new JPanel();
         JPanel leftPnl = new JPanel();
+        JPanel rightPnl = new JPanel();
         String TAKOROLL_LOGO = "/imgs/tako_hori.png";
         BufferedImage biHomeIcon = loadImage(TAKOROLL_LOGO);
         Image scaled = biHomeIcon.getScaledInstance(160,50,Image.SCALE_SMOOTH);
@@ -45,8 +48,10 @@ public class HeaderPanel extends JPanel {
         catalogLb.setText("CATALOG");
 //        catalogLb.setFont(new Font("SansSerif", Font.BOLD, 14)); // Make it visible and clear
 
+        accountName.setForeground(Color.black);
         leftPnl.add(homeIcon);
         leftPnl.add(catalogLb);
+        rightPnl.add(accountName);
 
         JPopupMenu menu = new JPopupMenu();
         logoutItem = new JMenuItem("Log Out");
@@ -62,7 +67,7 @@ public class HeaderPanel extends JPanel {
 
         add(leftPnl, BorderLayout.WEST);
         add(filler, BorderLayout.CENTER);
-        add(accountName,BorderLayout.EAST);
+        add(rightPnl, BorderLayout.EAST);
 
         accountName.addMouseListener(new MouseAdapter() {
             @Override
@@ -72,6 +77,9 @@ public class HeaderPanel extends JPanel {
             }
 
         });
+
+//        revalidate();
+//        repaint();
     }
 
     public static BufferedImage loadImage(String iresPath)
@@ -90,5 +98,5 @@ public class HeaderPanel extends JPanel {
     public JLabel getHomeIcon() { return homeIcon; }
     public JLabel getAccountName() { return accountName; }
     public JLabel getCatalogLb() { return catalogLb; }
-    public void setAccountName(String name) { accountName.setText(name); }
+    public void setAccountName(String name) { accountName.setText(name);}
 }

@@ -51,7 +51,7 @@ public class EpisodePage extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.BLUE);
+        setBackground(Color.ORANGE);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         initComponents();
     }
@@ -169,7 +169,7 @@ public class EpisodePage extends JPanel{
         reviewsScrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, reviewsPanel.getPreferredSize().height));
         reviewsScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         reviewsScrollPane.getVerticalScrollBar().setUnitIncrement(10);
-        reviewsScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(1,Integer.MAX_VALUE));
+        reviewsScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(10,Integer.MAX_VALUE));
         reviewsScrollPane.setBorder(BorderFactory.createTitledBorder("Reviews"));
         reviewsScrollPane.setBorder(BorderFactory.createEmptyBorder());
 
@@ -198,7 +198,8 @@ public class EpisodePage extends JPanel{
         reviewsPanel.removeAll();
         reviewCards.clear();
         for(EpisodeReview r: reviewsList){
-            ReviewCard revCard = new ReviewCard(r.getUsername(),r.getUserReview());
+            ReviewCard revCard = new ReviewCard(r.getReview());
+            revCard.putClientProperty("episode_id", r.getEpisode_id());
             revCard.setAlignmentX(Component.LEFT_ALIGNMENT);
             reviewCards.add(revCard);
             reviewsPanel.add(revCard);

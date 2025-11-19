@@ -14,10 +14,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class AppController {
-    private AnimeFrame view = new AnimeFrame();
-    private AppModel model = new AppModel();
+    private AnimeFrame view;
+    private AppModel model;
     private Account currentSession;
     public AppController(AnimeFrame view, AppModel model){
         this.view = view;
@@ -73,7 +74,7 @@ public class AppController {
             }
             try {
                 Account account = model.getAccountDAO().selectAccountByUsername(username);
-                if(!(account.getPassword().equals(pw))){
+                if(account==null || !(account.getPassword().equals(pw))){
 //                    System.out.println("Passwords don't match please try again");
                     JOptionPane.showMessageDialog(
                             this.view,
@@ -88,40 +89,57 @@ public class AppController {
                     this.currentSession = account;
 
                     int acc_id = account.getUserId();
+                    if(currentSession.getUsername().equalsIgnoreCase("admin") && currentSession.getPassword().equalsIgnoreCase("admin")){
+                        String name = currentSession.getUsername();
+                        view.getHeaderPanel().setAccountName("Welcome, " + name);
 
-                    // get the list of Favorites (user id, series id, date added)
-                    List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(acc_id);
-
-                    // get the list of WatchHistory (user id, episode id, date added)
-                    List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(acc_id);
-
-                    // declare an empty list: FaveSeries -> Series
-                    List<Series> favoriteListConverted = new ArrayList<>();
-
-                    // declare an empty list: WatchHistory -> Series
-                    List<Series> watchHistoryConverted = new ArrayList<>();
-
-                    // Loop through the favoriteSeries list, getting the series_id to get the
-                    // Series details to store into a Series object
-                    for(FavoriteSeries f: favoriteSeries){
-                        int series_id = f.getSeriesId();
-                        Series series = model.getSeriesDAO().getSeriesById(series_id);
-                        favoriteListConverted.add(series);
+                        view.switchView(view.ADMIN);
                     }
+                    else {
 
-                    // Loop through the watch list, getting the series_id to get the
-                    // Series details to store into a Series object
-                    for(WatchHistory w: watchedSeries){
-                        int episode_id = w.getEpisodeId();
-                        int series_id = model.getEpisodeDAO().selectEpisodeById(episode_id).getSeriesId();
-                        Series series = model.getSeriesDAO().getSeriesById(series_id);
-                        watchHistoryConverted.add(series);
+                        // get the list of Favorites (user id, series id, date added)
+                        List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(acc_id);
+
+                        // get the list of WatchHistory (user id, episode id, date added)
+                        List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(acc_id);
+
+                        // declare an empty list: FaveSeries -> Series
+                        List<Series> favoriteListConverted = new ArrayList<>();
+
+                        // declare an empty list: WatchHistory -> Series
+                        List<Series> watchHistoryConverted = new ArrayList<>();
+
+                        // Loop through the favoriteSeries list, getting the series_id to get the
+                        // Series details to store into a Series object
+                        for(FavoriteSeries f: favoriteSeries){
+                            int series_id = f.getSeriesId();
+                            Series series = model.getSeriesDAO().getSeriesById(series_id);
+                            favoriteListConverted.add(series);
+                        }
+                        Set<Integer> uniqueSeriesIds = new java.util.HashSet<>();
+                        // Loop through the watch list, getting the series_id to get the
+                        // Series details to store into a Series object
+                        for(WatchHistory w: watchedSeries){
+                            int episode_id = w.getEpisodeId();
+                            // Get the Series ID from the episode
+                            int series_id = model.getEpisodeDAO().selectEpisodeById(episode_id).getSeriesId();
+
+                            // Check if the Series ID is ALREADY in the Set
+                            if (uniqueSeriesIds.add(series_id)) {
+                                // If 'add' returns true, the ID was unique and added to the Set.
+                                Series series = model.getSeriesDAO().getSeriesById(series_id);
+                                watchHistoryConverted.add(series);
+                            }
+                        }
+
+                        view.getHomePage().setFavoriteList(favoriteListConverted);
+                        view.getHomePage().setWatchingList(watchHistoryConverted);
+                        view.getHeaderPanel().setVisible(true);
+                        String name = currentSession.getUsername();
+                        view.getHeaderPanel().setAccountName("Welcome, " + name);
+                        init_homepage_listeners();
+                        view.switchView(view.HOME);
                     }
-
-                    view.getHomePage().setFavoriteList(favoriteListConverted);
-                    view.getHomePage().setWatchingList(watchHistoryConverted);
-                    System.out.println("Login Success");
-                    view.switchView(view.HOME);
                 } else {
                     String error = "Login failed: Invalid username or password";
                     JOptionPane.showMessageDialog(
@@ -192,38 +210,53 @@ public class AppController {
                         System.out.println("Signup Success. Logging in...");
                         int acc_id = account.getUserId();
 
-                        // get the list of Favorites (user id, series id, date added)
-                        List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(acc_id);
-
-                        // get the list of WatchHistory (user id, episode id, date added)
-                        List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(acc_id);
-
-                        // declare an empty list: FaveSeries -> Series
-                        List<Series> favoriteListConverted = new ArrayList<>();
-
-                        // declare an empty list: WatchHistory -> Series
-                        List<Series> watchHistoryConverted = new ArrayList<>();
-
-                        // Loop through the favoriteSeries list, getting the series_id to get the
-                        // Series details to store into a Series object
-                        for(FavoriteSeries f: favoriteSeries){
-                            int series_id = f.getSeriesId();
-                            Series series = model.getSeriesDAO().getSeriesById(series_id);
-                            favoriteListConverted.add(series);
+                        if(currentSession.getUsername().equalsIgnoreCase("admin") || currentSession.getPassword().equalsIgnoreCase("admin")){
+                            view.getHeaderPanel().setVisible(true);
+                            String name = currentSession.getUsername();
+                            view.getHeaderPanel().setAccountName("Welcome, " + name);
+                            view.switchView(view.ADMIN);
                         }
+                        else {
 
-                        // Loop through the watch list, getting the series_id to get the
-                        // Series details to store into a Series object
-                        for(WatchHistory w: watchedSeries){
-                            int episode_id = w.getEpisodeId();
-                            int series_id = model.getEpisodeDAO().selectEpisodeById(episode_id).getSeriesId();
-                            Series series = model.getSeriesDAO().getSeriesById(series_id);
-                            watchHistoryConverted.add(series);
+                            // get the list of Favorites (user id, series id, date added)
+                            List<FavoriteSeries> favoriteSeries = model.getFavoriteSeriesDAO().getFavorites(acc_id);
+
+                            // get the list of WatchHistory (user id, episode id, date added)
+                            List<WatchHistory> watchedSeries = model.getWatchHistoryDAO().getWatchedListByUser(acc_id);
+
+                            // declare an empty list: FaveSeries -> Series
+                            List<Series> favoriteListConverted = new ArrayList<>();
+
+                            // declare an empty list: WatchHistory -> Series
+                            List<Series> watchHistoryConverted = new ArrayList<>();
+
+                            // Loop through the favoriteSeries list, getting the series_id to get the
+                            // Series details to store into a Series object
+                            for(FavoriteSeries f: favoriteSeries){
+                                int series_id = f.getSeriesId();
+                                Series series = model.getSeriesDAO().getSeriesById(series_id);
+                                favoriteListConverted.add(series);
+                            }
+
+                            // Loop through the watch list, getting the series_id to get the
+                            // Series details to store into a Series object
+                            for(WatchHistory w: watchedSeries){
+                                int episode_id = w.getEpisodeId();
+                                int series_id = model.getEpisodeDAO().selectEpisodeById(episode_id).getSeriesId();
+                                Series series = model.getSeriesDAO().getSeriesById(series_id);
+                                watchHistoryConverted.add(series);
+                            }
+
+                            view.getHomePage().setFavoriteList(favoriteListConverted);
+                            view.getHomePage().setWatchingList(watchHistoryConverted);
+                            init_homepage_listeners();
+                            view.getHeaderPanel().setVisible(true);
+                            String name = currentSession.getUsername();
+                            view.getHeaderPanel().setAccountName("Welcome, " + name);
+
+                            init_homepage_listeners();
+                            view.switchView(view.HOME);
                         }
-
-                        view.getHomePage().setFavoriteList(favoriteListConverted);
-                        view.getHomePage().setWatchingList(watchHistoryConverted);
-                        view.switchView(view.HOME);
                     }
                     else{
                         String error = ("Account created, but auto login failed.");
@@ -248,18 +281,34 @@ public class AppController {
 
     private void init_header_listeners(){
         HeaderPanel header = view.getHeaderPanel();
-        String name = currentSession.getUsername();
-        header.setAccountName("Welcome, " + name);
+        view.getHeaderPanel().setVisible(false);
+//        String name = currentSession.getUsername();
+//        header.setAccountName("Welcome, " + name);
         header.getHomeIcon().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
+
+                view.getHeaderPanel().setVisible(true);
+                String name = currentSession.getUsername();
+                view.getHeaderPanel().setAccountName("Welcome, " + name);
                 view.switchView(view.HOME);
             }
 
         });
         header.getCatalogLb().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mousePressed(MouseEvent e){
+                List<Series> series = null;
+                try {
+                    series = model.getSeriesDAO().getAllSeries();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                view.getCatalogPage().setCatalogSeriesList(series);
+                view.getHeaderPanel().setVisible(true);
+                String name = currentSession.getUsername();
+                view.getHeaderPanel().setAccountName("Welcome, " + name);
+                init_catalog_listeners();
                 view.switchView(view.CATALOG);
             }
         });
@@ -267,6 +316,11 @@ public class AppController {
             currentSession = null;
             view.getLoginPanel().getLoginContainer().setVisible(true);
             view.getLoginPanel().getSignupContainer().setVisible(true);
+            view.getLoginPanel().getLoginContainer().setVisible(true);
+            view.getLoginPanel().getSignupContainer().setVisible(false);
+            view.remove(view.getHeaderPanel());
+            view.getHeaderPanel().setVisible(false);
+            init_accpnl_listeners();
             view.switchView(view.LOGIN);
         });
 
@@ -275,6 +329,11 @@ public class AppController {
             try {
                 List<WatchHistory> accountWatchHist = model.getWatchHistoryDAO().getWatchedListByUser(currentSession.getUserId());
                 view.getWatchHistoryPage().setWatchedEpisodesList(accountWatchHist);
+
+                view.getHeaderPanel().setVisible(true);
+                String name = currentSession.getUsername();
+                view.getHeaderPanel().setAccountName("Welcome, " + name);
+
                 view.switchView(view.WATCH_HISTORY);
             }
             catch (SQLException ex){
@@ -288,6 +347,10 @@ public class AppController {
             try {
                 List<LikedEpisode> accountLikedEps = model.getLikedEpisodeDAO().getLikesByUser(currentSession.getUserId());
                 view.getLikeHistoryPage().setLikedEpisodesList(accountLikedEps);
+
+                view.getHeaderPanel().setVisible(true);
+                String name = currentSession.getUsername();
+                view.getHeaderPanel().setAccountName("Welcome, " + name);
                 view.switchView(view.LIKE_HISTORY);
             } catch (SQLException ex) {
                 System.err.println("DB Error loading watch history: " + ex.getMessage());
@@ -296,10 +359,18 @@ public class AppController {
         });
 
         header.getAccStatsItem().addActionListener(e->{
+
+            view.getHeaderPanel().setVisible(true);
+            String name = currentSession.getUsername();
+            view.getHeaderPanel().setAccountName("Welcome, " + name);
             view.switchView(view.REPORT);
         });
 
         header.getWrappedItem().addActionListener(e->{
+
+            view.getHeaderPanel().setVisible(true);
+            String name = currentSession.getUsername();
+            view.getHeaderPanel().setAccountName("Welcome, " + name);
             view.switchView(view.WRAPPED);
         });
     }
@@ -311,7 +382,7 @@ public class AppController {
         for(SeriesCard card: seriesCards){
             card.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
                     int series_id = card.getSeriesID();
                     try {
                         // might be redundant since series alr has the info but ill keep it here still
@@ -325,6 +396,8 @@ public class AppController {
                             view.getSeriesPage().setSeries(series);
                             view.getSeriesPage().setEpisodeList(episodeList);
                             view.getSeriesPage().setActorsList(actorList);
+                            init_seriespage_listeners();
+
                             view.switchView(view.SERIES);
                         } else {
                             String error = ("Series details cannot be found.");
@@ -355,11 +428,12 @@ public class AppController {
         for(SeriesCard card: allCards){
             card.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
                     int series_id = card.getSeriesID();
                     try {
                         // might be redundant since series alr has the info but ill keep it here still
                         Series series = model.getSeriesDAO().getSeriesById(series_id);
+                        System.out.println(series.getTitle());
                         // get episode list of the series
                          List<Episode> episodeList = model.getEpisodeDAO().selectEpisodeBySeries(series.getSeriesId());
                         // get actor list of the series
@@ -367,9 +441,15 @@ public class AppController {
                         if(series!=null) {
                             // load series info
                             view.getSeriesPage().setSeries(series);
+                            view.getSeriesPage().setSERIES_POSTERLink(series.getSeriesPhoto());
                             view.getSeriesPage().setEpisodeList(episodeList);
                             view.getSeriesPage().setActorsList(actorList);
+                            init_seriespage_listeners();
+
+
                             view.switchView(view.SERIES);
+                            view.revalidate();
+                            view.repaint();
                         } else {
                             String error= ("Series details cannot be found.");
                             JOptionPane.showMessageDialog(
@@ -392,6 +472,7 @@ public class AppController {
 
     private void init_seriespage_listeners(){
         SeriesPage seriesPage = view.getSeriesPage();
+
         List<SeriesEpisodeCard> episodeCards = seriesPage.getEpisodeCards();
         List<JLabel> actorLabelCards = seriesPage.getActorLabelCards();
         Series seriesInfo = seriesPage.getSeries();
@@ -399,7 +480,7 @@ public class AppController {
         for(SeriesEpisodeCard card: episodeCards){
             card.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
                     int ep_id = card.getEpisodeId();
                     try {
                         Episode episode = model.getEpisodeDAO().selectEpisodeById(ep_id);
@@ -407,7 +488,7 @@ public class AppController {
                         if(episode!=null) {
                             view.getEpisodePage().setEpisode(episode);
                             view.getEpisodePage().setSeriesTitle(seriesTitle);
-
+                            init_episodepage_listeners();
                             String currentUserTopGenre = model.getSeriesDAO().getTopGenreOfUser(currentSession.getUserId());
                             currentSession.setTopGenre(currentUserTopGenre);
                             model.getAccountDAO().updateTopGenre(currentSession.getUserId(), currentUserTopGenre);
@@ -420,7 +501,8 @@ public class AppController {
                                 // load review list
                                 List<EpisodeReview> reviewList = model.getEpisodeReviewDAO().getReviewsByEpisodeId(ep_id);
                                 view.getEpisodePage().setReviewsList(reviewList);
-
+                                int views = model.getWatchHistoryDAO().countViewsByEpisode(ep_id);
+                                init_episodepage_listeners();
                                 view.switchView(view.EPISODE);
                             }
                             else{
@@ -448,7 +530,7 @@ public class AppController {
         for(JLabel labelCard: actorLabelCards){
             labelCard.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
                     JLabel sourceLb = (JLabel) e.getSource();
                     int actor_id = (int)sourceLb.getClientProperty("actor_id");
                     try {
@@ -460,6 +542,10 @@ public class AppController {
                             // load roles info
                             List<ActorSeries> actorRoles = model.getActorSeriesDAO().getCharacterByActor(actor.getId());
                             view.getActorPage().setRolesList(actorRoles);
+
+                            view.getActorPage().setActorPhoto(actor.getActorPhoto());
+                            init_actorpage_listeners();
+
                             view.switchView(view.ACTOR);
                         } else {
                             String error = ("Actor details cannot be found.");
@@ -485,11 +571,13 @@ public class AppController {
             if(checker) {
                 // if true, meaning it has been favorited before, delete the favorited series
                 model.getFavoriteSeriesDAO().removeFavoriteSeries(currentSession.getUserId(), seriesInfo.getSeriesId());
+                System.out.println("Removed Fave");
                 // TODO: add changes to color button
             }
             else {
                 // if false meaning it has NOT been favorited before, add the favorited series
                 model.getFavoriteSeriesDAO().addFavoriteSeries(currentSession.getUserId(), seriesInfo.getSeriesId());
+                System.out.println("Added Fave");
             }
         });
     }
@@ -498,9 +586,21 @@ public class AppController {
         EpisodePage episodePage = view.getEpisodePage();
         Episode episodeInfo = episodePage.getEpisode();
 
+        List<ReviewCard> reviewCards = episodePage.getReviewsCards();
+
+        for(ReviewCard card: reviewCards){
+            try {
+                int user_id = (int)card.getClientProperty("user_id");
+                String userName = model.getAccountDAO().selectAccountById(user_id).getUsername();
+                card.setReviewUsername(userName);
+            } catch (SQLException e) {
+                System.err.println("DB Error during reviews loading: " + e.getMessage());
+                throw new RuntimeException(e);
+            }
+        }
         episodePage.getSeriesLb().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 int series_id = episodePage.getEpisode().getSeriesId();
                 try {
                     // might be redundant since series alr has the info but ill keep it here still
@@ -514,6 +614,8 @@ public class AppController {
                         view.getSeriesPage().setSeries(series);
                         view.getSeriesPage().setEpisodeList(episodeList);
                         view.getSeriesPage().setActorsList(actorList);
+
+                        init_seriespage_listeners();
                         view.switchView(view.SERIES);
                     } else {
                         String error=("Series details cannot be found.");
@@ -542,10 +644,12 @@ public class AppController {
                 if(checker) {
                     // if true, meaning it has been liked before, delete the liked series
                     model.getLikedEpisodeDAO().removeLike(currentSession.getUserId(),episodeInfo.getEpisodeId());
+                    System.out.println("Remove like");
                 }
                 else {
                     // if false meaning it has NOT been liked before, add the liked series
                     model.getLikedEpisodeDAO().addLike(currentSession.getUserId(),episodeInfo.getEpisodeId());
+                    System.out.println("Add like");
                 }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
@@ -563,6 +667,8 @@ public class AppController {
                 // reload series info after adding the new reviews
                 List<EpisodeReview> reviewList = model.getEpisodeReviewDAO().getReviewsByEpisodeId(ep_id);
                 view.getEpisodePage().setReviewsList(reviewList);
+
+                init_episodepage_listeners();
                 view.switchView(view.EPISODE);
             } catch (SQLException ex) {
                 System.err.println("DB Error during reviews loading: " + ex.getMessage());
@@ -577,9 +683,16 @@ public class AppController {
         List<RoleCard> rolesCards = actor.getRolesCard();
 
         for(RoleCard card: rolesCards){
+            try {
+                int sid = card.getRole_s_SeriesId();
+                Series series = model.getSeriesDAO().getSeriesById(sid);
+                card.setSERIES_POSTER(series.getSeriesPhoto());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             card.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
                     int series_id = card.getRole_s_SeriesId();
 
                     try {
@@ -595,6 +708,8 @@ public class AppController {
                             view.getSeriesPage().setSeries(series);
                             view.getSeriesPage().setEpisodeList(episodeList);
                             view.getSeriesPage().setActorsList(actorList);
+                            view.getSeriesPage().setSERIES_POSTERLink(series.getSeriesPhoto());
+                            init_seriespage_listeners();
                             view.switchView(view.SERIES);
                         } else {
                             String error = ("Series details cannot be found.");
@@ -639,7 +754,7 @@ public class AppController {
         for(PlainActorCard card: actorCards){
             card.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
                     selectedActorId = (Integer)card.getClientProperty("actor_id");
                     try{
                         Actor actorInfo = model.getActorDAO().getActorById(selectedActorId);
@@ -714,6 +829,17 @@ public class AppController {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
+
+            try {
+                List<Actor> allActors = model.getActorDAO().getActors();
+                actor.setActorList(allActors);
+                init_admin_actor_panel(actor);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            actor.revalidate();
+            actor.repaint();
         });
 
         actor.getUpdateBtn().addActionListener(e->{
@@ -759,7 +885,19 @@ public class AppController {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
+            try {
+                List<Actor> allActors = allActors = model.getActorDAO().getActors();
+
+                actor.setActorList(allActors);
+                init_admin_actor_panel(actor);
+
+                actor.revalidate();
+                actor.repaint();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         });
+
     }
 
     private void init_admin_series_panel(ManageSeriesPanel series) {
@@ -768,7 +906,7 @@ public class AppController {
         for (PlainSeriesCard card : seriesCards) {
             card.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
                    selectedEpisodeId = (Integer)card.getClientProperty("series_id");
                    series.getAddBtn().setEnabled(false);
                    series.getClearBtn().setEnabled(true);
@@ -864,6 +1002,16 @@ public class AppController {
                 System.err.println("DB Error during episode loading: " + ex.getMessage());
                 throw new RuntimeException(ex);
             }
+            try {
+                List<Series> allSeries = model.getSeriesDAO().getAllSeries();
+                series.setSeriesList(allSeries);
+                init_admin_series_panel(series);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            series.revalidate();
+            series.repaint();
         });
 
         series.getUpdateBtn().addActionListener(e->{
@@ -925,6 +1073,13 @@ public class AppController {
                 System.err.println("DB Error during episode loading: " + ex.getMessage());
                 throw new RuntimeException(ex);
             }
+            try {
+                List<Series> allSeries = model.getSeriesDAO().getAllSeries();
+                series.setSeriesList(allSeries);
+                init_admin_series_panel(series);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         });
     }
     private void init_admin_episode_panel(ManageEpisodePanel episode){
@@ -944,7 +1099,7 @@ public class AppController {
 
             card.addMouseListener(new MouseAdapter(){
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
                     selectedEpisodeId = (Integer)card.getClientProperty("episode_id");
                     episode.getAddBtn().setEnabled(false);
                     episode.getClearBtn().setEnabled(true);
@@ -1055,6 +1210,16 @@ public class AppController {
                 System.err.println("DB Error during episode loading: " + ex.getMessage());
                 throw new RuntimeException(ex);
             }
+            try {
+                List<Episode> allActors = model.getEpisodeDAO().selectAllEpisodes();
+                episode.setEpisodeList(allActors);
+                init_admin_episode_panel(episode);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            episode.revalidate();
+            episode.repaint();
         });
 
         episode.getUpdateBtn().addActionListener(e->{
@@ -1132,6 +1297,16 @@ public class AppController {
                 System.err.println("DB Error during episode loading: " + ex.getMessage());
                 throw new RuntimeException(ex);
             }
+            try {
+                List<Episode> allActors = model.getEpisodeDAO().selectAllEpisodes();
+                episode.setEpisodeList(allActors);
+                init_admin_episode_panel(episode);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            episode.revalidate();
+            episode.repaint();
         });
     }
     private void init_admin_actorseries_panel(ManageActorSeriesPanel role){
@@ -1179,7 +1354,7 @@ public class AppController {
         for(PlainActorCard card: actorCards){
             card.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void mousePressed(MouseEvent e) {
                     selectedActorId = (Integer)card.getClientProperty("actor_id");
                     try{
 //                        role.getDeleteBtn().setEnabled(true);
@@ -1262,6 +1437,16 @@ public class AppController {
                     System.err.println("Error deleting ActorSeries: " + ex.getMessage());
                     throw new RuntimeException(ex);
                 }
+                try {
+                    List<ActorSeries> allActorSeries = model.getActorSeriesDAO().getAllActorSeries();
+                    role.setActorSeriesList(allActorSeries);
+                    init_admin_actorseries_panel(role);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                role.revalidate();
+                role.repaint();
             }
         });
 
@@ -1315,6 +1500,13 @@ public class AppController {
 
                 } catch(Exception ex) {
                     System.err.println("Error deleting ActorSeries: " + ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+                try {
+                    List<ActorSeries> allActorSeries = model.getActorSeriesDAO().getAllActorSeries();
+                    role.setActorSeriesList(allActorSeries);
+                    init_admin_actorseries_panel(role);
+                } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             }

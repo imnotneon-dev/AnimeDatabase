@@ -14,7 +14,7 @@ public class FavoriteSeriesDAO {
 //    }
 
     public int countFavorites(int username) {
-        String sql = "SELECT COUNT(*) AS total FROM FavoriteSeries WHERE username = ?";
+        String sql = "SELECT COUNT(*) AS total FROM FavoriteSeries WHERE user_id = ?";
         try (Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
             
@@ -40,7 +40,7 @@ public class FavoriteSeriesDAO {
             return false; 
         }
 
-        String sql = "INSERT INTO FavoriteSeries (username, series_id, added_date) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO FavoriteSeries (user_id, series_id, added_date) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
@@ -81,7 +81,7 @@ public class FavoriteSeriesDAO {
 
     public List<FavoriteSeries> getFavorites(int username) {
         List<FavoriteSeries> favorites = new ArrayList<>();
-        String sql = "SELECT * FROM FavoriteSeries WHERE username = ?";
+        String sql = "SELECT * FROM favoriteSeries WHERE user_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -131,7 +131,7 @@ public class FavoriteSeriesDAO {
         sql.append("SELECT s.genre, COUNT(s.genre) AS genre_count ");
         sql.append("FROM FavoriteSeries fs ");
         sql.append("JOIN Series s ON fs.series_id = s.id ");
-        sql.append("WHERE fs.username = ? ");
+        sql.append("WHERE fs.user_id = ? ");
         sql.append("GROUP BY s.genre ");
         
         try (Connection conn = DBConnection.getConnection();
@@ -184,7 +184,7 @@ public class FavoriteSeriesDAO {
     }
 
     public boolean favoriteChecker(int username, int series_id){
-        String sql = "SELECT 1 FROM FavoriteSeries WHERE username = ? AND series_id = ?";
+        String sql = "SELECT 1 FROM FavoriteSeries WHERE user_id = ? AND series_id = ?";
 
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){

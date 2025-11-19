@@ -51,7 +51,7 @@ public class AdminPage extends JPanel implements ItemListener {
         adminTitlePnl.setAlignmentX(Component.CENTER_ALIGNMENT);
         adminTitlePnl.setBorder(new EmptyBorder(10,10,10,10));
 
-        String comboBoxItems[] = { ADD_SERIES, ADD_EP, ADD_ACTOR };
+        String comboBoxItems[] = { ADD_SERIES, ADD_EP, ADD_ACTOR, ADD_ACTOR_SERIES };
         cb = new JComboBox<>(comboBoxItems);
         cb.setEditable(false);
         cb.addItemListener(this);

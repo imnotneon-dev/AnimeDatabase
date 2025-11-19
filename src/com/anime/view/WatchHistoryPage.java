@@ -1,16 +1,13 @@
 package com.anime.view;
 
-import com.anime.model.Episode;
 import com.anime.model.WatchHistory;
 import com.anime.view.customcards.PlainEpisodeCard;
-import com.anime.view.customcards.SeriesEpisodeCard;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class WatchHistoryPage extends JPanel{
 //    private JPanel actorInfoPnl = new JPanel();
@@ -34,7 +31,7 @@ public class WatchHistoryPage extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.BLUE);
+        setBackground(Color.lightGray);
 //        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setLayout(new BorderLayout());
         initComponents();

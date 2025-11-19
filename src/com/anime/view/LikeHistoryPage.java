@@ -32,7 +32,7 @@ public class LikeHistoryPage extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.BLUE);
+        setBackground(Color.decode("#282828"));
 //        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setLayout(new BorderLayout());
         initComponents();
@@ -46,7 +46,7 @@ public class LikeHistoryPage extends JPanel{
 
 
         likePnl.setLayout(new BoxLayout(likePnl, BoxLayout.Y_AXIS));
-        likePnl.setBackground(Color.black);
+        likePnl.setBackground(Color.decode("#282828"));
 //        likePnl.setPreferredSize(new Dimension(1280, 720));
         likePnl.setMaximumSize(new Dimension(900, Integer.MAX_VALUE));
         likePnl.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -65,6 +65,7 @@ public class LikeHistoryPage extends JPanel{
         likeHistoryScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
         likeHistoryScrollPane.getVerticalScrollBar().setUnitIncrement(10);
         likeHistoryScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        likeHistoryScrollPane.getViewport().setBackground(Color.decode("#282828")); 
 //        likePnl.setBorder(new EmptyBorder(10,10,10,10));
 
         add(likeHistoryScrollPane, BorderLayout.CENTER);
@@ -79,13 +80,18 @@ public class LikeHistoryPage extends JPanel{
                 PlainEpisodeCard card = new PlainEpisodeCard(wd);
                 card.putClientProperty("episode_id",e.getEpisodeId());
                 card.setAlignmentX(Component.LEFT_ALIGNMENT);
+                card.setBackground(Color.decode("#282828"));
+                card.setForeground(Color.WHITE);
                 likedEpisodesCards.add(card);
                 likePnl.add(card);
                 likePnl.add(Box.createVerticalStrut(10));
             }
         }
         else {
-            likePnl.add(new JLabel("No episodes yet..."));
+            JLabel noEpisodesLabel = new JLabel("No episodes yet...");
+            noEpisodesLabel.setForeground(Color.WHITE);
+//            likePnl.add(new JLabel("No episodes yet..."));
+            likePnl.add(noEpisodesLabel);
         }
         likePnl.revalidate();
         likePnl.repaint();

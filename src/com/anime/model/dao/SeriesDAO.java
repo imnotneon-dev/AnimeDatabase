@@ -32,8 +32,8 @@ public class SeriesDAO{
                     resSet.getString("title"),
                     resSet.getString("genre"),
                     resSet.getInt("release_year"),
-                    resSet.getInt("total_episodes"),
-                    resSet.getString("status"),
+                    resSet.getInt("total_episode_count"),
+                    resSet.getString("status_of_series"),
                     resSet.getString("series_photo")
                 );
             }
@@ -93,8 +93,8 @@ public class SeriesDAO{
                         resSet.getString("title"),
                         resSet.getString("genre"),
                         resSet.getInt("release_year"),
-                        resSet.getInt("total_episodes"),
-                        resSet.getString("status"),
+                        resSet.getInt("total_episode_count"),
+                        resSet.getString("status_of_series"),
                         resSet.getString("series_photo")
                 );
 
@@ -113,8 +113,8 @@ public class SeriesDAO{
         /* boolean so that we know if na insert na true or false*/
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO series");
-        sql.append("(title, genre, release_year, total_episodes, status)");
-        sql.append("VALUES (?, ?, ?, ?, ?)");
+        sql.append("(title, genre, release_year, total_episode_count, status_of_series,s eries_photo)");
+        sql.append("VALUES (?, ?, ?, ?, ?, ?)");
 
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql.toString());){
@@ -124,6 +124,7 @@ public class SeriesDAO{
             ps.setInt(3, s.getReleaseYear());
             ps.setInt(4, s.getTotalEpisodes());
             ps.setString(5, s.getStatus());
+            ps.setString(6, s.getSeriesPhoto());
 
             return ps.executeUpdate() > 0;
 

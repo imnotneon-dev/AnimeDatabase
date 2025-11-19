@@ -59,7 +59,7 @@ public class SeriesPage extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.WHITE);
+        setBackground(Color.decode("#282828"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         initComponents();
@@ -76,9 +76,11 @@ public class SeriesPage extends JPanel{
         epInfoVSpacer.setOpaque(false);
 
         JLabel actorsListLb = new JLabel("Notable Actors:     ");
+        actorsListLb.setForeground(Color.WHITE); 
         actorsContainer.add(actorsListLb);
         actorsContainer.setLayout(new BoxLayout(actorsContainer, BoxLayout.Y_AXIS));
-        actorsContainer.setOpaque(false);
+        actorsContainer.setOpaque(true);
+        actorsContainer.setBackground(Color.decode("#282828"));
 
         seriesInfoPnl = new GradientPanel(biTakorollIcon);
         seriesInfoPnl.setLayout(gb);
@@ -138,7 +140,7 @@ public class SeriesPage extends JPanel{
 
         episodesPnl.setLayout(new GridLayout(0,4,5,5));
         episodesPnl.setBorder(new EmptyBorder(0,25,35,40));
-        episodesPnl.setBackground(Color.black);
+        episodesPnl.setBackground(Color.decode("#282828"));
 //        episodesPnl.setPreferredSize(new Dimension(1280,600));
         episodesPnl.setMaximumSize(new Dimension(1280,Integer.MAX_VALUE));
         episodesPnl.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -147,7 +149,7 @@ public class SeriesPage extends JPanel{
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
-        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(1,Integer.MAX_VALUE));
+        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(10,Integer.MAX_VALUE));
         scrollPane.getVerticalScrollBar().setVisible(false);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -181,12 +183,19 @@ public class SeriesPage extends JPanel{
             return;
         }
 
+        
         titleLb.setText(this.series.getTitle());
+        titleLb.setForeground(Color.WHITE);
         genreLb.setText(this.series.getGenre());
+        genreLb.setForeground(Color.WHITE);
         releaseYearLb.setText("Release Year: " + this.series.getReleaseYear());
+        releaseYearLb.setForeground(Color.WHITE);
         epCountLb.setText("Total Number of Episodes: " + this.series.getTotalEpisodes());
+        epCountLb.setForeground(Color.WHITE);
         statusLb.setText("Status: " + this.series.getStatus());
+        statusLb.setForeground(Color.WHITE);
         SERIES_POSTER = this.series.getSeriesPhoto();
+        
 
         loadEpisodeCards();
         loadActorLabelCards();
@@ -210,7 +219,9 @@ public class SeriesPage extends JPanel{
             episodesPnl.setPreferredSize(new Dimension(1200, (int) (Math.ceil(episodeList.size() / 5.0) * 150)));
         }
         else {
-            episodesPnl.add(new JLabel("No episodes yet..."));
+            JLabel noEpisodesLabel = new JLabel("No episodes yet...");
+            noEpisodesLabel.setForeground(Color.WHITE);
+            episodesPnl.add(noEpisodesLabel);
         }
         episodesPnl.revalidate();
         episodesPnl.repaint();
@@ -225,6 +236,7 @@ public class SeriesPage extends JPanel{
             for(Actor a: actorsList){
                 JLabel actor = new JLabel(a.getLastName() + ", " + a.getFirstName());
                 actor.putClientProperty("actor_id",a.getId());
+                actor.setForeground(Color.WHITE);
                 actorLabelCards.add(actor);
                 actorsContainer.add(actor);
                 actorsContainer.add(Box.createVerticalStrut(5));

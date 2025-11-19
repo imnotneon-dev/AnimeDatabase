@@ -1,7 +1,5 @@
 package com.anime.view;
 
-import com.anime.model.dao.TopSeriesOfTheWeek;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -10,7 +8,7 @@ import java.awt.event.ItemListener;
 
 public class ReportPage extends JPanel{
     private TopGenreOfTheWeekPanel tgPnl = new TopGenreOfTheWeekPanel();
-//    private TopSeriesOfTheWeekPanel tsPnl = new TopSeriesOfTheWeekPanel();
+    private TopSeriesOfTheWeekPanel tsPnl = new TopSeriesOfTheWeekPanel();
     private EpisodeReviewPanel reviewLogPnl = new EpisodeReviewPanel();
 
     private JPanel panelContainer = new JPanel();
@@ -38,7 +36,7 @@ public class ReportPage extends JPanel{
         panelContainer.setLayout(new BoxLayout(panelContainer,BoxLayout.Y_AXIS));
         panelContainer.setAlignmentY(Component.CENTER_ALIGNMENT);
         panelContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelContainer.setBackground(Color.red);
+        panelContainer.setBackground(Color.ORANGE);
 
         JScrollPane scrollPane = new JScrollPane(panelContainer);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -49,7 +47,7 @@ public class ReportPage extends JPanel{
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         panelContainer.add(tgPnl);
-//        panelContainer.add(tsPnl);
+        panelContainer.add(tsPnl);
         panelContainer.add(reviewLogPnl);
 
         add(scrollPane, BorderLayout.CENTER);

@@ -1,18 +1,15 @@
 package com.anime.view;
 
 import com.anime.model.Series;
-import com.anime.view.customcards.PlainEpisodeCard;
 import com.anime.view.customcards.PlainSeriesCard;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.NumberFormatter;
 
 public class ManageSeriesPanel extends JPanel {
     private JPanel seriesListPnl = new JPanel();
@@ -38,7 +35,7 @@ public class ManageSeriesPanel extends JPanel {
 
     public ManageSeriesPanel(){
         setLayout(new BorderLayout());
-        setBackground(Color.yellow);
+        setBackground(Color.gray);
         setBorder(new EmptyBorder(10,10,10,10));
         setupSeriesPanel();
     }
@@ -51,7 +48,7 @@ public class ManageSeriesPanel extends JPanel {
         seriesListPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
         seriesListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         seriesListPnl.setBorder(new EmptyBorder(10,10,10,10));
-        seriesListPnl.setBackground(Color.magenta);
+        seriesListPnl.setBackground(Color.white);
         loadPSCards();
 
         seriesListScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -107,7 +104,7 @@ public class ManageSeriesPanel extends JPanel {
         seriesFormPnl.add(new JLabel("Enter Number of Episodes"));
         seriesFormPnl.add(epCountField);
         seriesFormPnl.add(Box.createVerticalStrut(10));
-        seriesFormPnl.add(new JLabel("Enter Release Date (YYYY-MM-DD)"));
+        seriesFormPnl.add(new JLabel("Enter Release Year"));
         seriesFormPnl.add(releaseYearField);
         seriesFormPnl.add(Box.createVerticalStrut(10));
         seriesFormPnl.add(new JLabel("Set Status"));

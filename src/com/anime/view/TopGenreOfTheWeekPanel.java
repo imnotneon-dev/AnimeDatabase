@@ -15,7 +15,6 @@ import java.util.List;
 
 public class TopGenreOfTheWeekPanel extends JPanel{
     private JPanel historyPnl = new JPanel();
-    private JScrollPane watchHistoryScrollPane = new JScrollPane(historyPnl);
     private LocalDate dateToday = LocalDate.now();
     private LocalDate date1WeekAgo = dateToday.minusWeeks(1);
     private List<JLabel> allSeriesLb = new ArrayList<>();
@@ -27,7 +26,8 @@ public class TopGenreOfTheWeekPanel extends JPanel{
     List<Series> genre3List = new ArrayList<Series>();
     List<Series> genre4List = new ArrayList<Series>();
     List<Series> genre5List = new ArrayList<Series>();
-
+    private String heading = "TOP GENRES FROM " + dateToday + " TO " + date1WeekAgo;
+    private JLabel top5GenreLb = new JLabel(heading);
     private TopGenreOfTheWeekDAO tgDAO = new TopGenreOfTheWeekDAO();
 
     public TopGenreOfTheWeekPanel() {
@@ -36,15 +36,15 @@ public class TopGenreOfTheWeekPanel extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.BLUE);
+        setBackground(Color.ORANGE);
 //        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setLayout(new BorderLayout());
         initComponents();
     }
 
     private void initComponents(){
-        String heading = "TOP GENRES FROM " + dateToday + " TO " + date1WeekAgo;
-        JLabel top5GenreLb = new JLabel(heading);
+//        String heading = "TOP GENRES FROM " + dateToday + " TO " + date1WeekAgo;
+//        JLabel top5GenreLb = new JLabel(heading);
         JPanel container = new JPanel();
         JScrollPane scrollPane = new JScrollPane(container);
         JPanel upperPnl = new JPanel();
@@ -56,11 +56,16 @@ public class TopGenreOfTheWeekPanel extends JPanel{
         JPanel genre5Pnl = new JPanel();
 
         loadLists();
-        loadSeriesUnderGenreLabels(genre1Pnl, top5GenreOfTheWeekList.get(0).getGenre(), genre1List);
-        loadSeriesUnderGenreLabels(genre2Pnl, top5GenreOfTheWeekList.get(1).getGenre(), genre2List);
-        loadSeriesUnderGenreLabels(genre3Pnl, top5GenreOfTheWeekList.get(2).getGenre(), genre3List);
-        loadSeriesUnderGenreLabels(genre4Pnl, top5GenreOfTheWeekList.get(3).getGenre(), genre4List);
-        loadSeriesUnderGenreLabels(genre5Pnl, top5GenreOfTheWeekList.get(4).getGenre(), genre5List);
+        if(top5GenreOfTheWeekList.size()>0)
+            loadSeriesUnderGenreLabels(genre1Pnl, top5GenreOfTheWeekList.get(0).getGenre(), genre1List);
+        if(top5GenreOfTheWeekList.size()>1)
+            loadSeriesUnderGenreLabels(genre2Pnl, top5GenreOfTheWeekList.get(1).getGenre(), genre2List);
+        if(top5GenreOfTheWeekList.size()>2)
+            loadSeriesUnderGenreLabels(genre3Pnl, top5GenreOfTheWeekList.get(2).getGenre(), genre3List);
+        if(top5GenreOfTheWeekList.size()>3)
+            loadSeriesUnderGenreLabels(genre4Pnl, top5GenreOfTheWeekList.get(3).getGenre(), genre4List);
+        if(top5GenreOfTheWeekList.size()>4)
+            loadSeriesUnderGenreLabels(genre5Pnl, top5GenreOfTheWeekList.get(4).getGenre(), genre5List);
 
         top5GenreLb.setAlignmentX(Component.CENTER_ALIGNMENT);
 //        top5GenreLb.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -133,18 +138,24 @@ public class TopGenreOfTheWeekPanel extends JPanel{
         genre5Pnl.setBorder(new EmptyBorder(10,10,10,10));
 
         upperPnl.add(genre1Pnl);
+        upperPnl.add(Box.createHorizontalStrut(10));
         upperPnl.add(genre2Pnl);
+        upperPnl.add(Box.createHorizontalStrut(10));
         upperPnl.add(genre3Pnl);
+        upperPnl.add(Box.createHorizontalStrut(10));
         lowerPnl.add(genre4Pnl);
+        upperPnl.add(Box.createHorizontalStrut(10));
         lowerPnl.add(genre5Pnl);
+        upperPnl.add(Box.createHorizontalStrut(10));
         container.add(upperPnl);
+        upperPnl.add(Box.createHorizontalStrut(10));
 //        container.add(Box.createVerticalStrut(10));
         container.add(lowerPnl);
-        loadSeriesUnderGenreLabels(genre1Pnl,top5GenreOfTheWeekList.get(0).getGenre(),genre1List);
-        loadSeriesUnderGenreLabels(genre2Pnl,top5GenreOfTheWeekList.get(1).getGenre(),genre2List);
-        loadSeriesUnderGenreLabels(genre3Pnl,top5GenreOfTheWeekList.get(2).getGenre(),genre3List);
-        loadSeriesUnderGenreLabels(genre4Pnl,top5GenreOfTheWeekList.get(3).getGenre(),genre4List);
-        loadSeriesUnderGenreLabels(genre5Pnl,top5GenreOfTheWeekList.get(4).getGenre(),genre5List);
+//        loadSeriesUnderGenreLabels(genre1Pnl,top5GenreOfTheWeekList.get(0).getGenre(),genre1List);
+//        loadSeriesUnderGenreLabels(genre2Pnl,top5GenreOfTheWeekList.get(1).getGenre(),genre2List);
+//        loadSeriesUnderGenreLabels(genre3Pnl,top5GenreOfTheWeekList.get(2).getGenre(),genre3List);
+//        loadSeriesUnderGenreLabels(genre4Pnl,top5GenreOfTheWeekList.get(3).getGenre(),genre4List);
+//        loadSeriesUnderGenreLabels(genre5Pnl,top5GenreOfTheWeekList.get(4).getGenre(),genre5List);
 
         /*scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -159,11 +170,28 @@ public class TopGenreOfTheWeekPanel extends JPanel{
     private void loadLists(){
         try {
             top5GenreOfTheWeekList = tgDAO.getTop5GenreSeriesOfTheWeek(date1WeekAgo, dateToday);
-            genre1List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(0).getGenre()));
-            genre2List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(1).getGenre()));
-            genre3List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(2).getGenre()));
-            genre4List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(3).getGenre()));
-            genre5List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(4).getGenre()));
+            if(top5GenreOfTheWeekList==null || top5GenreOfTheWeekList.isEmpty()){
+                top5GenreOfTheWeekList = new ArrayList<>();
+
+                genre1List = new ArrayList<Series>();
+                genre2List = new ArrayList<Series>();
+                genre3List = new ArrayList<Series>();
+                genre4List = new ArrayList<Series>();
+                genre5List = new ArrayList<Series>();
+
+                if(top5GenreLb!=null) top5GenreLb.setText("No genre data available.");
+                return;
+            }
+//            if(top5GenreOfTheWeekList.size()>0)
+                genre1List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(0).getGenre()));
+//            if(top5GenreOfTheWeekList.size()>1)
+                genre2List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(1).getGenre()));
+//            if(top5GenreOfTheWeekList.size()>2)
+                genre3List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(2).getGenre()));
+//            if(top5GenreOfTheWeekList.size()>3)
+                genre4List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(3).getGenre()));
+//            if(top5GenreOfTheWeekList.size()>4)
+                genre5List = tgDAO.getSeriesByGenre(String.valueOf(top5GenreOfTheWeekList.get(4).getGenre()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -177,18 +205,15 @@ public class TopGenreOfTheWeekPanel extends JPanel{
 //        genreTitle.setAlignmentY(Component.CENTER_ALIGNMENT);
         if(list!=null){
             for(Series e: list){
-                try {
-                    String series_title = e.getTitle();
-                    JLabel seriesTitleLb = new JLabel(series_title);
 
-                    seriesTitleLb.putClientProperty("series_id", e.getSeriesId());
+                String series_title = e.getTitle();
+                JLabel seriesTitleLb = new JLabel(series_title);
 
-                    seriesTitleLb.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    allSeriesLb.add(seriesTitleLb);
-                    panel.add(seriesTitleLb);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                seriesTitleLb.putClientProperty("series_id", e.getSeriesId());
+
+                seriesTitleLb.setAlignmentX(Component.CENTER_ALIGNMENT);
+                allSeriesLb.add(seriesTitleLb);
+                panel.add(seriesTitleLb);
             }
         }
         else {

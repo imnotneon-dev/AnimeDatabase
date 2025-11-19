@@ -14,16 +14,16 @@ public class Episode {
     private int seriesId;
     private List<EpisodeReview> listOfReviews;
 
-public Episode(int episodeId, String epTitle, String sypnosis, int runtime, int views, LocalDate releaseDate, int seriesId) {
-    this.episodeId = episodeId;
-    this.epTitle = epTitle;
-    this.sypnosis = sypnosis;
-    this.runtime = runtime;
-    this.views = views;
-    this.releaseDate = releaseDate;
-    this.seriesId = seriesId;
-    this.listOfReviews = new ArrayList<>();
-}
+    public Episode(int episodeId, String epTitle, String sypnosis, int runtime, int views, LocalDate releaseDate, int seriesId) {
+        this.episodeId = episodeId;
+        this.epTitle = epTitle;
+        this.sypnosis = sypnosis;
+        this.runtime = runtime;
+        this.views = views;
+        this.releaseDate = releaseDate;
+        this.seriesId = seriesId;
+        this.listOfReviews = new ArrayList<>();
+    }
 
 
     public int getSeriesId(){

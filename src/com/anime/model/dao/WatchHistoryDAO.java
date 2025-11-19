@@ -62,4 +62,32 @@ public class WatchHistoryDAO {
         return false;
     }
 
+    public int countViewsByEpisode(int episode_id) throws SQLException {
+        int totalViews = 0;
+
+        // SQL selects the count from watchHistory where the episode_id matches.
+        String sql = "SELECT COUNT(watch_id) AS view_count " +
+                "FROM watchHistory " +
+                "WHERE episode_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, episode_id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Retrieve the count result from the aliased column
+                    totalViews = rs.getInt("view_count");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("DB Error counting episode views: " + e.getMessage());
+            throw e; // Re-throw the exception
+        }
+
+        return totalViews;
+    }
+
 }

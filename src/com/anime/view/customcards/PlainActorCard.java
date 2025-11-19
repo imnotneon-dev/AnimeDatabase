@@ -30,7 +30,7 @@ public class PlainActorCard extends JPanel {
 
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
         container.add(Box.createHorizontalStrut(10));
-        container.add(series);
+//        container.add(series);
         container.add(Box.createHorizontalGlue());
 
 //        add(da);

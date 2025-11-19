@@ -36,13 +36,13 @@ public class ManageActorSeriesPanel extends JPanel {
 
     public ManageActorSeriesPanel(){
         setLayout(new BorderLayout());
-        setBackground(Color.yellow);
+        setBackground(Color.decode("#282828"));
         setBorder(new EmptyBorder(10,10,10,10));
         setupEpisodePanel();
         setupRenderers();
     }
     private void setupEpisodePanel(){
-        JPanel actorListPnl = new JPanel();
+        actorListPnl = new JPanel();
         JPanel actorFormPnl = new JPanel();
         JScrollPane actorListScrollPanel = new JScrollPane(actorListPnl);
 
@@ -50,7 +50,7 @@ public class ManageActorSeriesPanel extends JPanel {
         actorListPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
         actorListPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         actorListPnl.setBorder(new EmptyBorder(10,10,10,10));
-        actorListPnl.setBackground(Color.magenta);
+        actorListPnl.setBackground(Color.decode("#282828"));
         loadPACards();
 
         actorListScrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -59,19 +59,24 @@ public class ManageActorSeriesPanel extends JPanel {
         actorListScrollPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         actorListScrollPanel.getVerticalScrollBar().setUnitIncrement(10);
         actorListScrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(3,Integer.MAX_VALUE));
+        actorListScrollPanel.getViewport().setBackground(Color.decode("#282828"));
+        actorListScrollPanel.setBackground(Color.decode("#282828"));
         add(actorListScrollPanel, BorderLayout.WEST);
 
         seriesTitleCb = new JComboBox<Object>(allSeriesList.toArray());
         seriesTitleCb.setMaximumSize(new Dimension(350,30));
         seriesTitleCb.setAlignmentX(Component.LEFT_ALIGNMENT);
         seriesTitleCb.setEditable(false);
+        seriesTitleCb.setBackground(Color.decode("#282828"));
+        seriesTitleCb.setForeground(Color.WHITE);
 
         actorSeriesCb = new JComboBox<Object>(allSeriesList.toArray());
         actorSeriesCb.setMaximumSize(new Dimension(350,30));
         actorSeriesCb.setAlignmentX(Component.LEFT_ALIGNMENT);
         actorSeriesCb.setEditable(false);
         actorSeriesCb.setEnabled(false);
-
+        actorSeriesCb.setBackground(Color.decode("#282828"));
+        actorSeriesCb.setForeground(Color.WHITE);
 
         addBtn.setPreferredSize(new Dimension(200,35));
         addBtn.setMaximumSize(new Dimension(200,35));
@@ -85,6 +90,11 @@ public class ManageActorSeriesPanel extends JPanel {
         deleteBtn.setEnabled(false);
 
         actorNameField.setEditable(false);
+        actorNameField.setBackground(Color.decode("#282828"));
+        actorNameField.setForeground(Color.WHITE);
+
+        actorRole.setBackground(Color.decode("#282828"));
+        actorRole.setForeground(Color.WHITE);
 
         actorFormPnl.add(Box.createVerticalStrut(10));
         actorFormPnl.add(new JLabel("Actor Name"));
@@ -108,10 +118,16 @@ public class ManageActorSeriesPanel extends JPanel {
         actorFormPnl.setPreferredSize(new Dimension((int)(1280/2), 720));
         actorFormPnl.setMaximumSize(new Dimension((int)(1280/2), 720));
         actorFormPnl.setBorder(new EmptyBorder(10,10,10,10));
-        actorFormPnl.setBackground(Color.orange);
+        actorFormPnl.setBackground(Color.decode("#282828"));
 //        actorFormPnl.add(addEpisodePnl);
 
         add(actorFormPnl,BorderLayout.CENTER);
+
+        for (Component c : actorFormPnl.getComponents()) {
+            if (c instanceof JLabel lbl) {
+                lbl.setForeground(Color.WHITE);
+            }
+        }
 
     }
 

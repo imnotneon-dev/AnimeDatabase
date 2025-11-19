@@ -52,7 +52,7 @@ public class EpisodeDAO {
         }
     }
     public Episode selectEpisodeById (int episodeId) throws SQLException {
-        String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM Episodes WHERE episodeId = ? ";
+        String sql = " SELECT episode_id, title, release_date, synopsis, no_of_views, runtime, series_id FROM Episodes WHERE episode_id = ? ";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -71,7 +71,7 @@ public class EpisodeDAO {
                             rs.getString("title"),
                             rs.getString("synopsis"),
                             rs.getInt("runtime"),
-                            rs.getInt("views"),
+                            rs.getInt("no_of_views"),
                             releaseDate,
                             rs.getInt("series_id"));
                 }
@@ -82,7 +82,7 @@ public class EpisodeDAO {
         return null;
     }
     public List<Episode> selectEpisodeBySeries (int series_id) throws SQLException {
-        String sql = " SELECT episode_id, title, release_date, synopsis, views, runtime, series_id FROM Episodes WHERE series_id = ? ";
+        String sql = " SELECT episode_id, title, release_date, synopsis, no_of_views, runtime, series_id FROM Episodes WHERE series_id = ? ";
         List<Episode> eplist = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -100,7 +100,7 @@ public class EpisodeDAO {
                             rs.getString("title"),
                             rs.getString("synopsis"),
                             rs.getInt("runtime"),
-                            rs.getInt("views"),
+                            rs.getInt("no_of_views"),
                             releaseDate,
                             rs.getInt("series_id")));
                 }
@@ -163,7 +163,7 @@ public class EpisodeDAO {
     public List<EpisodeReview> getReviewByEpisodeId (String episodeId) throws SQLException {
         List<EpisodeReview> reviews = new ArrayList<>();
 
-        String sql = "SELECT r.user_review, u.name, r.episode_id, r.series_id " +
+        String sql = "SELECT r.user_review, u.user_id, r.episode_id, r.series_id, r.date_reviewed" +
                 "FROM reviews r " +
                 "LEFT JOIN account u ON r.account_id = u.account_id " +
                 "WHERE r.episode_id = ?";
@@ -175,9 +175,10 @@ public class EpisodeDAO {
                 while (rs.next()) {
                     EpisodeReview data = new EpisodeReview(
                             rs.getInt("review_id"),
-                            rs.getString("username"),
-                            rs.getInt("series_id"),
-                            rs.getString("comment")
+                            rs.getInt("user_id"),
+                            rs.getInt("episode_id"),
+                            rs.getString("user_review"),
+                            rs.getDate("date_reviewed").toLocalDate()
                     );
                     reviews.add(data);
                 }

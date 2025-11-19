@@ -22,6 +22,7 @@ public class SeriesEpisodeCard extends JPanel {
         setBorder(new EmptyBorder(5,5,5,5));
         setPreferredSize(new Dimension(200,160));
         setMaximumSize(new Dimension(200,160));
+        setToolTipText(syp);
 
         JLabel epTitle = new JLabel(title);
         JLabel synopsis = new JLabel(syp);

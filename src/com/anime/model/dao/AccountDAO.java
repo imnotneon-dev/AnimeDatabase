@@ -91,6 +91,41 @@ public class AccountDAO {
                         rs.getString("status")
                     );
                 }
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public Account selectAccountById(int user_id) throws SQLException {
+        String sql = """
+            SELECT user_id, username, password, date_of_birth, country,
+                   top_genre, date_user_created, status
+            FROM Users
+            WHERE username = ? AND status = 'Active'
+        """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, user_id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Account(
+                            rs.getInt("user_id"),
+                            rs.getString("username"),
+                            rs.getString("password"),
+                            rs.getDate("date_of_birth"),
+                            rs.getString("country"),
+                            rs.getString("top_genre"),
+                            rs.getDate("date_user_created"),
+                            rs.getString("status")
+                    );
+                }
+            } catch(SQLException e){
+                e.printStackTrace();
             }
         }
         return null;

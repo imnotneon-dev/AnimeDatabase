@@ -14,7 +14,7 @@ public class ActorDAO {
 //    }
 
     public Actor getActorById(int id) throws SQLException {
-        String sql = "SELECT * FROM actors WHERE id = ?";
+        String sql = "SELECT * FROM actors WHERE actors_id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -22,14 +22,14 @@ public class ActorDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new Actor(
-                            rs.getInt("id"),
+                            rs.getInt("actors_id"),
                             rs.getString("last_name"),
                             rs.getString("first_name"),
                             rs.getString("gender"),
                             rs.getDate("date_of_birth").toLocalDate(),
                             rs.getString("place_of_birth"),
                             rs.getString("agency"),
-                            rs.getString("series_photo")
+                            rs.getString("actor_photo")
                     );
                 }
             }
@@ -42,7 +42,7 @@ public class ActorDAO {
 
     public List<String> getRolesByActorId(int actorId) throws SQLException {
         List<String> roles = new ArrayList<>();
-        String sql = "SELECT role_name FROM roles WHERE actor_id = ?";
+        String sql = "SELECT role_name FROM roles WHERE actors_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -62,11 +62,12 @@ public class ActorDAO {
 
     public List<Actor> getActorsBySeries(int series_id) throws SQLException {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT a.actor_id, a.last_name, a.first_name a.gender, a.date_of_birth, a.place_of_birth, a.agency");
+        sql.append("SELECT a.actors_id, a.last_name, a.first_name, a.gender, a.date_of_birth, a.place_of_birth, a.agency, a.actor_photo ");
         sql.append("FROM actors a ");
-        sql.append("JOIN actor_series acs ON a.actor_id = acs.actor_id ");
+        sql.append("JOIN actorSeries acs ON a.actors_id = acs.actors_id ");
         sql.append("JOIN series s ON acs.series_id = s.series_id ");
-        sql.append("WHERE s.series_id = ? LIMIT 5;");
+        sql.append("WHERE s.series_id = ? " +
+                    "LIMIT 5;");
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
             ps.setInt(1, series_id);
@@ -74,14 +75,14 @@ public class ActorDAO {
             List<Actor> actors = new ArrayList<>();
             while (rs.next()) {
                 actors.add(new Actor(
-                        rs.getInt("actor_id"),
+                        rs.getInt("actors_id"),
                         rs.getString("last_name"),
                         rs.getString("first_name"),
                         rs.getString("gender"),
                         rs.getDate("date_of_birth").toLocalDate(),
                         rs.getString("place_of_birth"),
                         rs.getString("agency"),
-                        rs.getString("series_photo")
+                        rs.getString("actor_photo")
                 ));
             }
             return actors;
@@ -93,9 +94,9 @@ public class ActorDAO {
 
     public List<Actor> getActorsByEpisode ( int epId) throws SQLException {
         String sql =
-                "SELECT a.actor_id, a.last_name, a.first_name, a.gender, a.date_of_birth, a.place_of_birth, a.agency " +
+                "SELECT a.actors_id, a.last_name, a.first_name, a.gender, a.date_of_birth, a.place_of_birth, a.agency, actor_photo " +
                         "FROM actors a " +
-                        "JOIN actor_series acs ON a.actor_id = acs.actor_id " +
+                        "JOIN actorSeries acs ON a.actors_id = acs.actors_id " +
                         "JOIN series s ON acs.series_id = s.series_id " +
                         "WHERE s.ep_id = ?";
 
@@ -107,14 +108,14 @@ public class ActorDAO {
                 List<Actor> actors = new ArrayList<>();
                 while (rs.next()) {
                     actors.add(new Actor(
-                            rs.getInt("actor_id"),
+                            rs.getInt("actors_id"),
                             rs.getString("last_name"),
                             rs.getString("first_name"),
                             rs.getString("gender"),
                             rs.getDate("date_of_birth").toLocalDate(),
                             rs.getString("place_of_birth"),
                             rs.getString("agency"),
-                            rs.getString("series_photo")
+                            rs.getString("actor_photo")
                     ));
                 }
                 return actors;
@@ -146,7 +147,7 @@ public class ActorDAO {
     }
 
     public void deleteActor ( int actorId) throws SQLException {
-        String sql = "DELETE FROM actors WHERE actor_id = ?";
+        String sql = "DELETE FROM actors WHERE actors_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -160,7 +161,7 @@ public class ActorDAO {
     }
 
     public boolean editActor (int actorId, String lastName, String firstName, String gender, String dateOfBirth, String placeOfBirth, String agency) throws SQLException {
-        String sql = "UPDATE actors SET last_name = ?, first_name = ?, gender = ?, date_of_birth = ?, place_of_birth = ?, agency = ? WHERE actor_id = ?";
+        String sql = "UPDATE actors SET last_name = ?, first_name = ?, gender = ?, date_of_birth = ?, place_of_birth = ?, agency = ? WHERE actors_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -180,7 +181,7 @@ public class ActorDAO {
         return false;
     }
 
-    public List<Actor> viewActors () throws SQLException {
+    public List<Actor> getActors () throws SQLException {
         String sql = "SELECT * FROM actors";
 
         try (Connection conn = DBConnection.getConnection();
@@ -190,14 +191,14 @@ public class ActorDAO {
             List<Actor> list = new ArrayList<>();
             while (rs.next()) {
                 list.add(new Actor(
-                        rs.getInt("actor_id"),
+                        rs.getInt("actors_id"),
                         rs.getString("last_name"),
                         rs.getString("first_name"),
                         rs.getString("gender"),
                         rs.getDate("date_of_birth").toLocalDate(),
                         rs.getString("place_of_birth"),
                         rs.getString("agency"),
-                        rs.getString("series_photo")
+                        rs.getString("actor_photo")
                 ));
             }
             return list;

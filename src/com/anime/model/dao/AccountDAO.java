@@ -166,4 +166,26 @@ public class AccountDAO {
                 return false;
             }
     }
+
+    // Update the top genre of a user
+    public boolean updateTopGenre(int userId, String newGenre) {
+        String sql = """
+            UPDATE Users
+            SET top_genre = ?
+            WHERE user_id = ?
+        """;
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, newGenre);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

@@ -107,7 +107,7 @@ CREATE TABLE episodeReviews (
     review_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     episode_id INT NOT NULL,
-    comment TEXT,
+    user_review TEXT,
 	date_reviewed DATE DEFAULT CURRENT_DATE,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (episode_id) REFERENCES episodes(episode_id)
@@ -173,3 +173,16 @@ VALUES
 (32, 9, 'Yukari Hayasaka/Caroline'), -- PARADISE KISS
 (37, 10, 'Mafuyu Satou'), -- GIVEN
 (40, 11, 'Kaede/Lucy/Nyu'); -- ELFEN LIED
+
+INSERT INTO episodeReviews(user_id, episode_id, user_review, date_reviewed)
+VALUES
+(1, 'Amazing episode! Loved the animation and character development.', '2025-11-19'),
+(2, 'Not my favorite, but the plot twist was unexpected.', '2025-11-18'),
+(3, 'WOWOWOWOW LOVE THE EPISODE!', '2025-11-17'),
+(4, 'Can''t wait for the next episode!', '2025-11-19'),
+(5, 'Meh, it was okay.', '2025-11-16'),
+(6, 'THE ANIMATION WAS GOOD!', '2025-11-15'),
+(7, 'The character development is slow, but I am invested.', '2025-11-14'),
+(8, 'Funny episode! Had me laughing the whole time.', '2025-11-13'),
+(9, 'The ending shocked me! Can''t believe that happened.', '2025-11-12'),
+(10, 'Good episode!', '2025-11-11');

@@ -59,6 +59,7 @@ CREATE TABLE actors (
     date_of_birth DATE,
     place_of_birth VARCHAR(100),
     agency VARCHAR(100),
+    actor_photo VARCHAR(100),
     PRIMARY KEY (actors_id)
 );
 DROP TABLE IF EXISTS likedEpisode;

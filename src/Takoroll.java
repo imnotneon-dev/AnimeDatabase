@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,6 +9,8 @@ import com.anime.controller.*;
 import com.anime.model.dao.AppModel;
 import com.anime.view.*;
 import com.anime.model.*;
+
+import javax.swing.*;
 
 public class Takoroll {
     
@@ -20,36 +23,32 @@ public class Takoroll {
 
     public static void main(String[] args) {
         try {
-            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/02_add_constraints.sql");
-            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_FavoriteSeries.sql");
-            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_accounts.sql");
-            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_actors.sql");
-            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_episodes.sql");
-            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_likedepisodes.sql");
-            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_series.sql");
+//            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/02_add_constraints.sql");
+//            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_FavoriteSeries.sql");
+//            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_accounts.sql");
+//            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_actors.sql");
+//            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_episodes.sql");
+//            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_likedepisodes.sql");
+//            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/data_series.sql");
             SQLScriptRunner.runScript("AnimeDatabase/resources/sql/db_anime.sql");
-            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/getFavoriteSeriesByUser.sql");
-            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/report_reviewlog.sql");
+//            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/getFavoriteSeriesByUser.sql");
+//            SQLScriptRunner.runScript("AnimeDatabase/resources/sql/report_reviewlog.sql");
             System.out.println("Database Initialized");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        AppController controller = new AppController(mainFrame, model);
-    }
-
-    public Connection connectToDatabase() {
-        try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            System.out.println("Connected to Takoroll database successfully!");
+        } catch (IOException e) {
+            System.err.println("Error executing SQL script: " + e.getMessage());
+            return;
         } catch (SQLException e) {
-            System.err.println("Failed to connect to the database: " + e.getMessage());
-            System.getLogger(Takoroll.class.getName()).log(System.Logger.Level.ERROR, "Database connection error", e);
+            System.err.println("Error executing SQL script: " + e.getMessage());
+            return;
         }
-        return connection;
-    }
 
-    public Connection geConnection() {
-        return connection;
+        SwingUtilities.invokeLater(()->{
+            AppModel model = new AppModel();
+            AnimeFrame view = new AnimeFrame();
+            AppController controller = new AppController(view, model);
+
+            view.setVisible(true);
+            System.out.println("Application started...")
+        });
     }
 }

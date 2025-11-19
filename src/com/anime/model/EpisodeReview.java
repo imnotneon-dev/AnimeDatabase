@@ -9,15 +9,13 @@ public class EpisodeReview {
     private int episode_id;
     private String comment;
     private LocalDate date_reviewed; 
-    private String episode_title;
 
-    public EpisodeReview(int review_id, int user_id, int episode_id, String comment, LocalDate date_reviewed, String episode_title) {
+    public EpisodeReview(int review_id, int user_id, int episode_id, String comment, LocalDate date_reviewed) {
         this.review_id = review_id;
         this.user_id = user_id;
         this.episode_id = episode_id;
         this.comment = comment;
         this.date_reviewed = date_reviewed;
-        this.episode_title = episode_title;
     }
 
     public int getReview_id() {
@@ -58,15 +56,5 @@ public class EpisodeReview {
 
     public void setDate_reviewed(LocalDate date_reviewed) {
         this.date_reviewed = date_reviewed;
-    }
-
-    public String getEpisode_title() { 
-        return episode_title; 
-    }
-
-    public void setEpisode_title(String episode_title) {
-        this.episode_title = episode_title;
-    }
-
-    
+    }    
 }

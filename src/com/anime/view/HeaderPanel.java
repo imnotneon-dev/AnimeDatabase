@@ -6,7 +6,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -15,6 +14,7 @@ public class HeaderPanel extends JPanel {
     private JMenuItem watchHistoryItem = new JMenuItem();
     private JMenuItem likesItem = new JMenuItem();
     private JMenuItem accStatsItem = new JMenuItem();
+    private JMenuItem wrappedItem = new JMenuItem();
     private JLabel homeIcon = new JLabel();
     private JLabel accountName = new JLabel();
     private JLabel catalogLb = new JLabel();
@@ -43,7 +43,7 @@ public class HeaderPanel extends JPanel {
         homeIcon.setOpaque(true);
 
         catalogLb.setText("CATALOG");
-        catalogLb.setFont(new Font("SansSerif", Font.BOLD, 14)); // Make it visible and clear
+//        catalogLb.setFont(new Font("SansSerif", Font.BOLD, 14)); // Make it visible and clear
 
         leftPnl.add(homeIcon);
         leftPnl.add(catalogLb);
@@ -52,11 +52,13 @@ public class HeaderPanel extends JPanel {
         logoutItem = new JMenuItem("Log Out");
         watchHistoryItem = new JMenuItem("Watch History");
         likesItem = new JMenuItem("Liked Episodes");
-        accStatsItem = new JMenuItem("Statistics");
+        accStatsItem = new JMenuItem("Statistics and Review Log");
+        wrappedItem = new JMenuItem("Anime Wrapped!");
         menu.add(logoutItem);
         menu.add(watchHistoryItem);
         menu.add(likesItem);
         menu.add(accStatsItem);
+        menu.add(wrappedItem);
 
         add(leftPnl, BorderLayout.WEST);
         add(filler, BorderLayout.CENTER);
@@ -84,6 +86,7 @@ public class HeaderPanel extends JPanel {
     public JMenuItem getWatchHistoryItem() { return watchHistoryItem; }
     public JMenuItem getLikesItem() { return likesItem; }
     public JMenuItem getAccStatsItem() { return accStatsItem; }
+    public JMenuItem getWrappedItem() { return wrappedItem; }
     public JLabel getHomeIcon() { return homeIcon; }
     public JLabel getAccountName() { return accountName; }
     public JLabel getCatalogLb() { return catalogLb; }

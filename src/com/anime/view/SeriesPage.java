@@ -186,6 +186,7 @@ public class SeriesPage extends JPanel{
         releaseYearLb.setText("Release Year: " + this.series.getReleaseYear());
         epCountLb.setText("Total Number of Episodes: " + this.series.getTotalEpisodes());
         statusLb.setText("Status: " + this.series.getStatus());
+        SERIES_POSTER = this.series.getSeriesPhoto();
 
         loadEpisodeCards();
         loadActorLabelCards();
@@ -263,7 +264,7 @@ public class SeriesPage extends JPanel{
 
     }
 
-    public String setSERIES_POSTERLink(String iresPath){
+    public void setSERIES_POSTERLink(String iresPath){
         this.SERIES_POSTER = iresPath;
     }
 

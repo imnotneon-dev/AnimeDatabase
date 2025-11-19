@@ -3,30 +3,31 @@ USE anime_db;
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE Users(
-	user_id INT AUTO_INCREMENT,
-	username VARCHAR(50) PRIMARY KEY,
+	user_id INT AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(50) NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	date_of_birth DATE NOT NULL,
-	country VARCHAR(50),
-	top_genre VARCHAR(50),
+	country VARCHAR(50) NOT NULL,
+	top_genre VARCHAR(50) DEFAULT 'N/A',
 	date_user_created DATE DEFAULT CURRENT_DATE,
 	status VARCHAR(20) DEFAULT 'Active' --for archives
 );
 
 -- INSERTS FOR USERS
---INSERT INTO Users (username, password, date_of_birth, country, top_genre)
+--INSERT INTO Users (username, password, date_of_birth, country)
 --VALUES 
 
---('thistlezhi', 'zh15p4ssword', '2006-08-21', 'China', 'Action'),
---('cerizz_', 'xLuvr8', '2014-06-16', 'Philippines', 'Comedy'),
---('_zafibleh', 'm3oW!', '2005-10-28', 'Canada', 'Romance'),
---('icep0p', 'xD_rul3z', '2006-07-27', 'South Korea', 'Horror'),
---('Mother_Coco', 'AFDG2028.switz!', '2004-12-18', 'Switzerland', 'Ecchi'),
---('IJ.Orts', '1ts_IJcUhh', '2005-06-29', 'Taipei', 'Supernatural'),
---('Azii95', 'k4tch0W!', '2005-08-14', 'America', 'Fantasy'),
---('YSA', 'gl@ssy!!', '2012-08-10', 'Japan', 'Drama'),
---('SMHMyHead', 'r4ndOm_p@ssw0rd!', '2006-10-06', 'Japan', 'Adventure'),
---('RYAN12345801', 's3cret!S4NT4', '2007-12-05', 'Philippines', 'Sci-Fi');
+--('thistlezhi', 'zh15p4ssword', '2006-08-21', 'Malaysia', '2014-03-18'),
+--('cerizz_', 'xLuvr8', '2014-06-16', 'Philippines', '2025-11-02'),
+--('_zafibleh', 'm3oW!', '2005-10-28', 'Singapore', '2023-05-27'),
+--('icep0p', 'xD_rul3z', '2006-07-27', 'Philippines', '2016-08-09'),
+--('Mother_Coco', 'AFDG2028.switz!', '2004-12-18', 'Philippines', '2023-02-14'),
+--('IJ.Orts', '1ts_IJcUhh', '2005-06-29', 'Malaysia', '2020-12-21'),
+--('Azii95', 'k4tch0W!', '2005-08-14', 'Malaysia', '2019-07-30'),
+--('YSA', 'gl@ssy!!', '2012-08-10', 'Singapore', '2024-05-04'),
+--('SMHMyHead', 'r4ndOm_p@ssw0rd!', '2006-10-06', 'Malaysia', '2023-09-18'),
+--('RYAN12345801', 's3cret!S4NT4', '2007-12-05', 'Philippines', '2025-01-12');
+
 
 DROP TABLE IF EXISTS series;
 CREATE TABLE series (

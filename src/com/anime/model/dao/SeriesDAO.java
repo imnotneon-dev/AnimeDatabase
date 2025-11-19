@@ -1,7 +1,10 @@
 package com.anime.model.dao;
 
 import com.anime.model.Series;
+import com.anime.model.TopGenreOfTheWeek;
+
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +17,6 @@ public class SeriesDAO{
 //        this.conn = conn;
 //    }
 
-    // TODO: add throws SQL EXCEPTION
     public Series getSeriesById(int series_id) throws SQLException{
         String sql = "SELECT * FROM series WHERE series_id = ?";
 
@@ -204,7 +206,35 @@ public class SeriesDAO{
         }
 
         return false;
-        
+    }
+    public String getTopGenreOfUser(int user_id) throws SQLException {
+        String topGenre =null;
+        String q = """
+                SELECT s.genre, COUNT(h.episode_id) AS totalViews
+                FROM watchHistory h 
+                LEFT JOIN episodes e ON h.episode_id = e.episode_id 
+                LEFT JOIN series s ON e.series_id = s.series_id 
+                WHERE user_id = ? 
+                GROUP BY s.genre 
+                ORDER BY totalViews DESC 
+                LIMIT 1;
+                """;
+
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement topStmt = conn.prepareStatement(q.toString())) {
+            topStmt.setInt(1, user_id);
+            ResultSet rs = topStmt.executeQuery();
+            if (rs.next()) {
+                String genre = rs.getString("genre");
+                int views = rs.getInt("totalViews");
+
+                topGenre = genre;
+
+            }
+        }
+
+        return topGenre;
     }
 }
 

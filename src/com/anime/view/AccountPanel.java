@@ -148,15 +148,15 @@ public class AccountPanel extends JPanel{
 
         // Add to main panel
         add(signupContainer);
-        signupContainer.setVisible(true);
+        signupContainer.setVisible(false);
         revalidate();
         repaint();
     }
     private void setupLoginPanel(){
+        loginContainer.setVisible(true);
         JLabel logoIconLb = new JLabel();
         // GridBagLayout centers the loginContainer panel
         logLayout.setConstraints(loginContainer, new GridBagConstraints());
-        loginContainer.setVisible(false);
         // set layout of component loginContainer so components are centered
         loginContainer.setLayout(new BoxLayout(loginContainer,BoxLayout.Y_AXIS));
         loginContainer.setAlignmentY(Component.CENTER_ALIGNMENT);

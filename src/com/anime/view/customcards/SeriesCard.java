@@ -16,14 +16,14 @@ import java.util.Objects;
 
 public class SeriesCard extends JPanel {
 //    private Episode episode;
-    private String TAKOROLL_LOGO = "/imgs/takoroll_logo.png";
+    private String SERIES_POSTER = "/imgs/takoroll_logo.png";
     private ImageIcon seriesPosterIcon;
     private final int series_id;
 
-    public SeriesCard(int sid, String title){
+    public SeriesCard(int sid, String title, String SERIES_POSTER){
 //        episode = ep;
+        this.SERIES_POSTER = SERIES_POSTER;
         this.series_id = sid;
-        // TODO: FIGURE OUT HOW TO INIT THE SERIES PHOTO
 
         setOpaque(true);
         setVisible(true);
@@ -36,7 +36,7 @@ public class SeriesCard extends JPanel {
         JLabel seriesTitle = new JLabel(title);
         JLabel seriesPosterLb = new JLabel();
 
-        BufferedImage biSeriesPoster = loadImage(TAKOROLL_LOGO);
+        BufferedImage biSeriesPoster = loadImage(SERIES_POSTER);
         Image scaled = biSeriesPoster.getScaledInstance(160,200,Image.SCALE_SMOOTH);
         seriesPosterIcon = new ImageIcon(scaled);
         seriesPosterLb.setIcon(seriesPosterIcon);
@@ -85,6 +85,9 @@ public class SeriesCard extends JPanel {
         this.seriesPosterIcon = seriesPosterIcon;
     }
 
+    public void setSERIES_POSTERLink(String iresPath){
+        this.SERIES_POSTER = iresPath;
+    }
     public int getSeriesID() {
         return series_id;
     }

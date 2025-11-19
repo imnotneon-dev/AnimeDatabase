@@ -59,7 +59,7 @@ public class SeriesPage extends JPanel{
     private void init() {
         setOpaque(true);
         setVisible(true);
-        setBackground(Color.WHITE);
+        setBackground(Color.decode("#282828"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         initComponents();
@@ -78,12 +78,13 @@ public class SeriesPage extends JPanel{
         JLabel actorsListLb = new JLabel("Notable Actors:     ");
         actorsContainer.add(actorsListLb);
         actorsContainer.setLayout(new BoxLayout(actorsContainer, BoxLayout.Y_AXIS));
-        actorsContainer.setOpaque(false);
+        actorsContainer.setOpaque(true);
+        actorsContainer.setBackground(Color.decode("#282828"));
 
         seriesInfoPnl = new GradientPanel(biTakorollIcon);
         seriesInfoPnl.setLayout(gb);
         seriesInfoPnl.setBorder(new EmptyBorder(0,70,100,70));
-        seriesInfoPnl.setBackground(Color.decode("#282828"));
+        seriesInfoPnl.setBackground(Color.WHITE);
         seriesInfoPnl.setPreferredSize(new Dimension(1280,700));
         seriesInfoPnl.setMaximumSize(new Dimension(1280,700));
 //        seriesInfoPnl.setPreferredSize(new Dimension(420,720));
@@ -138,7 +139,7 @@ public class SeriesPage extends JPanel{
 
         episodesPnl.setLayout(new GridLayout(0,4,5,5));
         episodesPnl.setBorder(new EmptyBorder(0,25,35,40));
-        episodesPnl.setBackground(Color.decode("#282828");
+        episodesPnl.setBackground(Color.decode("#282828"));
 //        episodesPnl.setPreferredSize(new Dimension(1280,600));
         episodesPnl.setMaximumSize(new Dimension(1280,Integer.MAX_VALUE));
         episodesPnl.setAlignmentX(Component.LEFT_ALIGNMENT);

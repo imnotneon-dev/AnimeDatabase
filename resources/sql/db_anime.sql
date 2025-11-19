@@ -112,3 +112,61 @@ CREATE TABLE episodeReviews (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (episode_id) REFERENCES episodes(episode_id)
 );
+
+INSERT INTO actors (last_name, first_name, gender, date_of_birth, place_of_birth, agency)
+VALUES 
+('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy''s Factory'), -- ONE PUNCH MAN
+('Ishikawa', 'Kaito', 'Male', '1993-10-13', 'Bunkyo, Tokyo, Japan', 'Stay Luck'),
+('Kaji', 'Yūki', 'Male', '1985-09-03', 'Tokyo, Japan', 'VIMS'),
+('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'),
+('Hanae', 'Natsuki', 'Male', '1991-06-26', 'Kanagawa Prefecture, Japan', 'Across Entertainment'), -- DEMON SLAYER
+('Kitō', 'Akari', 'Female', '1994-10-16', 'Nagoya, Aichi Prefecture, Japan', 'Raccoon Dog'),
+('Shimono', 'Hiro', 'Male', '1980-04-21', 'Tokyo, Japan', 'I''m Enterprise'),
+('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'),
+('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'),
+('Suzumura', 'Kenichi', 'Male', '1975-03-12', 'Nagano Prefecture, Japan', 'Aoni Production'),
+('Yamashita', 'Daiki', 'Male', '1989-09-07', 'Hamamatsu, Shizuoka Prefecture, Japan', 'Arts Vision'), -- MY HERO ACADEMIA
+('Okamoto', 'Nobuhiko', 'Male', '1986-10-24', 'Tokyo, Japan', 'Raccoon Dog'),
+('Sakura', 'Ayane', 'Female', '1994-01-29', 'Shibuya, Tokyo, Japan', 'Aoni Production'),
+('Eguchi', 'Takuya', 'Male', '1987-05-22', 'Setagaya, Tokyo, Japan', '81 Produce'), -- SPY X FAMILY
+('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise'),
+('Tanezaki', 'Atsumi', 'Female', '1990-09-27', 'Ōita Prefecture, Japan', 'Tokyo Actor''s Consumer''s Cooperative Society / Haikyo'),
+('Matsuda', 'Kenichiro', 'Male', '1978-09-22', 'Saitama Prefecture, Japan', 'Arts Vision'),
+('Ono', 'Kenshō', 'Male', '1989-10-05', 'Fukuoka, Fukuoka Prefecture, Japan', 'Animo Produce'),
+('Ichikawa', 'Aoi', 'Male', '1991-10-02', 'Fukuoka, Japan', 'Office Osawa'), -- GACHIAKUTA
+('Konishi', 'Katsuyuki', 'Male', '1973-04-21', 'Kanagawa Prefecture, Japan', 'Ken Production'),
+('Matsuoka', 'Yoshitsugu', 'Male', '1985-09-17', 'Chiba Prefecture, Japan', 'I''m Enterprise'),
+('Hanamori', 'Yumiri', 'Female', '1997-08-29', 'Saitama Prefecture, Japan', 'Aster Nine'),
+('Morikawa', 'Toshiyuki', 'Male', '1967-05-26', 'Toyama Prefecture, Japan', 'Axlone'),
+('Shin', 'Yuuki', 'Male', '1998-02-22', 'Kanagawa, Japan', 'Ken Production'),
+('Nakao', 'Ryūsei', 'Male', '1951-04-02', 'Katsuyama, Fukui Prefecture, Japan', 'Aoni Production'),
+('Hanazawa', 'Kana', 'Female', '1989-02-25', 'Tokyo, Japan', 'Office Osawa'),
+('Tougen Anki: Dark Demon of Paradise', 'Ura', 'Kazuki', 'Male', '1995-10-18', 'Hyōgo Prefecture, Japan', 'VIMS'), -- TOUGEN ANKI
+('Tougen Anki: Dark Demon of Paradise', 'Kamiya', 'Hiroshi', 'Male', '1975-01-28', 'Yokohama, Kanagawa Prefecture, Japan', 'Aoni Production'),
+('Tougen Anki: Dark Demon of Paradise', 'Nishiyama', 'Kōtarō', 'Male', '1989-06-07', 'Niigata Prefecture, Japan', 'Aoni Production'),
+('Tougen Anki: Dark Demon of Paradise', 'Iwami', 'Manaka', 'Female', '1998-11-30', 'Hiroshima Prefecture, Japan', 'Raccoon Dog'),
+('Tougen Anki: Dark Demon of Paradise', 'Sakata', 'Shōgo', 'Male', '1997-07-07', 'Tokyo, Japan', 'Haikyō'),
+('Tougen Anki: Dark Demon of Paradise', 'Hanae', 'Natsuki', 'Male', '1991-06-26', 'Anan, Tokushima Prefecture, Japan', 'Aoni Production'),
+('Koga', 'Aoi', 'Female', '1998-08-24', 'Saga Prefecture, Japan', '81 Produce', 'Kaguya Shinomiya'), -- KAGUYA SAMA
+('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture, Japan', 'Space Craft'),
+('Kohara', 'Konomi', 'Female', '1992-06-28', 'Chiba Prefecture, Japan', 'Office Osawa'),
+('Suzuki', 'Ryota', 'Male', '1998-03-29', 'Aichi Prefecture, Japan', 'INTENTION'),
+('Tomita', 'Miyu', 'Female', '1999-11-15', 'Saitama Prefecture, Japan', 'Amuse');
+('Katou', 'Keiko', 'Female', '1969-02-06', 'Tokyo, Japan', 'Production Baobab'), -- PARADISE KISS
+('Kawanishi', 'Kenn', 'Male', '1965-02-14', 'Tokyo, Japan', 'Aoni Production'),
+('Fukuyama', 'Jun', 'Male', '1978-11-26', 'Hiroshima Prefecture, Japan', 'Axlone'),
+('Taneda', 'Risa', 'Female', '1988-07-12', 'Tokyo, Japan', 'Office Osawa'),
+('Horie', 'Yui', 'Female', '1987-09-05', 'Tokyo, Japan', 'Arts Vision'),
+('Toyonaga', 'Toshiyuki', 'Male', '1984-04-28', 'Tokyo, Japan', 'Style Cube'),
+('Kayano', 'Ai', 'Female', '1987-09-13', 'Tokyo, Japan', 'Office Osawa'),
+('Ichimichi', 'Mikako', 'Female', '1996-10-26', 'Tokyo, Japan', 'Haikyō'), -- GIVEN
+('Matsuoka', 'Yoshitsugu', 'Male', '1986-09-17', 'Saitama Prefecture, Japan', 'I''m Enterprise'),
+('Fukuhara', 'Kaori', 'Female', '1981-07-29', 'Tokyo, Japan', '81 Produce'),
+('Sugita', 'Tomokazu', 'Male', '1980-10-11', 'Tokyo, Japan', 'Haikyō'),
+('Horie', 'Yui', 'Female', '1987-09-05', 'Tokyo, Japan', 'Arts Vision'),
+('Kobayashi', 'Sanae', 'Female', '1980-01-26', 'Hamakita, Shizuoka, Japan', 'Sigma Seven'), -- ELFEN LIED
+('Suzuki', 'Chihiro', 'Male', '1977-02-17', 'Yamagata Prefecture, Japan', 'Haikyou'),
+('Noto', 'Mamiko', 'Female', '1980-02-06', 'Kanazawa, Ishikawa, Japan', 'Office Osawa'),
+('Okamura', 'Akemi', 'Female', '1969-03-12', 'Tokyo, Japan', 'Mausu Promotion'),
+('Gibu', 'Yūko', 'Female', '1981-01-28', 'Kōbe, Hyōgo, Japan', 'Freelance');
+

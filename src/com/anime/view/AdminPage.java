@@ -1,10 +1,10 @@
 package com.anime.view;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class AdminPage extends JPanel implements ItemListener {
     private ManageSeriesPanel mngSeriesPnl = new ManageSeriesPanel();

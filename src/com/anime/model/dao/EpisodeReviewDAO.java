@@ -62,10 +62,8 @@ public class EpisodeReviewDAO {
         List<EpisodeReview> list = new ArrayList<>();
         String sql = """
             SELECT 
-                r.review_id, r.user_id, r.episode_id, r.comment, r.date_reviewed,
-                e.title AS episode_title
+                r.review_id, r.user_id, r.episode_id, r.comment, r.date_reviewed
             FROM episodeReviews r
-            JOIN episodes e ON r.episode_id = e.episode_id
             ORDER BY r.date_reviewed DESC
         """;
 
@@ -79,8 +77,7 @@ public class EpisodeReviewDAO {
                     rs.getInt("user_id"),
                     rs.getInt("episode_id"),
                     rs.getString("comment"),
-                    rs.getDate("date_reviewed").toLocalDate(),
-                    rs.getString("episode_title")
+                    rs.getDate("date_reviewed").toLocalDate()
                 );
                 list.add(review);
             }
@@ -97,10 +94,9 @@ public class EpisodeReviewDAO {
         List<EpisodeReview> list = new ArrayList<>();
         String sql = """
             SELECT 
-                r.review_id, r.user_id, r.episode_id, r.comment, r.date_reviewed,
-                e.title AS episode_title
+                r.review_id, r.user_id, r.episode_id, r.comment, r.date_reviewed
             FROM episodeReviews r
-            JOIN episodes e ON r.episode_id = e.episode_id
+            JOIN users u ON r.user_id = u.user_id
             WHERE r.episode_id = ?
                 AND u.status = 'Active'
             ORDER BY r.date_reviewed DESC
@@ -117,8 +113,7 @@ public class EpisodeReviewDAO {
                         rs.getInt("user_id"),
                         rs.getInt("episode_id"),
                         rs.getString("comment"),
-                        rs.getDate("date_reviewed").toLocalDate(),
-                        rs.getString("episode_title")
+                        rs.getDate("date_reviewed").toLocalDate()
                     );
                     list.add(review);
                 }

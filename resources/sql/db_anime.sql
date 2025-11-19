@@ -118,7 +118,7 @@ INSERT INTO actors (last_name, first_name, gender, date_of_birth, place_of_birth
 VALUES 
 ('Furukawa', 'Makoto', 'Male', '1989-09-29', 'Kumamoto Prefecture', 'Japan Toy''s Factory', '/imgs/actor.png'), -- ONE PUNCH MAN -- !! also in KAGUYA SAMA
 ('Ishikawa', 'Kaito', 'Male', '1993-10-13', 'Bunkyo, Tokyo, Japan', 'Stay Luck', '/imgs/actor.png'),
-('Kaji', 'Yūki', 'Male', '1985-09-03', 'Tokyo, Japan', 'VIMS', '/imgs/actor.png'),
+('Kaji', 'Yuki', 'Male', '1985-09-03', 'Tokyo, Japan', 'VIMS', '/imgs/actor.png'),
 ('Hayami', 'Saori', 'Female', '1991-05-29', 'Tokyo, Japan', 'I''m Enterprise', '/imgs/actor.png'), -- also in MY HERO ACADEMIA and SPY X FAMILY
 ('Sakamoto', 'Maaya', 'Female', '1980-03-31', 'Tokyo, Japan', 'Flying Dog', '/imgs/actor.png'), -- OURAN HIGH SCHOOL HOST CLUB
 ('Miyano', 'Mamoru', 'Male', '1983-06-08', 'Saitama Prefecture, Japan', 'Ken-On', '/imgs/actor.png'),
@@ -159,7 +159,7 @@ VALUES
 ('Suzuki', 'Chihiro', 'Male', '1977-02-17', 'Yamagata Prefecture, Japan', 'Haikyou', '/imgs/actor.png'),
 ('Noto', 'Mamiko', 'Female', '1980-02-06', 'Kanazawa, Ishikawa, Japan', 'Office Osawa', '/imgs/actor.png'), 
 ('Okamura', 'Akemi', 'Female', '1969-03-12', 'Tokyo, Japan', 'Mausu Promotion', '/imgs/actor.png'), 
-('Gibu', 'Yūko', 'Female', '1981-01-28', 'Kobe, Hyogo, Japan', 'Freelance', '/imgs/actor.png'); 
+('Gibu', 'Yuko', 'Female', '1981-01-28', 'Kobe, Hyogo, Japan', 'Freelance', '/imgs/actor.png'); 
 
 INSERT INTO actorSeries(actors_id, series_id, character_name)
 VALUES

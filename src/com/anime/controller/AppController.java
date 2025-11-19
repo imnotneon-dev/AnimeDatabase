@@ -7,6 +7,7 @@ import com.anime.view.*;
 import com.anime.view.customcards.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -36,7 +37,30 @@ public class AppController {
         init_admin_panel_listeners();
 
     }
+    private boolean acc_signup_DisplayHasError(Component parentComp, String username, String password, String confirmPw, String dob, String country){
+        String errorMsg = null;
 
+        if(username.isEmpty() || password.isEmpty() || confirmPw.isEmpty() || dob == null || country.isEmpty()){
+            errorMsg = "Username and password cannot be empty";
+        }
+        else if(username.equalsIgnoreCase("admin")){
+            errorMsg = "Username cannot be admin.";
+        }
+        else if (!password.equals(confirmPw)){
+            errorMsg = "Passwords do not match or is empty";
+        }
+
+        if(errorMsg!=null){
+            JOptionPane.showMessageDialog(
+                parentComp,
+                errorMsg,
+                "Input Validation Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+            return true;
+        }
+        return false; // passed validation
+    }
     private void init_accpnl_listeners() {
         AccountPanel login = view.getLoginPanel();
 
@@ -50,8 +74,15 @@ public class AppController {
             try {
                 Account account = model.getAccountDAO().selectAccountByUsername(username);
                 if(!(account.getPassword().equals(pw))){
-                    System.out.println("Passwords don't match please try again");
+//                    System.out.println("Passwords don't match please try again");
+                    JOptionPane.showMessageDialog(
+                            this.view,
+                            "Passwords don't match please try again",
+                            "Input Validation Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                     return;
+
                 }
                 if(account!=null){
                     this.currentSession = account;
@@ -92,7 +123,14 @@ public class AppController {
                     System.out.println("Login Success");
                     view.switchView(view.HOME);
                 } else {
-                    System.out.println("Login failed: Invalid username or password");
+                    String error = "Login failed: Invalid username or password";
+                    JOptionPane.showMessageDialog(
+                            this.view,
+                            error,
+                            "Input Validation Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
                 }
 
 
@@ -117,29 +155,36 @@ public class AppController {
             String confirmPw = login.getSignConfirm();
             String dob = login.getSignDob();
             String country = login.getCountry();
-            if(username.isEmpty() || password.isEmpty() || confirmPw.isEmpty() || dob == null || country.isEmpty()){
-                System.out.println("Username and password cannot be empty");
+            if(acc_signup_DisplayHasError(this.view, username, password, confirmPw, dob, country)){
                 return;
             }
-            else if (!password.equals(confirmPw)){
-                System.out.println("Passwords do not match or is empty");
-                return;
-            }
-
             LocalDate date;
             try{
                 date = LocalDate.parse(dob);
             } catch (Exception ex){
-                System.out.println("Invalid date");
+                String error = ("Invalid date");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
             try {
                 Account checker = model.getAccountDAO().selectAccountByUsername(username);
                 if(checker!=null){
-                    System.out.println("Account already exist");
+                    String error = ("Account already exist");
+                    JOptionPane.showMessageDialog(
+                            this.view,
+                            error,
+                            "Input Validation Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
                 }
                 else {
-                    model.getAccountDAO().addUser(username,password, String.valueOf(date),country,"None");
+                    model.getAccountDAO().addUser(username,password, String.valueOf(date),country);
                     Account account = model.getAccountDAO().selectAccountByUsername(username);
 
                     if(account!=null){
@@ -181,7 +226,16 @@ public class AppController {
                         view.switchView(view.HOME);
                     }
                     else{
-                        System.out.println("Account created, but auto login failed.");
+                        String error = ("Account created, but auto login failed.");
+                        JOptionPane.showMessageDialog(
+                                this.view,
+                                error,
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+
+                        view.getLoginPanel().getLoginContainer().setVisible(true);
+                        view.getLoginPanel().getSignupContainer().setVisible(false);
                     }
 
                 }
@@ -273,7 +327,14 @@ public class AppController {
                             view.getSeriesPage().setActorsList(actorList);
                             view.switchView(view.SERIES);
                         } else {
-                            System.out.println("Series details cannot be found.");
+                            String error = ("Series details cannot be found.");
+                            JOptionPane.showMessageDialog(
+                                    view.getMainFrame(),
+                                    error,
+                                    "Input Validation Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                            return;
                         }
                     }
                     catch (SQLException ex) {
@@ -310,7 +371,14 @@ public class AppController {
                             view.getSeriesPage().setActorsList(actorList);
                             view.switchView(view.SERIES);
                         } else {
-                            System.out.println("Series details cannot be found.");
+                            String error= ("Series details cannot be found.");
+                            JOptionPane.showMessageDialog(
+                                    view.getMainFrame(),
+                                    error,
+                                    "Input Validation Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                            return;
                         }
                     }
                     catch (SQLException ex) {
@@ -357,7 +425,14 @@ public class AppController {
                                 System.out.println("Could not add to watch history and thus not opening the episode...");
                             }
                         } else {
-                            System.out.println("Episode details cannot be found.");
+                            String error = ("Episode details cannot be found.");
+                            JOptionPane.showMessageDialog(
+                                    view.getMainFrame(),
+                                    error,
+                                    "Input Validation Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                            return;
                         }
                     }
                     catch (SQLException ex) {
@@ -385,7 +460,14 @@ public class AppController {
                             view.getActorPage().setRolesList(actorRoles);
                             view.switchView(view.ACTOR);
                         } else {
-                            System.out.println("Actor details cannot be found.");
+                            String error = ("Actor details cannot be found.");
+                            JOptionPane.showMessageDialog(
+                                    view.getMainFrame(),
+                                    error,
+                                    "Input Validation Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                            return;
                         }
                     }
                     catch (SQLException ex) {
@@ -432,7 +514,14 @@ public class AppController {
                         view.getSeriesPage().setActorsList(actorList);
                         view.switchView(view.SERIES);
                     } else {
-                        System.out.println("Series details cannot be found.");
+                        String error=("Series details cannot be found.");
+                        JOptionPane.showMessageDialog(
+                                view.getMainFrame(),
+                                error,
+                                "Input Validation Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                        return;
                     }
                 }
                 catch (SQLException ex) {
@@ -506,7 +595,14 @@ public class AppController {
                             view.getSeriesPage().setActorsList(actorList);
                             view.switchView(view.SERIES);
                         } else {
-                            System.out.println("Series details cannot be found.");
+                            String error = ("Series details cannot be found.");
+                            JOptionPane.showMessageDialog(
+                                    view.getMainFrame(),
+                                    error,
+                                    "Input Validation Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                            return;
                         }
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
@@ -584,7 +680,14 @@ public class AppController {
 
             if(ln.isEmpty() || fn.isEmpty() || g.isEmpty() || dob.isEmpty() ||
                 pob.isEmpty() || a.isEmpty()){
-                System.out.println("No field can be empty");
+                String error  = ("No field can be empty");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
             }
 
             try {
@@ -597,7 +700,14 @@ public class AppController {
                     actor.getPobField().setText("");
                     actor.getAgencyField().setText("");
                 } else {
-                    System.out.println("Failed to add actor.");
+                    String error = ("Failed to add actor. Already exists.");
+                    JOptionPane.showMessageDialog(
+                            this.view,
+                            error,
+                            "Input Validation Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
                 }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
@@ -615,7 +725,14 @@ public class AppController {
 
             if(ln.isEmpty() || fn.isEmpty() || g.isEmpty() || dob.isEmpty() ||
                     pob.isEmpty() || a.isEmpty()){
-                System.out.println("No field can be empty");
+                String error = "No field can be empty";
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
             }
 
             try {
@@ -628,7 +745,14 @@ public class AppController {
                     actor.getPobField().setText("");
                     actor.getAgencyField().setText("");
                 } else {
-                    System.out.println("Failed to add actor.");
+                    String error = ("Failed to edit actor.");
+                    JOptionPane.showMessageDialog(
+                            this.view,
+                            error,
+                            "Input Validation Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
                 }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
@@ -636,13 +760,13 @@ public class AppController {
         });
     }
 
-    private void init_admin_series_panel(ManageSeriesPanel series){
+    private void init_admin_series_panel(ManageSeriesPanel series) {
         List<PlainSeriesCard> seriesCards = series.getSeriesCards();
 
-        for(PlainSeriesCard card: seriesCards){
-            card.addMouseListener(new MouseAdapter(){
-               @Override
-               public void mouseClicked(MouseEvent e) {
+        for (PlainSeriesCard card : seriesCards) {
+            card.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
                    selectedEpisodeId = (Integer)card.getClientProperty("series_id");
                    series.getAddBtn().setEnabled(false);
                    series.getClearBtn().setEnabled(true);
@@ -697,13 +821,26 @@ public class AppController {
                 intC = Integer.parseInt(c);
 
             } catch (NumberFormatException ex) {
-                System.err.println("Input Error: Release Year or Episode Count is not a valid number.");
+                String error = ("Input Error: Release Year or Episode Count is not a valid number.");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
 
             if(t.isEmpty() || g.isEmpty() || ry.isEmpty() || c.isEmpty() ||
                     s.isEmpty()){
-                System.out.println("No field can be empty");
+                String error = "No field can be empty";
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
             }
 
             try{
@@ -743,13 +880,27 @@ public class AppController {
                 intC = Integer.parseInt(c);
 
             } catch (NumberFormatException ex) {
-                System.err.println("Input Error: Release Year or Episode Count is not a valid number.");
+//                System.err.println("Input Error: Release Year or Episode Count is not a valid number.");
+                String error = "Input Error: Release Year or Episode Count is not a valid number.";
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
 
             if(t.isEmpty() || g.isEmpty() || ry.isEmpty() || c.isEmpty() ||
                     s.isEmpty()){
-                System.out.println("No field can be empty");
+                String error = "No field can be empty";
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
             }
 
             try{
@@ -831,7 +982,14 @@ public class AppController {
             Object selectedSeries = episode.getSeriesTitleCb().getSelectedItem();
 
             if(!(selectedSeries instanceof Series selectedS)){
-                System.out.println("Please select a series title");
+                String error = ("Please select a series title");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
                 return;
             }
             int series_id = selectedS.getSeriesId();
@@ -851,13 +1009,26 @@ public class AppController {
                 intRun = Integer.parseInt(run);
 
             } catch (NumberFormatException ex) {
-                System.err.println("Input Error: Release Year or Episode Count is not a valid number.");
+                String error = ("Input Error: Release Year or Episode Count is not a valid number.");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
 
             if(t.isEmpty() || syn.isEmpty() || rd.isEmpty() || run.isEmpty() ||
                     st.equals("Select a Series") || !(selectedSeries instanceof Series)){
-                System.out.println("No field can be empty");
+                String error  = ("No field can be empty");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
             }
 
             try{
@@ -876,7 +1047,6 @@ public class AppController {
 
                     // updating gui/list
                     List<Episode> eList = model.getEpisodeDAO().selectAllEpisodes();
-                    // todo
                     episode.setEpisodeList(eList);
                 }
             } catch (SQLException ex){
@@ -889,10 +1059,15 @@ public class AppController {
             Object selectedSeries = episode.getSeriesTitleCb().getSelectedItem();
 
             if(!(selectedSeries instanceof Series selectedS)){
-                System.out.println("Please select a series title");
+                String error = ("Please select a series title");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
-            int series_id = selectedS.getSeriesId();
 
             String t = episode.getTitleField().getText().trim();
             String st = episode.getSeriesTitleCb().getSelectedItem().toString().trim();
@@ -910,13 +1085,27 @@ public class AppController {
                 intRun = Integer.parseInt(run);
 
             } catch (NumberFormatException ex) {
-                System.err.println("Input Error: Release Year or Episode Count is not a valid number.");
+                String error = ("Input Error: Release Year or Episode Count is not a valid number.");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
+
             }
 
             if(t.isEmpty() || syn.isEmpty() || rd.isEmpty() || run.isEmpty() ||
                     st.equals("Select a Series") || !(selectedSeries instanceof Series)){
-                System.out.println("No field can be empty");
+                String error = ("No field can be empty");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
             }
 
             try{
@@ -1026,7 +1215,14 @@ public class AppController {
         role.getDeleteBtn().addActionListener(e-> {
 
             if (selectedActorId == null) {
-                System.out.println("Error: No actor selected.");
+                String error = ("Error: No actor selected.");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
                 return;
             }
 
@@ -1036,7 +1232,6 @@ public class AppController {
                 int actIdToDelete = selectedRole.getActId();
 
                 try {
-                    // TODO: use archive account instead
                     boolean success = model.getActorSeriesDAO().deleteActorSeries(actIdToDelete);
 
                     if (success) {
@@ -1051,7 +1246,14 @@ public class AppController {
 
                         // update gui list by setting all
                     } else {
-                        System.out.println("Failed to delete role from database.");
+                        String error = ("Failed to delete role from database.");
+                        JOptionPane.showMessageDialog(
+                                this.view,
+                                error,
+                                "Input Validation Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                        return;
                     }
 
                 } catch(Exception ex) {
@@ -1064,7 +1266,14 @@ public class AppController {
         role.getAddBtn().addActionListener(e-> {
 
             if (selectedActorId == null) {
-                System.out.println("Error: No actor selected.");
+                String error = ("Error: No actor selected.");
+                JOptionPane.showMessageDialog(
+                        this.view,
+                        error,
+                        "Input Validation Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
                 return;
             }
 
@@ -1092,7 +1301,14 @@ public class AppController {
                         // update gui list
 
                     } else {
-                        System.out.println("Failed to add role to database.");
+                        String error = ("Failed to add role to database.");
+                        JOptionPane.showMessageDialog(
+                                this.view,
+                                error,
+                                "Input Validation Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                        return;
                     }
 
                 } catch(Exception ex) {

@@ -160,4 +160,8 @@ public class AnimeFrame extends JFrame {
     public AnimeWrappedPanel getWrappedPage(){
         return wrapped;
     }
+
+    public JFrame getMainFrame(){
+        return this;
+    }
 }

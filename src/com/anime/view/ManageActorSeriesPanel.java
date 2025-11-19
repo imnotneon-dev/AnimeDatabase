@@ -9,6 +9,7 @@ import com.anime.view.customcards.PlainActorCard;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -164,17 +165,21 @@ public class ManageActorSeriesPanel extends JPanel {
                 // Call super method for standard coloring/selection logic
                 Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-                if (value instanceof ActorSeries aseries) {
-                    // Display ONLY the title on the component (which is a JLabel)
-                    Series series = model.getSeriesDAO().getSeriesById(aseries.getSeriesId());
-                    ((JLabel) component).setText(series.getTitle());
-                } else if (value != null) {
-                    // For non-Series objects (like the initial placeholder text)
-                    ((JLabel) component).setText(value.toString());
-                } else {
-                    ((JLabel) component).setText("Select a Series");
+                try {
+                    if (value instanceof ActorSeries aseries) {
+                        // Display ONLY the title on the component (which is a JLabel)
+                        Series series = model.getSeriesDAO().getSeriesById(aseries.getSeriesId());
+                        ((JLabel) component).setText(series.getTitle());
+                    } else if (value != null) {
+                        // For non-Series objects (like the initial placeholder text)
+                        ((JLabel) component).setText(value.toString());
+                    } else {
+                        ((JLabel) component).setText("Select a Series");
+                    }
+                    return component;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
-                return component;
             }
         });
     }

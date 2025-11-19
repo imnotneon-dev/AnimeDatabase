@@ -48,7 +48,7 @@ public class Takoroll {
             AppController controller = new AppController(view, model);
 
             view.setVisible(true);
-            System.out.println("Application started...")
+            System.out.println("Application started...");
         });
     }
 }

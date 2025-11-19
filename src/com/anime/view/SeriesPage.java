@@ -76,7 +76,7 @@ public class SeriesPage extends JPanel{
         epInfoVSpacer.setOpaque(false);
 
         JLabel actorsListLb = new JLabel("Notable Actors:     ");
-        actorsListLb.setForeground(Color.WHITE); 
+        actorsListLb.setForeground(Color.WHITE);
         actorsContainer.add(actorsListLb);
         actorsContainer.setLayout(new BoxLayout(actorsContainer, BoxLayout.Y_AXIS));
         actorsContainer.setOpaque(true);
@@ -183,7 +183,7 @@ public class SeriesPage extends JPanel{
             return;
         }
 
-        
+
         titleLb.setText(this.series.getTitle());
         titleLb.setForeground(Color.WHITE);
         genreLb.setText(this.series.getGenre());
@@ -195,7 +195,7 @@ public class SeriesPage extends JPanel{
         statusLb.setText("Status: " + this.series.getStatus());
         statusLb.setForeground(Color.WHITE);
         SERIES_POSTER = this.series.getSeriesPhoto();
-        
+
 
         loadEpisodeCards();
         loadActorLabelCards();
